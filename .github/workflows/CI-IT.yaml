@@ -1,0 +1,43 @@
+name: CI AND IT
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+    tags:
+      - 'v*'
+
+
+jobs:
+  CI:
+    runs-on: ubuntu-18.04
+    timeout-minutes: 180
+    strategy:
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 8
+      - uses: aahmed-se/setup-maven@v3
+        with:
+          maven-version: 3.6.1
+      - name: 'Install & Test'
+        run: mvn clean install
+
+  CI-on-MacOS:
+    runs-on: macos-latest
+    timeout-minutes: 180
+    strategy:
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 8
+      - uses: aahmed-se/setup-maven@v3
+        with:
+          maven-version: 3.6.1
+      - name: 'Install & Test'
+        run: mvn clean instsall

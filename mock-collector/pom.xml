@@ -30,11 +30,13 @@
     <artifactId>mock-collector</artifactId>
     <packaging>jar</packaging>
 
-    <name>SkyWalking-Mock-Collector</name>
+    <name>SkyWalking Mock Collector</name>
     <url>http://maven.apache.org</url>
 
     <properties>
-        <repos.protocol>https://github.com/apache/skywalking-data-collect-protocol.git</repos.protocol>
+        <protocol.version>7a22d3e</protocol.version>
+        <protocol.workingDirectory>${project.basedir}/target/protocol</protocol.workingDirectory>
+        <protocol.repos>https://github.com/apache/skywalking-data-collect-protocol.git</protocol.repos>
     </properties>
 
     <dependencies>
@@ -66,16 +68,6 @@
         </extensions>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.source}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-            </plugin>
-<!--            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.6.0</version>
@@ -88,16 +80,15 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <executable>git</executable>
+                    <executable>bash</executable>
                     <arguments>
-                        <argument>clone</argument>
-                        <argument>-b</argument>
-                        <argument>master</argument>
-                        <argument>${repos.protocol}</argument>
-                        <argument>${project.basedir}/target/proto</argument>
+                        <argument>${project.basedir}/bin/fetch_code.sh</argument>
+                        <argument>${protocol.workingDirectory}</argument>
+                        <argument>${protocol.repos}</argument>
+                        <argument>${protocol.version}</argument>
                     </arguments>
                 </configuration>
-            </plugin>-->
+            </plugin>
             <plugin>
                 <groupId>org.xolstice.maven.plugins</groupId>
                 <artifactId>protobuf-maven-plugin</artifactId>
@@ -106,6 +97,7 @@
                     <protocArtifact>com.google.protobuf:protoc:3.3.0:exe:${os.detected.classifier}</protocArtifact>
                     <pluginId>grpc-java</pluginId>
                     <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.4.0:exe:${os.detected.classifier}</pluginArtifact>
+                    <protoSourceRoot>${repos.workingDirectory}</protoSourceRoot>
                 </configuration>
                 <executions>
                     <execution>
