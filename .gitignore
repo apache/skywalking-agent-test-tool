@@ -1,0 +1,17 @@
+/build/
+target/
+.idea/
+**/tagert/**
+*.iml
+.classpath
+.project
+.settings/
+.DS_Store
+*~
+packages/
+**/dependency-reduced-pom.xml
+/dist/
+.factorypath  
+.vscode 
+.checkstyle
+.externalToolBuilders
