@@ -23,7 +23,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.skywalking.apm.network.common.KeyIntValuePair;
 import org.apache.skywalking.apm.network.register.v2.Endpoint;
 import org.apache.skywalking.apm.network.register.v2.EndpointMapping;
-import org.apache.skywalking.apm.network.register.v2.Enpoints;
+import org.apache.skywalking.apm.network.register.v2.Endpoints;
 import org.apache.skywalking.apm.network.register.v2.NetAddressMapping;
 import org.apache.skywalking.apm.network.register.v2.NetAddresses;
 import org.apache.skywalking.apm.network.register.v2.RegisterGrpc;
@@ -41,7 +41,7 @@ public class MockRegisterService extends RegisterGrpc.RegisterImplBase {
     private Logger logger = LogManager.getLogger(MockTraceSegmentService.class);
 
     @Override
-    public void doEndpointRegister(Enpoints request, StreamObserver<EndpointMapping> responseObserver) {
+    public void doEndpointRegister(Endpoints request, StreamObserver<EndpointMapping> responseObserver) {
         for (Endpoint endpoint : request.getEndpointsList()) {
             ValidateData.INSTANCE.getRegistryItem()
                                  .registryOperationName(new RegistryItem.OperationName(endpoint.getServiceId(), endpoint
