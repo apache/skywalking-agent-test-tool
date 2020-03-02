@@ -29,15 +29,8 @@
     <artifactId>validator</artifactId>
     <packaging>jar</packaging>
 
-    <name>SkyWalking-Validator</name>
+    <name>SkyWalking Validator</name>
     <url>http://maven.apache.org</url>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.yaml</groupId>
-            <artifactId>snakeyaml</artifactId>
-        </dependency>
-    </dependencies>
 
     <build>
         <finalName>validator</finalName>
