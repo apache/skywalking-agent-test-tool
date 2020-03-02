@@ -16,7 +16,7 @@
 #
 
 github:
-    description: The Nginx Lua agent for Apache SkyWalking
+    description: The integration test tool for Apache SkyWalking, including Mock OAP server and trace validator.
     homepage: https://skywalking.apache.org/
     labels:
       - skywalking
@@ -26,6 +26,7 @@ github:
       - nginx
       - lua
       - dapper
+      - test
     enabled_merge_buttons:
       squash:  true
       merge:   false
