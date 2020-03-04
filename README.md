@@ -58,7 +58,7 @@ or specify the jvm arguments likes:
 
 ## Apache SkyWalking Validator Tool
 
-`Validator Tool` a data validating tool. It resposible for validating the `expected data` with `actual data`.
+`Validator Tool` is a data validating tool. It is responsible for validating the `expected data` with `actual data`.
 
 ```bash
 java -jar \
