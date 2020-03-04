@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SegmentItemForRead implements SegmentItem {
-    private String applicationCode;
+    private String serviceName;
     private String segmentSize;
     private List<SegmentForRead> segments;
 
@@ -33,12 +33,12 @@ public class SegmentItemForRead implements SegmentItem {
         this.segments = segments;
     }
 
-    public String getApplicationCode() {
-        return applicationCode;
+    public String getServiceName() {
+        return serviceName;
     }
 
-    public void setApplicationCode(String applicationCode) {
-        this.applicationCode = applicationCode;
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
     }
 
     public String getSegmentSize() {
@@ -51,7 +51,7 @@ public class SegmentItemForRead implements SegmentItem {
 
     @Override
     public String serviceName() {
-        return applicationCode;
+        return serviceName;
     }
 
     @Override
@@ -69,7 +69,7 @@ public class SegmentItemForRead implements SegmentItem {
 
     @Override
     public String toString() {
-        StringBuilder message = new StringBuilder(String.format("\nSegment Item[%s]", applicationCode));
+        StringBuilder message = new StringBuilder(String.format("\nSegment Item[%s]", serviceName));
         message.append(String.format(" - segment size:\t\t%s\n", segmentSize));
         return message.toString();
     }

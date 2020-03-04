@@ -49,7 +49,7 @@ public class RegistryItem {
         heartBeats = new ConcurrentHashMap<>();
     }
 
-    public void registryApplication(Service service) {
+    public void registryService(Service service) {
         services.putIfAbsent(service.serviceName, service.serviceId);
     }
 

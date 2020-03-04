@@ -19,19 +19,19 @@ package org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exceptio
 
 import org.apache.skywalking.plugin.test.agent.tool.validator.exception.AssertFailedException;
 
-public class RegistryInstanceOfApplicationNotFoundException extends AssertFailedException {
+public class RegistryInstanceOfServiceNotFoundException extends AssertFailedException {
 
-    private final String applicationCode;
+    private final String serviceName;
 
-    public RegistryInstanceOfApplicationNotFoundException(String applicationCode) {
-        this.applicationCode = applicationCode;
+    public RegistryInstanceOfServiceNotFoundException(String serviceName) {
+        this.serviceName = serviceName;
     }
 
     @Override
     public String getCauseMessage() {
         return String.format(
-            "RegistryInstanceOfApplicationNotFoundException\nexpected: Instances of Service(%s)" + "\nactual: %s\n",
-            applicationCode, "NOT FOUND"
+            "RegistryInstanceOfServiceNotFoundException\nexpected: Instances of Service(%s)" + "\nactual: %s\n",
+            serviceName, "NOT FOUND"
         );
     }
 }

@@ -1,7 +1,7 @@
 # RegistryOperationNamesNotFoundException
 
 ## Format
-RegistryOperationNamesNotFoundException  <APPLICATION><br/>
+RegistryOperationNamesNotFoundException  <SERVICE_NAME><br/>
 expected:   <OPERATION_NAME_1, OPERATION_NAME_2, ....><br/>
 actual:     Not Found<br/>
 

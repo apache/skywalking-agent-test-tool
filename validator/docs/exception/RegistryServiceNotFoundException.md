@@ -17,11 +17,11 @@ e.g.,
 the service that you write in the expected data file:  
 ```
 registryItems:   {
-  "test_application":  {
+  "test_servce_name":  {
   }
 }
 ```
 the service of  `agent.service_name` that you configured: 
-`-Dskywalking.agent.service_name=another_application`
+`-Dskywalking.agent.service_name=another_service_name`
 
 2. Check the agent of someone project in the test case if it works.

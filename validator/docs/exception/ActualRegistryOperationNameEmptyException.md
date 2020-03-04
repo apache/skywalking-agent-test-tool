@@ -1,7 +1,7 @@
 # ActualRegistryOperationNameEmptyException
 
 ## Format
-ActualRegistryOperationNameEmptyException APPLICATION<br/>
+ActualRegistryOperationNameEmptyException SERVICE_ID<br/>
 expected: [ OPERATION_NAME_A, OPERATION_NAME_B, ... ]<br/>
 actual:  Empty
 

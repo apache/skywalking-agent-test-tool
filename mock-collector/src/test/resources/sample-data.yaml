@@ -16,26 +16,26 @@
 #
 validateData:
   - registryItem:
-    - applications:
-      - test-applicationCode1: 3   // the application id of test-applicationCode is 3
-      - test-applicationCode2: 1
+    - services:
+      - test-serviceName1: 3   // the application id of test-serviceName is 3
+      - test-serviceName2: 1
     - operationNames:
-      - test-applicationCode1: {testOperationName, testOperationName1} // there are three operation names in test-applicationCode1 has been registery
+      - test-serviceName1: {testOperationName, testOperationName1} // there are three operation names in test-serviceName1 has been registery
     - instances:
-      - test-applicationCode1: 3  // test-applicationCode1 has 3 instances
-      - test-applicationCode2: 1  // test-applicationCode2 has 1 instance
+      - test-serviceName1: 3  // test-serviceName1 has 3 instances
+      - test-serviceName2: 1  // test-serviceName2 has 1 instance
     - heartbeat:
-      - test-applicationCode1: 3 // there are 3 instance of test-applicationCode has been send  heartbeat
+      - test-serviceName1: 3 // there are 3 instance of test-serviceName has been send  heartbeat
 
   - segmentsItems:
     -
-      test-applicationCode: 1  // test-applicationCode has seend 1 segment.
+      test-serviceName: 1  // test-serviceName has seend 1 segment.
       segments:
       -
         segmentId: xxxx
         refs:
           - parentSpanId: 1
-          - parentTraceSegmentId: ${test-applicationCode2[0]}
+          - parentTraceSegmentId: ${test-serviceName2[0]}
           - networkAddress: xxx
           - parentServiceId: 1
           - parentServiceName: not null
@@ -63,6 +63,6 @@ validateData:
             spanType: Entry
             isError: false
     -
-      test-applicationCode2: 2
+      test-serviceName2: 2
       segments:
         //.....

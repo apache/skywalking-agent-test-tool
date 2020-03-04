@@ -1,12 +1,12 @@
-# RegistryApplicationSizeNotEqualsException
+# RegistryServiceSizeNotEqualsException
 
 ## Format
-RegistryApplicationSizeNotEqualsException  APPLICATION<br/>
+RegistryServiceSizeNotEqualsException  SERVICE_NAME<br/>
 expected:  EXPECTED_SIZE<br/>
 actual:    ACTUAL_SIZE
 
 ## Cause
-The `RegistryApplicationSizeNotEqualsException` caused by the size of the registry service is different between expected and actual.
+The `RegistryServiceSizeNotEqualsException` caused by the size of the registry service is different between expected and actual.
 
 ## Check Points
 1. Check if the size of the registry service that you expected

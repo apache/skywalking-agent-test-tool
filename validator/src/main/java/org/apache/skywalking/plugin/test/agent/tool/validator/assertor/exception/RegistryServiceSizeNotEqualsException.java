@@ -20,18 +20,18 @@ package org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exceptio
 import org.apache.skywalking.plugin.test.agent.tool.validator.exception.AssertFailedException;
 
 public class RegistryServiceSizeNotEqualsException extends AssertFailedException {
-    private final String applicationCode;
+    private final String serviceName;
     private final ValueAssertFailedException cause;
 
-    public RegistryServiceSizeNotEqualsException(String applicationCode, ValueAssertFailedException cause) {
-        this.applicationCode = applicationCode;
+    public RegistryServiceSizeNotEqualsException(String serviceName, ValueAssertFailedException cause) {
+        this.serviceName = serviceName;
         this.cause = cause;
     }
 
     @Override
     public String getCauseMessage() {
         return String.format(
-            "RegistryApplicationSizeNotEqualsException: %s\nexpected: %s\nactual: %s\n", applicationCode, cause
+            "RegistryServiceSizeNotEqualsException: %s\nexpected: %s\nactual: %s\n", serviceName, cause
                 .getExpected(), cause.getActual());
     }
 }

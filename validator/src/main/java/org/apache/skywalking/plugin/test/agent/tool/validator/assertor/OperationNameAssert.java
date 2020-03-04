@@ -20,7 +20,7 @@ package org.apache.skywalking.plugin.test.agent.tool.validator.assertor;
 import java.util.List;
 import org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exception.ActualRegistryOperationNameEmptyException;
 import org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exception.RegistryOperationNameNotFoundException;
-import org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exception.RegistryOperationNamesOfApplicationNotFoundException;
+import org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exception.RegistryOperationNamesOfServiceNotFoundException;
 import org.apache.skywalking.plugin.test.agent.tool.validator.entity.RegistryOperationName;
 
 public class OperationNameAssert {
@@ -37,11 +37,11 @@ public class OperationNameAssert {
         }
     }
 
-    private static void assertOperationEquals(String applicationCode, List<String> expectedOperationName,
+    private static void assertOperationEquals(String serviceName, List<String> expectedOperationName,
                                               List<String> actualOperationName) {
         for (String operationName : expectedOperationName) {
             if (!actualOperationName.contains(operationName)) {
-                throw new RegistryOperationNameNotFoundException(applicationCode, operationName);
+                throw new RegistryOperationNameNotFoundException(serviceName, operationName);
             }
         }
     }
@@ -58,6 +58,6 @@ public class OperationNameAssert {
             }
         }
 
-        throw new RegistryOperationNamesOfApplicationNotFoundException(registryOperationName);
+        throw new RegistryOperationNamesOfServiceNotFoundException(registryOperationName);
     }
 }

@@ -20,14 +20,14 @@ package org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exceptio
 import org.apache.skywalking.plugin.test.agent.tool.validator.exception.AssertFailedException;
 
 public class SegmentItemNotFoundException extends AssertFailedException {
-    private final String applicationCode;
+    private final String serviceName;
 
-    public SegmentItemNotFoundException(String applicationCode) {
-        this.applicationCode = applicationCode;
+    public SegmentItemNotFoundException(String serviceName) {
+        this.serviceName = serviceName;
     }
 
     @Override
     public String getCauseMessage() {
-        return String.format("SegmentItemNotFoundException\nexpected: %s\nactual: %s", applicationCode, "Not Found");
+        return String.format("SegmentItemNotFoundException\nexpected: %s\nactual: %s", serviceName, "Not Found");
     }
 }

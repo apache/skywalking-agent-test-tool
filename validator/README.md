@@ -8,13 +8,13 @@ The following are the exceptions that may occur in the validate tools.
 * [IllegalDataFileException](./docs/exception/IllegalDataFileException.md)
 
 ### Registry Item
-#### Application
-* [RegistryInstanceOfApplicationNotFoundException](./docs/exception/RegistryInstanceOfApplicationNotFoundException.md)
-* [RegistryApplicationNotFoundException](docs/exception/RegistryServiceNotFoundException.md)
-* [RegistryApplicationSizeNotEqualsException](docs/exception/RegistryServiceSizeNotEqualsException.md)
+#### Service
+* [RegistryInstanceOfServiceNotFoundException](./docs/exception/RegistryInstanceOfServiceNotFoundException.md)
+* [RegistryServiceNotFoundException](docs/exception/RegistryServiceNotFoundException.md)
+* [RegistryServiceSizeNotEqualsException](docs/exception/RegistryServiceSizeNotEqualsException.md)
 
 #### Instance
-* [RegistryInstanceOfApplicationNotFoundException](./docs/exception/RegistryInstanceOfApplicationNotFoundException.md)
+* [RegistryInstanceOfServiceNotFoundException](./docs/exception/RegistryInstanceOfServiceNotFoundException.md)
 * [RegistryInstanceSizeNotEqualsException](./docs/exception/RegistryInstanceSizeNotEqualsException.md)
 * [RegistryInstancesNotEqualsException](./docs/exception/RegistryInstancesNotEqualsException.md)
 
@@ -22,7 +22,7 @@ The following are the exceptions that may occur in the validate tools.
 * [ActualRegistryOperationNameEmptyException](./docs/exception/ActualRegistryOperationNameEmptyException.md)
 * [RegistryOperationNameNotFoundException](./docs/exception/RegistryOperationNameNotFoundException.md)
 * [RegistryOperationNamesNotFoundException](./docs/exception/RegistryOperationNamesNotFoundException.md)
-* [RegistryOperationNamesOfApplicationNotFoundException](./docs/exception/RegistryOperationNamesOfApplicationNotFoundException.md)
+* [RegistryOperationNamesOfServiceNotFoundException](./docs/exception/RegistryOperationNamesOfServiceNotFoundException.md)
 
 ### Segment
 * [ActualSegmentItemEmptyException](./docs/exception/ActualSegmentItemEmptyException.md)

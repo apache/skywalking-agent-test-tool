@@ -26,7 +26,7 @@ public class RegistryItemsAssert {
 
     public static void assertEquals(RegistryItems excepted, RegistryItems actual) {
         ServiceAssert.assertEquals(excepted.services(), actual.services());
-        logger.info("{} assert successful.", "registry applications");
+        logger.info("{} assert successful.", "registry services");
         InstanceAssert.assertEquals(excepted.instances(), actual.instances());
         logger.info("{} assert successful.", "registry instances");
         OperationNameAssert.assertEquals(excepted.operationNames(), actual.operationNames());

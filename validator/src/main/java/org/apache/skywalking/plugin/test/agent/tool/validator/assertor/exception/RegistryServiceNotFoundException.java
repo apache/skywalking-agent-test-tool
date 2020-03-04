@@ -20,15 +20,15 @@ package org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exceptio
 import org.apache.skywalking.plugin.test.agent.tool.validator.exception.AssertFailedException;
 
 public class RegistryServiceNotFoundException extends AssertFailedException {
-    private final String applicationCode;
+    private final String serviceName;
 
-    public RegistryServiceNotFoundException(String applicationCode) {
-        this.applicationCode = applicationCode;
+    public RegistryServiceNotFoundException(String serviceName) {
+        this.serviceName = serviceName;
     }
 
     @Override
     public String getCauseMessage() {
         return String.format(
-            "RegistryApplicationNotFoundException\nexpected: %s\nactual: %s\n", applicationCode, "Not Found");
+            "RegistryServiceNotFoundException\nexpected: %s\nactual: %s\n", serviceName, "Not Found");
     }
 }

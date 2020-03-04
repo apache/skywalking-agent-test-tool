@@ -1,7 +1,7 @@
 # RegistryInstanceSizeNotEqualsException
 
 ## Format
-RegistryInstanceSizeNotEqualsException APPLICATION<br/>
+RegistryInstanceSizeNotEqualsException SERVICE_NAME<br/>
 expected: EXPECTED_SIZE<br/>
 actual:   ACTUAL_SIZE
 
