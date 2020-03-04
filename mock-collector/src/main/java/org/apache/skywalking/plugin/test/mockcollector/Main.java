@@ -58,7 +58,7 @@ public class Main {
             @Override
             protected void doGet(HttpServletRequest req,
                                  HttpServletResponse resp) throws ServletException, IOException {
-                if (ValidateData.INSTANCE.getRegistryItem().getApplications().isEmpty()) {
+                if (ValidateData.INSTANCE.getRegistryItem().getServices().isEmpty()) {
                     resp.setStatus(500);
                     return;
                 }

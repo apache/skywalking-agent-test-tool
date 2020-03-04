@@ -27,7 +27,6 @@ import org.apache.skywalking.apm.network.register.v2.Endpoints;
 import org.apache.skywalking.apm.network.register.v2.NetAddressMapping;
 import org.apache.skywalking.apm.network.register.v2.NetAddresses;
 import org.apache.skywalking.apm.network.register.v2.RegisterGrpc;
-import org.apache.skywalking.apm.network.register.v2.Service;
 import org.apache.skywalking.apm.network.register.v2.ServiceInstance;
 import org.apache.skywalking.apm.network.register.v2.ServiceInstanceRegisterMapping;
 import org.apache.skywalking.apm.network.register.v2.ServiceInstances;
@@ -95,7 +94,7 @@ public class MockRegisterService extends RegisterGrpc.RegisterImplBase {
             return;
         }
 
-        for (Service service : request.getServicesList()) {
+        for (org.apache.skywalking.apm.network.register.v2.Service service : request.getServicesList()) {
             String applicationCode = service.getServiceName();
             ServiceRegisterMapping.Builder builder = ServiceRegisterMapping.newBuilder();
 
@@ -111,7 +110,7 @@ public class MockRegisterService extends RegisterGrpc.RegisterImplBase {
                 applicationId = Sequences.ENDPOINT_SEQUENCE.incrementAndGet();
                 Sequences.SERVICE_MAPPING.put(applicationCode, applicationId);
                 ValidateData.INSTANCE.getRegistryItem()
-                                     .registryApplication(new RegistryItem.Application(applicationCode, applicationId));
+                                     .registryApplication(new RegistryItem.Service(applicationCode, applicationId));
             }
 
             builder.addServices(KeyIntValuePair.newBuilder().setKey(applicationCode).setValue(applicationId).build());

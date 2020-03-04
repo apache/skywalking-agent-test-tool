@@ -35,22 +35,22 @@ public class InstanceAssert {
             try {
                 ExpressParser.parse(actualInstance.expressValue())
                              .assertValue(
-                                 String.format("The registry instance of %s", instance.applicationCode()),
+                                 String.format("The registry instance of %s", instance.serviceName()),
                                  actualInstance
                                      .expressValue()
                              );
             } catch (ValueAssertFailedException e) {
-                throw new RegistryInstanceSizeNotEqualsException(instance.applicationCode(), e);
+                throw new RegistryInstanceSizeNotEqualsException(instance.serviceName(), e);
             }
         }
     }
 
     private static RegistryInstance getMatchApplication(List<RegistryInstance> actual, RegistryInstance application) {
         for (RegistryInstance registryApplication : actual) {
-            if (registryApplication.applicationCode().equals(application.applicationCode())) {
+            if (registryApplication.serviceName().equals(application.serviceName())) {
                 return registryApplication;
             }
         }
-        throw new RegistryInstanceOfApplicationNotFoundException(application.applicationCode());
+        throw new RegistryInstanceOfApplicationNotFoundException(application.serviceName());
     }
 }

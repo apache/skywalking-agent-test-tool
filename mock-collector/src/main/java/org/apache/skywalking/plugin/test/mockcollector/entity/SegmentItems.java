@@ -28,7 +28,7 @@ public class SegmentItems {
     }
 
     public SegmentItems addSegmentItem(int applicationId, Segment segment) {
-        String applicationCode = ValidateData.INSTANCE.getRegistryItem().findApplicationCode(applicationId);
+        String applicationCode = ValidateData.INSTANCE.getRegistryItem().findServiceName(applicationId);
         SegmentItem segmentItem = segmentItems.get(applicationCode);
         if (segmentItem == null) {
             segmentItem = new SegmentItem(applicationCode);

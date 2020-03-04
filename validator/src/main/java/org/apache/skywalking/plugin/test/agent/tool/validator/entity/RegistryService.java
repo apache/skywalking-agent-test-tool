@@ -17,23 +17,23 @@
 
 package org.apache.skywalking.plugin.test.agent.tool.validator.entity;
 
-public interface RegistryApplication {
-    String applicationCode();
+public interface RegistryService {
+    String serviceName();
 
     String expressValue();
 
-    class Impl implements RegistryApplication {
-        private String applicationCode;
+    class Impl implements RegistryService {
+        private String serviceName;
         private String express;
 
-        Impl(String code, String express) {
-            this.applicationCode = code;
+        Impl(String serviceName, String express) {
+            this.serviceName = serviceName;
             this.express = express;
         }
 
         @Override
-        public String applicationCode() {
-            return applicationCode;
+        public String serviceName() {
+            return serviceName;
         }
 
         @Override

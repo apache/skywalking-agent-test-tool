@@ -34,7 +34,7 @@ public class ParentSegmentIdExpressParser {
         int endIndexOfIndex = parentSegmentExpress.indexOf("]", startIndexOfIndex);
         int expectedSize = Integer.parseInt(parentSegmentExpress.substring(startIndexOfIndex + 1, endIndexOfIndex));
         for (SegmentItem segmentItem : actual) {
-            if (segmentItem.applicationCode().equals(applicationCode)) {
+            if (segmentItem.serviceName().equals(applicationCode)) {
                 if (segmentItem.segments().size() <= expectedSize) {
                     throw new ParentSegmentNotFoundException(parentSegmentExpress);
                 }

@@ -30,9 +30,9 @@ public class SegmentItemsSerializer implements JsonSerializer<SegmentItems> {
     @Override
     public JsonElement serialize(SegmentItems src, Type typeOfSrc, JsonSerializationContext context) {
         JsonArray applicationSegmentItems = new JsonArray();
-        src.getSegmentItems().forEach((applicationCode, segmentItem) -> {
+        src.getSegmentItems().forEach((serviceName, segmentItem) -> {
             JsonObject segmentJson = new JsonObject();
-            segmentJson.addProperty("applicationCode", applicationCode);
+            segmentJson.addProperty("serviceName", serviceName);
             segmentJson.addProperty("segmentSize", segmentItem.getSegments().size());
             JsonArray segments = new JsonArray();
             segmentItem.getSegments().forEach(segment -> {

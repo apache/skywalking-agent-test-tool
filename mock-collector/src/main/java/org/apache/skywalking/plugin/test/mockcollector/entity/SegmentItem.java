@@ -21,11 +21,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SegmentItem {
-    private String applicationCode;
+    private String serviceName;
     private List<Segment> segments;
 
-    public SegmentItem(String applicationCode) {
-        this.applicationCode = applicationCode;
+    public SegmentItem(String serviceName) {
+        this.serviceName = serviceName;
         segments = new ArrayList<>();
     }
 
@@ -33,8 +33,8 @@ public class SegmentItem {
         segments.add(item);
     }
 
-    public String getApplicationCode() {
-        return applicationCode;
+    public String getServiceName() {
+        return serviceName;
     }
 
     public List<Segment> getSegments() {

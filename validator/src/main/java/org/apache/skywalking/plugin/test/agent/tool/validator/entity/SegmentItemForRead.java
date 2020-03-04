@@ -50,7 +50,7 @@ public class SegmentItemForRead implements SegmentItem {
     }
 
     @Override
-    public String applicationCode() {
+    public String serviceName() {
         return applicationCode;
     }
 

@@ -19,10 +19,10 @@ package org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exceptio
 
 import org.apache.skywalking.plugin.test.agent.tool.validator.exception.AssertFailedException;
 
-public class RegistryApplicationNotFoundException extends AssertFailedException {
+public class RegistryServiceNotFoundException extends AssertFailedException {
     private final String applicationCode;
 
-    public RegistryApplicationNotFoundException(String applicationCode) {
+    public RegistryServiceNotFoundException(String applicationCode) {
         this.applicationCode = applicationCode;
     }
 

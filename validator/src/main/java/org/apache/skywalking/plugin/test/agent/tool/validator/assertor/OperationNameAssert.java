@@ -32,7 +32,7 @@ public class OperationNameAssert {
         for (RegistryOperationName operationName : expected) {
             RegistryOperationName actualOperationName = findActualRegistryOperationName(actual, operationName);
             assertOperationEquals(
-                actualOperationName.applicationCode(), operationName.operationName(), actualOperationName
+                actualOperationName.serviceName(), operationName.operationName(), actualOperationName
                     .operationName());
         }
     }
@@ -53,7 +53,7 @@ public class OperationNameAssert {
         }
 
         for (RegistryOperationName operationName : actual) {
-            if (operationName.applicationCode().equals(registryOperationName.applicationCode())) {
+            if (operationName.serviceName().equals(registryOperationName.serviceName())) {
                 return operationName;
             }
         }

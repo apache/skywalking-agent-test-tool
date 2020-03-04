@@ -26,49 +26,49 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class RegistryItem {
     /**
-     * applicationCode, applicationId
+     * serviceName, serviceId
      */
-    private final Map<String, Integer> applications;
+    private final Map<String, Integer> services;
     /**
-     * applicationCode, operationName
+     * serviceName, operationName
      */
     private final Map<String, Set<String>> operationNames;
     /**
-     * applicationCode, instanceId
+     * serviceName, instanceId
      */
     private final Map<String, List<Integer>> instanceMapping;
     /**
-     * applicationCode, count
+     * serviceName, count
      */
     private final Map<String, Integer> heartBeats;
 
     public RegistryItem() {
-        applications = new ConcurrentHashMap<>();
+        services = new ConcurrentHashMap<>();
         operationNames = new ConcurrentHashMap<>();
         instanceMapping = new ConcurrentHashMap<>();
         heartBeats = new ConcurrentHashMap<>();
     }
 
-    public void registryApplication(Application application) {
-        applications.putIfAbsent(application.applicationCode, application.applicationId);
+    public void registryApplication(Service service) {
+        services.putIfAbsent(service.serviceName, service.serviceId);
     }
 
     public void registryOperationName(OperationName operationName) {
-        String applicationCode = findApplicationCode(operationName.applicationId);
-        Set<String> operationNameList = operationNames.get(applicationCode);
+        String serviceName = findServiceName(operationName.serviceId);
+        Set<String> operationNameList = operationNames.get(serviceName);
         if (operationNameList == null) {
             operationNameList = new HashSet<>();
-            operationNames.put(applicationCode, operationNameList);
+            operationNames.put(serviceName, operationNameList);
         }
         operationNameList.add(operationName.operationName);
     }
 
     public void registryInstance(Instance instance) {
-        String applicationCode = findApplicationCode(instance.applicationId);
-        List<Integer> instances = instanceMapping.get(applicationCode);
+        String serviceName = findServiceName(instance.serviceId);
+        List<Integer> instances = instanceMapping.get(serviceName);
         if (instances == null) {
             instances = new ArrayList<>();
-            instanceMapping.put(applicationCode, instances);
+            instanceMapping.put(serviceName, instances);
         }
 
         if (!instances.contains(instance)) {
@@ -76,13 +76,13 @@ public class RegistryItem {
         }
     }
 
-    public String findApplicationCode(int id) {
-        for (Map.Entry<String, Integer> entry : applications.entrySet()) {
+    public String findServiceName(int id) {
+        for (Map.Entry<String, Integer> entry : services.entrySet()) {
             if (entry.getValue() == id) {
                 return entry.getKey();
             }
         }
-        throw new RuntimeException("Cannot found the code of applicationID[" + id + "].");
+        throw new RuntimeException("Cannot found the name of serviceId [" + id + "].");
     }
 
     public void registryHeartBeat(HeartBeat heartBeat) {
@@ -98,31 +98,31 @@ public class RegistryItem {
     }
 
     public static class OperationName {
-        int applicationId;
+        int serviceId;
         String operationName;
 
-        public OperationName(int applicationId, String operationName) {
-            this.applicationId = applicationId;
+        public OperationName(int serviceId, String operationName) {
+            this.serviceId = serviceId;
             this.operationName = operationName;
         }
     }
 
-    public static class Application {
-        String applicationCode;
-        int applicationId;
+    public static class Service {
+        String serviceName;
+        int serviceId;
 
-        public Application(String applicationCode, int applicationId) {
-            this.applicationCode = applicationCode;
-            this.applicationId = applicationId;
+        public Service(String serviceName, int serviceId) {
+            this.serviceName = serviceName;
+            this.serviceId = serviceId;
         }
     }
 
     public static class Instance {
-        int applicationId;
+        int serviceId;
         int instanceId;
 
-        public Instance(int applicationId, int instanceId) {
-            this.applicationId = applicationId;
+        public Instance(int serviceId, int instanceId) {
+            this.serviceId = serviceId;
             this.instanceId = instanceId;
         }
     }
@@ -135,8 +135,8 @@ public class RegistryItem {
         }
     }
 
-    public Map<String, Integer> getApplications() {
-        return applications;
+    public Map<String, Integer> getServices() {
+        return services;
     }
 
     public Map<String, Set<String>> getOperationNames() {

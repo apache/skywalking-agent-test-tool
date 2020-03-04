@@ -10,8 +10,8 @@ The following are the exceptions that may occur in the validate tools.
 ### Registry Item
 #### Application
 * [RegistryInstanceOfApplicationNotFoundException](./docs/exception/RegistryInstanceOfApplicationNotFoundException.md)
-* [RegistryApplicationNotFoundException](./docs/exception/RegistryApplicationNotFoundException.md)
-* [RegistryApplicationSizeNotEqualsException](./docs/exception/RegistryApplicationSizeNotEqualsException.md)
+* [RegistryApplicationNotFoundException](docs/exception/RegistryServiceNotFoundException.md)
+* [RegistryApplicationSizeNotEqualsException](docs/exception/RegistryServiceSizeNotEqualsException.md)
 
 #### Instance
 * [RegistryInstanceOfApplicationNotFoundException](./docs/exception/RegistryInstanceOfApplicationNotFoundException.md)
