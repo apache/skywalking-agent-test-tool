@@ -5,13 +5,13 @@ Apache SkyWalking Agent Test Tool Suite
 
 [![Twitter Follow](https://img.shields.io/twitter/follow/asfskywalking.svg?style=for-the-badge&label=Follow&logo=twitter)](https://twitter.com/AsfSkyWalking)
 
-![CI](https://github.com/apache/skywalking-nginx-lua/workflows/CI/badge.svg?branch=master)
+![CI](https://github.com/apache/skywalking-agent-test-tool/workflows/CI/badge.svg?branch=master)
 
 
 [**SkyWalking**](https://github.com/apache/skywalking) Agent Test Tool is a tremendously useful test tools suite in a wide variety of languages of `Agent`. 
 Includes `mock collector` and `validator`. The `mock collector` is a SkyWalking receiver, like OAP server. 
 
-The `mock collector` is responsible for mocking the SkyWalking OAP receiver to collect data from the agent. It will collect data from Agent reported by `GRPC`. 
+The `mock collector` is responsible for mocking the SkyWalking OAP receiver to collect data from the agent. It receives data from agent through `GRPC` and `HTTP REST API`(in plan).
 And then it can be downloaded by Http API that the mock collector collected(service registered, instance registered, and segments). 
 Eventually, validate the file downloaded from `mock collector` by using `SkyWalking Validator`. 
 
@@ -44,12 +44,12 @@ http://localhost:12800/receiveData
 
 We can modify the configurations of agent in `./config/agent.conf`, as follows
 
-```yaml
+```properties
 # Backend service addresses.
 collector.backend_service=${SW_AGENT_COLLECTOR_BACKEND_SERVICES:127.0.0.1:19876}
 ```
 
-or specify the jvm arguments likes:
+or specify the jvm arguments like:
 
 ```bash
 # Backend service addresses.
@@ -63,13 +63,13 @@ or specify the jvm arguments likes:
 ```bash
 java -jar \
     -Xmx256m -Xms256m \
-    -DcaseName="${SCENARIO_NAME}-${SCENARIO_VERSION}" \
-    -DtestCasePath=${SCENARIO_HOME}/data/ \
+    -DcaseName="case_name" \
+    -DtestCasePath=/path/to/download-folder \
     ${TOOLS_HOME}/skywalking-validator-tools.jar
 ```
 
-NOTICE: the `expected data` have to call `expectedData.yaml`, and the `actual data` must name as `actualData.yaml`. 
-
+NOTICE: the `expected data` have to call `expectedData.yaml`, and the `actual data` must name as `actualData.yaml`. And these are in the same directory, `/path/to/download-folder`.
+JVM argument `caseName` just for show in the log.
 
 # Contact Us
 * Mail list: **dev@skywalking.apache.org**. Mail to `dev-subscribe@skywalking.apache.org`, follow the reply to subscribe the mail list.
