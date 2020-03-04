@@ -13,7 +13,7 @@ Includes `mock collector` and `validator`. The `mock collector` is a SkyWalking 
 
 The `mock collector` is responsible for mocking the SkyWalking OAP receiver to collect data from the agent. It will collect data from Agent reported by `GRPC`. 
 And then it can be downloaded by Http API that the mock collector collected(service registered, instance registered, and segments). 
-Finally, to validate the file downloaded from `mock collector` by `SkyWalking Validator. 
+Eventually, validate the file downloaded from `mock collector` by using `SkyWalking Validator`. 
 
 ## Apache SkyWalking Mock Collector
 
