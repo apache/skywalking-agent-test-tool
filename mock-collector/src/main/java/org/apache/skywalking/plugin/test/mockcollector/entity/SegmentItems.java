@@ -27,12 +27,12 @@ public class SegmentItems {
         this.segmentItems = new HashMap<>();
     }
 
-    public SegmentItems addSegmentItem(int applicationId, Segment segment) {
-        String applicationCode = ValidateData.INSTANCE.getRegistryItem().findServiceName(applicationId);
-        SegmentItem segmentItem = segmentItems.get(applicationCode);
+    public SegmentItems addSegmentItem(int serviceId, Segment segment) {
+        String serviceName = ValidateData.INSTANCE.getRegistryItem().findServiceName(serviceId);
+        SegmentItem segmentItem = segmentItems.get(serviceName);
         if (segmentItem == null) {
-            segmentItem = new SegmentItem(applicationCode);
-            segmentItems.put(applicationCode, segmentItem);
+            segmentItem = new SegmentItem(serviceName);
+            segmentItems.put(serviceName, segmentItem);
         }
         segmentItem.addSegments(segment);
         return this;

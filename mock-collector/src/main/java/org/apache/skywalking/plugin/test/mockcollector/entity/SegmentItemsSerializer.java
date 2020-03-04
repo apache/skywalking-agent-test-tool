@@ -29,7 +29,7 @@ public class SegmentItemsSerializer implements JsonSerializer<SegmentItems> {
 
     @Override
     public JsonElement serialize(SegmentItems src, Type typeOfSrc, JsonSerializationContext context) {
-        JsonArray applicationSegmentItems = new JsonArray();
+        JsonArray serviceSegmentItems = new JsonArray();
         src.getSegmentItems().forEach((serviceName, segmentItem) -> {
             JsonObject segmentJson = new JsonObject();
             segmentJson.addProperty("serviceName", serviceName);
@@ -39,9 +39,9 @@ public class SegmentItemsSerializer implements JsonSerializer<SegmentItems> {
                 segments.add(new Gson().toJsonTree(segment));
             });
             segmentJson.add("segments", segments);
-            applicationSegmentItems.add(segmentJson);
+            serviceSegmentItems.add(segmentJson);
         });
 
-        return applicationSegmentItems;
+        return serviceSegmentItems;
     }
 }

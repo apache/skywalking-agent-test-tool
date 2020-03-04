@@ -105,18 +105,6 @@ public class Span {
             return this;
         }
 
-        public SpanBuilder logEventV1(List<KeyStringValuePair> dataList) {
-            if (logs == null) {
-                logs = new ArrayList<>();
-            }
-
-            LogEvent event = new LogEvent();
-            for (KeyStringValuePair value : dataList) {
-                event.logEvent.add(new KeyValuePair(value.getKey(), value.getValue()));
-            }
-            logs.add(event);
-            return this;
-        }
     }
 
     public static class KeyValuePair {
