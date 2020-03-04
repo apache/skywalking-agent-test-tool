@@ -9,7 +9,7 @@ Apache SkyWalking Agent Test Tool Suite
 
 
 [**SkyWalking**](https://github.com/apache/skywalking) Agent Test Tool is a tremendously useful test tools suite in a wide variety of languages of `Agent`. 
-Includes `mock collector` and `validator`. The `mock collector` is a SkyWalking receiver, likes OAP server. 
+Includes `mock collector` and `validator`. The `mock collector` is a SkyWalking receiver, like OAP server. 
 
 The `mock collector` is responsible for mocking the SkyWalking OAP receiver to collect data from the agent. It will collect data from Agent reported by `GRPC`. 
 And then it can be downloaded by Http API that the mock collector collected(service registered, instance registered, and segments). 
