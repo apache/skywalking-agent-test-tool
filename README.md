@@ -42,7 +42,7 @@ http://localhost:12800/receiveData
 
 - How to config on agent
 
-We can modify directly the conguration of agent, `./config/agent.conf`, likes following.
+We can modify the configurations of agent in `./config/agent.conf`, as follows
 
 ```yaml
 # Backend service addresses.
