@@ -65,7 +65,8 @@ public class SegmentForRead implements Segment {
             this.entryEndpointId = ref.get("entryEndpointId") == null ? null : ref.get("entryEndpointId").toString();
             this.parentEndpointId = ref.get("parentEndpointId") == null ? null : ref.get("parentEndpointId").toString();
             this.networkAddressId = ref.get("networkAddressId") == null ? null : ref.get("networkAddressId").toString();
-            this.parentServiceInstanceId = ref.get("parentServiceInstanceId") == null ? null : ref.get("parentServiceInstanceId")
+            this.parentServiceInstanceId = ref.get("parentServiceInstanceId") == null ? null : ref.get(
+                "parentServiceInstanceId")
                                                                                                   .toString();
         }
 

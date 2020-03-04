@@ -30,7 +30,8 @@ public class RegistryApplicationSizeNotEqualsException extends AssertFailedExcep
 
     @Override
     public String getCauseMessage() {
-        return String.format("RegistryApplicationSizeNotEqualsException: %s\nexpected: %s\nactual: %s\n", applicationCode, cause
-            .getExpected(), cause.getActual());
+        return String.format(
+            "RegistryApplicationSizeNotEqualsException: %s\nexpected: %s\nactual: %s\n", applicationCode, cause
+                .getExpected(), cause.getActual());
     }
 }

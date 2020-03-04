@@ -59,7 +59,7 @@ public class MockRegisterService extends RegisterGrpc.RegisterImplBase {
 
     @Override
     public void doServiceInstanceRegister(ServiceInstances request,
-        StreamObserver<ServiceInstanceRegisterMapping> responseObserver) {
+                                          StreamObserver<ServiceInstanceRegisterMapping> responseObserver) {
         if (request.getInstancesCount() <= 0) {
             responseObserver.onNext(ServiceInstanceRegisterMapping.getDefaultInstance());
             responseObserver.onCompleted();
@@ -69,13 +69,16 @@ public class MockRegisterService extends RegisterGrpc.RegisterImplBase {
         for (ServiceInstance serviceInstance : request.getInstancesList()) {
             int instanceId = Sequences.INSTANCE_SEQUENCE.incrementAndGet();
             ValidateData.INSTANCE.getRegistryItem()
-                                 .registryInstance(new RegistryItem.Instance(serviceInstance.getServiceId(), instanceId));
+                                 .registryInstance(
+                                     new RegistryItem.Instance(serviceInstance.getServiceId(), instanceId));
 
             responseObserver.onNext(ServiceInstanceRegisterMapping.newBuilder()
                                                                   .addServiceInstances(KeyIntValuePair.newBuilder()
-                                                                                                      .setKey(serviceInstance
-                                                                                                          .getInstanceUUID())
-                                                                                                      .setValue(instanceId)
+                                                                                                      .setKey(
+                                                                                                          serviceInstance
+                                                                                                              .getInstanceUUID())
+                                                                                                      .setValue(
+                                                                                                          instanceId)
                                                                                                       .build())
                                                                   .build());
             responseObserver.onCompleted();
@@ -96,8 +99,8 @@ public class MockRegisterService extends RegisterGrpc.RegisterImplBase {
             String applicationCode = service.getServiceName();
             ServiceRegisterMapping.Builder builder = ServiceRegisterMapping.newBuilder();
 
-            if (applicationCode.startsWith("localhost") || applicationCode.startsWith("127.0.0.1") || applicationCode.contains(":") || applicationCode
-                .contains("/")) {
+            if (applicationCode.startsWith("localhost") || applicationCode.startsWith("127.0.0.1")
+                || applicationCode.contains(":") || applicationCode.contains("/")) {
                 responseObserver.onNext(builder.build());
                 responseObserver.onCompleted();
                 return;

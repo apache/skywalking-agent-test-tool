@@ -32,6 +32,7 @@ public class SegmentSizeNotEqualsException extends AssertFailedException {
 
     @Override
     public String getCauseMessage() {
-        return String.format("SegmentSizeNotEqualsException:\t%s\nexpected:\t%s\nactual:\t\t%s\n", applicationCode, expected, actual);
+        return String.format(
+            "SegmentSizeNotEqualsException:\t%s\nexpected:\t%s\nactual:\t\t%s\n", applicationCode, expected, actual);
     }
 }

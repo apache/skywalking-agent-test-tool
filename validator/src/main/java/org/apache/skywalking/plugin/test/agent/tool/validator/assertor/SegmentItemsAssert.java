@@ -43,7 +43,8 @@ public class SegmentItemsAssert {
             try {
                 assertSegmentSize(item.segmentSize(), actualSegmentItem.segmentSize());
             } catch (ValueAssertFailedException e) {
-                throw new SegmentSizeNotEqualsException(item.applicationCode(), item.segmentSize(), actualSegmentItem.segmentSize());
+                throw new SegmentSizeNotEqualsException(
+                    item.applicationCode(), item.segmentSize(), actualSegmentItem.segmentSize());
             }
             SegmentAssert.assertEquals(item, actualSegmentItem);
         }

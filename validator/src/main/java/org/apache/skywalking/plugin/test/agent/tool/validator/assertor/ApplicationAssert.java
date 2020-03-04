@@ -42,7 +42,7 @@ public class ApplicationAssert {
     }
 
     private static RegistryApplication getMatchApplication(List<RegistryApplication> actual,
-        RegistryApplication application) {
+                                                           RegistryApplication application) {
         for (RegistryApplication registryApplication : actual) {
             if (registryApplication.applicationCode().equals(application.applicationCode())) {
                 return registryApplication;

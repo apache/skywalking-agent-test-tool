@@ -29,6 +29,9 @@ public class RegistryInstanceOfApplicationNotFoundException extends AssertFailed
 
     @Override
     public String getCauseMessage() {
-        return String.format("RegistryInstanceOfApplicationNotFoundException\nexpected: Instances of Service(%s)" + "\nactual: %s\n", applicationCode, "NOT FOUND");
+        return String.format(
+            "RegistryInstanceOfApplicationNotFoundException\nexpected: Instances of Service(%s)" + "\nactual: %s\n",
+            applicationCode, "NOT FOUND"
+        );
     }
 }

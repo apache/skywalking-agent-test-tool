@@ -34,8 +34,11 @@ public class InstanceAssert {
             RegistryInstance actualInstance = getMatchApplication(actual, instance);
             try {
                 ExpressParser.parse(actualInstance.expressValue())
-                             .assertValue(String.format("The registry instance of %s", instance.applicationCode()), actualInstance
-                                 .expressValue());
+                             .assertValue(
+                                 String.format("The registry instance of %s", instance.applicationCode()),
+                                 actualInstance
+                                     .expressValue()
+                             );
             } catch (ValueAssertFailedException e) {
                 throw new RegistryInstanceSizeNotEqualsException(instance.applicationCode(), e);
             }

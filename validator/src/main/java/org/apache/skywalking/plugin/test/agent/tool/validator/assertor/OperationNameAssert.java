@@ -31,13 +31,14 @@ public class OperationNameAssert {
 
         for (RegistryOperationName operationName : expected) {
             RegistryOperationName actualOperationName = findActualRegistryOperationName(actual, operationName);
-            assertOperationEquals(actualOperationName.applicationCode(), operationName.operationName(), actualOperationName
-                .operationName());
+            assertOperationEquals(
+                actualOperationName.applicationCode(), operationName.operationName(), actualOperationName
+                    .operationName());
         }
     }
 
     private static void assertOperationEquals(String applicationCode, List<String> expectedOperationName,
-        List<String> actualOperationName) {
+                                              List<String> actualOperationName) {
         for (String operationName : expectedOperationName) {
             if (!actualOperationName.contains(operationName)) {
                 throw new RegistryOperationNameNotFoundException(applicationCode, operationName);
@@ -46,7 +47,7 @@ public class OperationNameAssert {
     }
 
     private static RegistryOperationName findActualRegistryOperationName(List<RegistryOperationName> actual,
-        RegistryOperationName registryOperationName) {
+                                                                         RegistryOperationName registryOperationName) {
         if (actual == null) {
             throw new ActualRegistryOperationNameEmptyException(registryOperationName);
         }

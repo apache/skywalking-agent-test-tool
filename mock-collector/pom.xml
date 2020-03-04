@@ -34,7 +34,7 @@
     <url>http://maven.apache.org</url>
 
     <properties>
-        <protocol.version>7e135257720bd61e70d12ba69bda9c90c131e09f</protocol.version>
+        <protocol.version>b512211334db26a9c1031ce7bacfa2bef99b1d89</protocol.version>
         <protocol.workingDirectory>${project.basedir}/target/protocol</protocol.workingDirectory>
         <protocol.repos>https://github.com/apache/skywalking-data-collect-protocol.git</protocol.repos>
     </properties>
@@ -83,7 +83,7 @@
     </dependencies>
 
     <build>
-        <finalName>mock-collector</finalName>
+        <finalName>skywalking-mock-collector</finalName>
         <extensions>
             <extension>
                 <groupId>kr.motd.maven</groupId>
