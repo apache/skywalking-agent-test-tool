@@ -17,7 +17,7 @@
 validateData:
   - registryItem:
     - services:
-      - test-serviceName1: 3   // the application id of test-serviceName is 3
+      - test-serviceName1: 3   // the service id of test-serviceName is 3
       - test-serviceName2: 1
     - operationNames:
       - test-serviceName1: {testOperationName, testOperationName1} // there are three operation names in test-serviceName1 has been registery
