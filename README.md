@@ -34,7 +34,7 @@ cd ./mock-collector
 bash ./bin/collector-startup.sh
 ```
 
-after above steps, we can check whether the `mock collector` is available throgh HTTP API. To visit `http://localhost:12800/status` and get the reponse with `success` in the body of content.
+after above steps, we can check whether the `mock collector` is available through HTTP API. To visit `http://localhost:12800/status` and get the response with `success` in the body of content.
 
 Finally, To visit follow URL to download the data as `yaml` file, which can be used by `SkyWalking Validator Tool`.
 
