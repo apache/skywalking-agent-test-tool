@@ -27,7 +27,6 @@ import org.apache.skywalking.apm.network.register.v2.Endpoints;
 import org.apache.skywalking.apm.network.register.v2.NetAddressMapping;
 import org.apache.skywalking.apm.network.register.v2.NetAddresses;
 import org.apache.skywalking.apm.network.register.v2.RegisterGrpc;
-import org.apache.skywalking.apm.network.register.v2.Service;
 import org.apache.skywalking.apm.network.register.v2.ServiceInstance;
 import org.apache.skywalking.apm.network.register.v2.ServiceInstanceRegisterMapping;
 import org.apache.skywalking.apm.network.register.v2.ServiceInstances;
@@ -59,7 +58,7 @@ public class MockRegisterService extends RegisterGrpc.RegisterImplBase {
 
     @Override
     public void doServiceInstanceRegister(ServiceInstances request,
-        StreamObserver<ServiceInstanceRegisterMapping> responseObserver) {
+                                          StreamObserver<ServiceInstanceRegisterMapping> responseObserver) {
         if (request.getInstancesCount() <= 0) {
             responseObserver.onNext(ServiceInstanceRegisterMapping.getDefaultInstance());
             responseObserver.onCompleted();
@@ -69,13 +68,16 @@ public class MockRegisterService extends RegisterGrpc.RegisterImplBase {
         for (ServiceInstance serviceInstance : request.getInstancesList()) {
             int instanceId = Sequences.INSTANCE_SEQUENCE.incrementAndGet();
             ValidateData.INSTANCE.getRegistryItem()
-                                 .registryInstance(new RegistryItem.Instance(serviceInstance.getServiceId(), instanceId));
+                                 .registryInstance(
+                                     new RegistryItem.Instance(serviceInstance.getServiceId(), instanceId));
 
             responseObserver.onNext(ServiceInstanceRegisterMapping.newBuilder()
                                                                   .addServiceInstances(KeyIntValuePair.newBuilder()
-                                                                                                      .setKey(serviceInstance
-                                                                                                          .getInstanceUUID())
-                                                                                                      .setValue(instanceId)
+                                                                                                      .setKey(
+                                                                                                          serviceInstance
+                                                                                                              .getInstanceUUID())
+                                                                                                      .setValue(
+                                                                                                          instanceId)
                                                                                                       .build())
                                                                   .build());
             responseObserver.onCompleted();
@@ -84,7 +86,7 @@ public class MockRegisterService extends RegisterGrpc.RegisterImplBase {
 
     @Override
     public void doServiceRegister(Services request, StreamObserver<ServiceRegisterMapping> responseObserver) {
-        logger.debug("receive application register.");
+        logger.debug("receive service register.");
         if (request.getServicesCount() <= 0) {
             logger.warn("The service count is empty. return the default service register mapping");
             responseObserver.onNext(ServiceRegisterMapping.getDefaultInstance());
@@ -92,26 +94,26 @@ public class MockRegisterService extends RegisterGrpc.RegisterImplBase {
             return;
         }
 
-        for (Service service : request.getServicesList()) {
-            String applicationCode = service.getServiceName();
+        for (org.apache.skywalking.apm.network.register.v2.Service service : request.getServicesList()) {
+            String serviceName = service.getServiceName();
             ServiceRegisterMapping.Builder builder = ServiceRegisterMapping.newBuilder();
 
-            if (applicationCode.startsWith("localhost") || applicationCode.startsWith("127.0.0.1") || applicationCode.contains(":") || applicationCode
-                .contains("/")) {
+            if (serviceName.startsWith("localhost") || serviceName.startsWith("127.0.0.1")
+                || serviceName.contains(":") || serviceName.contains("/")) {
                 responseObserver.onNext(builder.build());
                 responseObserver.onCompleted();
                 return;
             }
 
-            Integer applicationId = Sequences.SERVICE_MAPPING.get(applicationCode);
-            if (applicationId == null) {
-                applicationId = Sequences.ENDPOINT_SEQUENCE.incrementAndGet();
-                Sequences.SERVICE_MAPPING.put(applicationCode, applicationId);
+            Integer serviceId = Sequences.SERVICE_MAPPING.get(serviceName);
+            if (serviceId == null) {
+                serviceId = Sequences.ENDPOINT_SEQUENCE.incrementAndGet();
+                Sequences.SERVICE_MAPPING.put(serviceName, serviceId);
                 ValidateData.INSTANCE.getRegistryItem()
-                                     .registryApplication(new RegistryItem.Application(applicationCode, applicationId));
+                                     .registryService(new RegistryItem.Service(serviceName, serviceId));
             }
 
-            builder.addServices(KeyIntValuePair.newBuilder().setKey(applicationCode).setValue(applicationId).build());
+            builder.addServices(KeyIntValuePair.newBuilder().setKey(serviceName).setValue(serviceId).build());
             responseObserver.onNext(builder.build());
             responseObserver.onCompleted();
         }

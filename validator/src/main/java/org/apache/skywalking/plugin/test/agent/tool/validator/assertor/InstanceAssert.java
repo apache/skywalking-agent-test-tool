@@ -18,7 +18,7 @@
 package org.apache.skywalking.plugin.test.agent.tool.validator.assertor;
 
 import java.util.List;
-import org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exception.RegistryInstanceOfApplicationNotFoundException;
+import org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exception.RegistryInstanceOfServiceNotFoundException;
 import org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exception.RegistryInstanceSizeNotEqualsException;
 import org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exception.ValueAssertFailedException;
 import org.apache.skywalking.plugin.test.agent.tool.validator.entity.RegistryInstance;
@@ -31,23 +31,26 @@ public class InstanceAssert {
         }
 
         for (RegistryInstance instance : expected) {
-            RegistryInstance actualInstance = getMatchApplication(actual, instance);
+            RegistryInstance actualInstance = getMatchService(actual, instance);
             try {
                 ExpressParser.parse(actualInstance.expressValue())
-                             .assertValue(String.format("The registry instance of %s", instance.applicationCode()), actualInstance
-                                 .expressValue());
+                             .assertValue(
+                                 String.format("The registry instance of %s", instance.serviceName()),
+                                 actualInstance
+                                     .expressValue()
+                             );
             } catch (ValueAssertFailedException e) {
-                throw new RegistryInstanceSizeNotEqualsException(instance.applicationCode(), e);
+                throw new RegistryInstanceSizeNotEqualsException(instance.serviceName(), e);
             }
         }
     }
 
-    private static RegistryInstance getMatchApplication(List<RegistryInstance> actual, RegistryInstance application) {
-        for (RegistryInstance registryApplication : actual) {
-            if (registryApplication.applicationCode().equals(application.applicationCode())) {
-                return registryApplication;
+    private static RegistryInstance getMatchService(List<RegistryInstance> actual, RegistryInstance service) {
+        for (RegistryInstance registryInstance : actual) {
+            if (registryInstance.serviceName().equals(service.serviceName())) {
+                return registryInstance;
             }
         }
-        throw new RegistryInstanceOfApplicationNotFoundException(application.applicationCode());
+        throw new RegistryInstanceOfServiceNotFoundException(service.serviceName());
     }
 }

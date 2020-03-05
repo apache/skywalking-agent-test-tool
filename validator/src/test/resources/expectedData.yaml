@@ -14,7 +14,7 @@
 # limitations under the License.
 {
   "registryItems": {
-    "applications": [
+    "services": [
     {
       "vertx-core-3.x-scenario": 2
     }
@@ -36,7 +36,7 @@
   },
   "segmentItems": [
   {
-    "applicationCode": "vertx-core-3.x-scenario",
+    "serviceName": "vertx-core-3.x-scenario",
     "segmentSize": "8",
     "segments": [
     {

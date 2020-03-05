@@ -22,16 +22,16 @@ import java.util.List;
 import java.util.Map;
 
 public class RegistryItemsForRead implements RegistryItems {
-    private List<Map<String, String>> applications;
+    private List<Map<String, String>> services;
     private List<Map<String, String>> instances;
     private List<Map<String, List<String>>> operationNames;
 
-    public List<Map<String, String>> getApplications() {
-        return applications;
+    public List<Map<String, String>> getServices() {
+        return services;
     }
 
-    public void setApplications(List<Map<String, String>> applications) {
-        this.applications = applications;
+    public void setServices(List<Map<String, String>> services) {
+        this.services = services;
     }
 
     public List<Map<String, String>> getInstances() {
@@ -51,18 +51,18 @@ public class RegistryItemsForRead implements RegistryItems {
     }
 
     @Override
-    public List<RegistryApplication> applications() {
-        if (this.applications == null) {
+    public List<RegistryService> services() {
+        if (this.services == null) {
             return null;
         }
 
-        List<RegistryApplication> registryApplications = new ArrayList<>();
-        for (Map<String, String> registryApplication : applications) {
-            String applicationCode = new ArrayList<String>(registryApplication.keySet()).get(0);
-            String express = String.valueOf(registryApplication.get(applicationCode));
-            registryApplications.add(new RegistryApplication.Impl(applicationCode, express));
+        List<RegistryService> registryServices = new ArrayList<>();
+        for (Map<String, String> registryService : services) {
+            String serviceName = new ArrayList<String>(registryService.keySet()).get(0);
+            String express = String.valueOf(registryService.get(serviceName));
+            registryServices.add(new RegistryService.Impl(serviceName, express));
         }
-        return registryApplications;
+        return registryServices;
     }
 
     @Override
@@ -73,9 +73,9 @@ public class RegistryItemsForRead implements RegistryItems {
 
         List<RegistryInstance> registryInstances = new ArrayList<>();
         instances.forEach((registryInstance) -> {
-            String applicationCode = new ArrayList<String>(registryInstance.keySet()).get(0);
-            String express = String.valueOf(registryInstance.get(applicationCode));
-            registryInstances.add(new RegistryInstance.Impl(applicationCode, express));
+            String serviceName = new ArrayList<String>(registryInstance.keySet()).get(0);
+            String express = String.valueOf(registryInstance.get(serviceName));
+            registryInstances.add(new RegistryInstance.Impl(serviceName, express));
         });
         return registryInstances;
     }
@@ -88,9 +88,9 @@ public class RegistryItemsForRead implements RegistryItems {
 
         List<RegistryOperationName> registryOperationNames = new ArrayList<>();
         operationNames.forEach((registryInstance) -> {
-            String applicationCode = new ArrayList<String>(registryInstance.keySet()).get(0);
-            List<String> express = registryInstance.get(applicationCode);
-            registryOperationNames.add(new RegistryOperationName.Impl(applicationCode, express));
+            String serviceName = new ArrayList<String>(registryInstance.keySet()).get(0);
+            List<String> express = registryInstance.get(serviceName);
+            registryOperationNames.add(new RegistryOperationName.Impl(serviceName, express));
         });
         return registryOperationNames;
     }

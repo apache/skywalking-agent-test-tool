@@ -29,34 +29,34 @@ public class RegistryItemSerializer implements JsonSerializer<RegistryItem> {
     @Override
     public JsonElement serialize(RegistryItem src, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject jsonObject = new JsonObject();
-        JsonArray applicationArrays = new JsonArray();
-        src.getApplications().forEach((applicationCode, applicationId) -> {
-            JsonObject applicationJson = new JsonObject();
-            applicationJson.addProperty(applicationCode, applicationId);
-            applicationArrays.add(applicationJson);
+        JsonArray serviceArrays = new JsonArray();
+        src.getServices().forEach((serviceName, serviceId) -> {
+            JsonObject serviceJson = new JsonObject();
+            serviceJson.addProperty(serviceName, serviceId);
+            serviceArrays.add(serviceJson);
         });
-        jsonObject.add("applications", applicationArrays);
+        jsonObject.add("services", serviceArrays);
 
         JsonArray instanceArrays = new JsonArray();
-        src.getInstanceMapping().forEach((applicationCode, instanceIds) -> {
+        src.getInstanceMapping().forEach((serviceName, instanceIds) -> {
             JsonObject instanceJson = new JsonObject();
-            instanceJson.addProperty(applicationCode, instanceIds.size());
+            instanceJson.addProperty(serviceName, instanceIds.size());
             instanceArrays.add(instanceJson);
         });
         jsonObject.add("instances", instanceArrays);
 
         JsonArray operationNameArrays = new JsonArray();
-        src.getOperationNames().forEach((applicationCode, operationNames) -> {
+        src.getOperationNames().forEach((serviceName, operationNames) -> {
             JsonObject instanceJson = new JsonObject();
-            instanceJson.add(applicationCode, new Gson().toJsonTree(operationNames));
+            instanceJson.add(serviceName, new Gson().toJsonTree(operationNames));
             operationNameArrays.add(instanceJson);
         });
         jsonObject.add("operationNames", operationNameArrays);
 
         JsonArray heartBeatArrays = new JsonArray();
-        src.getHeartBeats().forEach((applicationCode, count) -> {
+        src.getHeartBeats().forEach((serviceName, count) -> {
             JsonObject instanceJson = new JsonObject();
-            instanceJson.addProperty(applicationCode, count);
+            instanceJson.addProperty(serviceName, count);
             heartBeatArrays.add(instanceJson);
         });
         jsonObject.add("heartbeat", heartBeatArrays);

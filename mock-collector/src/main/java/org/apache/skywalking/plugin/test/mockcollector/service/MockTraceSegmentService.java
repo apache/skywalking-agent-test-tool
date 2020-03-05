@@ -46,8 +46,11 @@ public class MockTraceSegmentService extends TraceSegmentReportServiceGrpc.Trace
                     SegmentObject traceSegmentObject = SegmentObject.parseFrom(value.getSegment());
                     Segment.SegmentBuilder segmentBuilder = Segment.builder()
                                                                    .segmentId(traceSegmentObject.getTraceSegmentId());
-                    logger.debug("Receive segment: ServiceID[{}], TraceSegmentId[{}]", traceSegmentObject.getServiceId(), traceSegmentObject
-                        .getTraceSegmentId());
+                    logger.debug(
+                        "Receive segment: ServiceID[{}], TraceSegmentId[{}]", traceSegmentObject.getServiceId(),
+                        traceSegmentObject
+                            .getTraceSegmentId()
+                    );
 
                     for (SpanObjectV2 spanObject : traceSegmentObject.getSpansList()) {
                         Span.SpanBuilder spanBuilder = Span.builder()

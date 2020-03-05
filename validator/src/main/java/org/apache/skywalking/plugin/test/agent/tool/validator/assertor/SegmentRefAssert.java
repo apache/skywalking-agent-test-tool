@@ -67,14 +67,14 @@ public class SegmentRefAssert {
             ExpressParser.parse(expected.networkAddressId())
                          .assertValue("network address id", actual.networkAddressId());
             ExpressParser.parse(expected.parentServiceInstanceId())
-                         .assertValue("parent application instance id", actual.parentServiceInstanceId());
+                         .assertValue("parent service instance id", actual.parentServiceInstanceId());
             ExpressParser.parse(expected.parentEndpointId())
                          .assertValue("parent endpoint id", actual.parentEndpointId());
             ExpressParser.parse(expected.parentEndpointName())
                          .assertValue("parent endpoint name", actual.parentEndpointName());
             ExpressParser.parse(expected.refType()).assertValue("ref type", actual.refType());
             ExpressParser.parse(expected.entryServiceInstanceId())
-                         .assertValue("entry application instance id", actual.entryServiceInstanceId());
+                         .assertValue("entry service instance id", actual.entryServiceInstanceId());
             return true;
         } catch (ValueAssertFailedException e) {
             throw new SegmentRefAssertFailedException(e, expected, actual);

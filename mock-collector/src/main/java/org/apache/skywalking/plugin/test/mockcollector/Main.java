@@ -28,10 +28,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.skywalking.plugin.test.mockcollector.entity.ValidateData;
 import org.apache.skywalking.plugin.test.mockcollector.service.ClearReceiveDataService;
 import org.apache.skywalking.plugin.test.mockcollector.service.GrpcAddressHttpService;
-import org.apache.skywalking.plugin.test.mockcollector.service.MockInstanceDiscoveryService;
 import org.apache.skywalking.plugin.test.mockcollector.service.MockInstancePingService;
 import org.apache.skywalking.plugin.test.mockcollector.service.MockJVMMetricReportService;
-import org.apache.skywalking.plugin.test.mockcollector.service.MockNetworkAddressRegisterService;
 import org.apache.skywalking.plugin.test.mockcollector.service.MockRegisterService;
 import org.apache.skywalking.plugin.test.mockcollector.service.MockTraceSegmentService;
 import org.apache.skywalking.plugin.test.mockcollector.service.ReceiveDataService;
@@ -47,8 +45,6 @@ public class Main {
                           .maxMessageSize(16777216)
                           .addService(new MockRegisterService())
                           .addService(new MockInstancePingService())
-                          .addService(new MockInstanceDiscoveryService())
-                          .addService(new MockNetworkAddressRegisterService())
                           .addService(new MockTraceSegmentService())
                           .addService(new MockJVMMetricReportService())
                           .build()
@@ -61,8 +57,8 @@ public class Main {
         servletContextHandler.addServlet(new ServletHolder(new HttpServlet() {
             @Override
             protected void doGet(HttpServletRequest req,
-                HttpServletResponse resp) throws ServletException, IOException {
-                if (ValidateData.INSTANCE.getRegistryItem().getApplications().isEmpty()) {
+                                 HttpServletResponse resp) throws ServletException, IOException {
+                if (ValidateData.INSTANCE.getRegistryItem().getServices().isEmpty()) {
                     resp.setStatus(500);
                     return;
                 }

@@ -1,12 +1,12 @@
 # RegistryOperationNamesNotFoundException
 
 ## Format
-RegistryOperationNamesNotFoundException  <APPLICATION><br/>
+RegistryOperationNamesNotFoundException  <SERVICE_NAME><br/>
 expected:   <OPERATION_NAME_1, OPERATION_NAME_2, ....><br/>
 actual:     Not Found<br/>
 
 ## Cause by
-The RegistryOperationNamesNotFoundException cause by the registry operation names of someone application cannot found
+The RegistryOperationNamesNotFoundException cause by the registry operation names of someone service cannot found
  in the actual data file.
 
 ## Check Points

@@ -30,11 +30,11 @@ public class ParentSegmentIdExpressParser {
         String parentSegmentExpress = express.trim().substring(2, express.trim().length() - 1);
 
         int startIndexOfIndex = parentSegmentExpress.indexOf("[");
-        String applicationCode = parentSegmentExpress.substring(0, startIndexOfIndex);
+        String serviceName = parentSegmentExpress.substring(0, startIndexOfIndex);
         int endIndexOfIndex = parentSegmentExpress.indexOf("]", startIndexOfIndex);
         int expectedSize = Integer.parseInt(parentSegmentExpress.substring(startIndexOfIndex + 1, endIndexOfIndex));
         for (SegmentItem segmentItem : actual) {
-            if (segmentItem.applicationCode().equals(applicationCode)) {
+            if (segmentItem.serviceName().equals(serviceName)) {
                 if (segmentItem.segments().size() <= expectedSize) {
                     throw new ParentSegmentNotFoundException(parentSegmentExpress);
                 }

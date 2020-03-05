@@ -20,18 +20,19 @@ package org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exceptio
 import org.apache.skywalking.plugin.test.agent.tool.validator.exception.AssertFailedException;
 
 public class SegmentSizeNotEqualsException extends AssertFailedException {
-    private final String applicationCode;
+    private final String serviceName;
     private final String expected;
     private final String actual;
 
-    public SegmentSizeNotEqualsException(String applicationCode, String expected, String actual) {
-        this.applicationCode = applicationCode;
+    public SegmentSizeNotEqualsException(String serviceName, String expected, String actual) {
+        this.serviceName = serviceName;
         this.expected = expected;
         this.actual = actual;
     }
 
     @Override
     public String getCauseMessage() {
-        return String.format("SegmentSizeNotEqualsException:\t%s\nexpected:\t%s\nactual:\t\t%s\n", applicationCode, expected, actual);
+        return String.format(
+            "SegmentSizeNotEqualsException:\t%s\nexpected:\t%s\nactual:\t\t%s\n", serviceName, expected, actual);
     }
 }

@@ -3,7 +3,7 @@
 ## Format
 ActualSegmentItemEmptyException<br/>
 expected:<br/>
-Segment Item[APPLICATION]<br/>
+Segment Item[SERVICE_NAME]<br/>
  - segment size: EXPECTED_SIZE<br/>
 
 actual: Empty<br/>

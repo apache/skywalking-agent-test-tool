@@ -25,8 +25,8 @@ public class RegistryItemsAssert {
     private static Logger logger = LogManager.getLogger(RegistryItemsAssert.class);
 
     public static void assertEquals(RegistryItems excepted, RegistryItems actual) {
-        ApplicationAssert.assertEquals(excepted.applications(), actual.applications());
-        logger.info("{} assert successful.", "registry applications");
+        ServiceAssert.assertEquals(excepted.services(), actual.services());
+        logger.info("{} assert successful.", "registry services");
         InstanceAssert.assertEquals(excepted.instances(), actual.instances());
         logger.info("{} assert successful.", "registry instances");
         OperationNameAssert.assertEquals(excepted.operationNames(), actual.operationNames());

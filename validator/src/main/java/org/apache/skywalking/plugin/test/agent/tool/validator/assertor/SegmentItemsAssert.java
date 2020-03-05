@@ -43,7 +43,8 @@ public class SegmentItemsAssert {
             try {
                 assertSegmentSize(item.segmentSize(), actualSegmentItem.segmentSize());
             } catch (ValueAssertFailedException e) {
-                throw new SegmentSizeNotEqualsException(item.applicationCode(), item.segmentSize(), actualSegmentItem.segmentSize());
+                throw new SegmentSizeNotEqualsException(
+                    item.serviceName(), item.segmentSize(), actualSegmentItem.segmentSize());
             }
             SegmentAssert.assertEquals(item, actualSegmentItem);
         }
@@ -92,11 +93,11 @@ public class SegmentItemsAssert {
         }
 
         for (SegmentItem segmentItem : actual) {
-            if (expected.applicationCode().equals(segmentItem.applicationCode())) {
+            if (expected.serviceName().equals(segmentItem.serviceName())) {
                 return segmentItem;
             }
         }
 
-        throw new SegmentItemNotFoundException(expected.applicationCode());
+        throw new SegmentItemNotFoundException(expected.serviceName());
     }
 }
