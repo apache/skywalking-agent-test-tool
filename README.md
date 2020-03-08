@@ -71,6 +71,8 @@ java -jar \
 NOTICE: the `expected data` have to call `expectedData.yaml`, and the `actual data` must name as `actualData.yaml`. And these are in the same directory, `/path/to/download-folder`.
 JVM argument `caseName` just for show in the log.
 
+The format and documentation of `expectedData.yaml` could be found in [SkyWalking plugin test doc](https://github.com/apache/skywalking/blob/master/docs/en/guides/Plugin-test.md#expecteddatayaml)
+
 # Contact Us
 * Mail list: **dev@skywalking.apache.org**. Mail to `dev-subscribe@skywalking.apache.org`, follow the reply to subscribe the mail list.
 * Join `skywalking` channel at [Apache Slack](https://join.slack.com/t/the-asf/shared_invite/enQtNzc2ODE3MjI1MDk1LTAyZGJmNTg1NWZhNmVmOWZjMjA2MGUyOGY4MjE5ZGUwOTQxY2Q3MDBmNTM5YTllNGU4M2QyMzQ4M2U4ZjQ5YmY). If the link is not working, find the latest one at [Apache INFRA WIKI](https://cwiki.apache.org/confluence/display/INFRA/Slack+Guest+Invites).
