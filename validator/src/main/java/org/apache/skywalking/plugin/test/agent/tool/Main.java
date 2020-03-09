@@ -18,14 +18,13 @@
 package org.apache.skywalking.plugin.test.agent.tool;
 
 import java.io.File;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.skywalking.plugin.test.agent.tool.validator.assertor.DataAssert;
 import org.apache.skywalking.plugin.test.agent.tool.validator.entity.Data;
 import org.apache.skywalking.plugin.test.agent.tool.validator.exception.AssertFailedException;
 
+@Slf4j
 public class Main {
-    private static Logger logger = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
         System.exit(verify() ? 0 : 1);
@@ -35,11 +34,11 @@ public class Main {
         File casePath = new File(ConfigHelper.testCaseBaseDir());
         try {
             if (!casePath.exists()) {
-                logger.error("test case dir is not exists or is not directory");
+                log.error("test case dir is not exists or is not directory");
                 return false;
             }
 
-            logger.info("start to assert data of test case[{}]", ConfigHelper.caseName());
+            log.info("start to assert data of test case[{}]", ConfigHelper.caseName());
             File actualData = new File(casePath, "actualData.yaml");
             File expectedData = new File(casePath, "expectedData.yaml");
 
@@ -51,17 +50,17 @@ public class Main {
                     );
                     return true;
                 } catch (AssertFailedException e) {
-                    logger.error("\nassert failed.\n{}\n", e.getCauseMessage());
+                    log.error("\nassert failed.\n{}\n", e.getCauseMessage());
                 }
             } else {
-                logger.error(
+                log.error(
                     "assert failed. because actual data {} and expected data {}",
                     actualData.exists() ? "founded" : "not founded", expectedData
                         .exists() ? "founded" : "not founded"
                 );
             }
         } catch (Exception e) {
-            logger.error("assert test case {} failed.", ConfigHelper.caseName(), e);
+            log.error("assert test case {} failed.", ConfigHelper.caseName(), e);
         }
         return false;
     }

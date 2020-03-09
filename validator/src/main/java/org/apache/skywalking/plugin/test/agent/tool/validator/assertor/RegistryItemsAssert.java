@@ -17,19 +17,18 @@
 
 package org.apache.skywalking.plugin.test.agent.tool.validator.assertor;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.skywalking.plugin.test.agent.tool.validator.entity.RegistryItems;
 
+@Slf4j
 public class RegistryItemsAssert {
-    private static Logger logger = LogManager.getLogger(RegistryItemsAssert.class);
 
     public static void assertEquals(RegistryItems excepted, RegistryItems actual) {
         ServiceAssert.assertEquals(excepted.services(), actual.services());
-        logger.info("{} assert successful.", "registry services");
+        log.info("{} assert successful.", "registry services");
         InstanceAssert.assertEquals(excepted.instances(), actual.instances());
-        logger.info("{} assert successful.", "registry instances");
+        log.info("{} assert successful.", "registry instances");
         OperationNameAssert.assertEquals(excepted.operationNames(), actual.operationNames());
-        logger.info("{} assert successful.", "registry operation name");
+        log.info("{} assert successful.", "registry operation name");
     }
 }

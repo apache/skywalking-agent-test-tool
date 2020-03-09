@@ -18,8 +18,7 @@
 package org.apache.skywalking.plugin.test.mockcollector.service;
 
 import io.grpc.stub.StreamObserver;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.skywalking.apm.network.common.KeyIntValuePair;
 import org.apache.skywalking.apm.network.register.v2.Endpoint;
 import org.apache.skywalking.apm.network.register.v2.EndpointMapping;
@@ -35,9 +34,8 @@ import org.apache.skywalking.apm.network.register.v2.Services;
 import org.apache.skywalking.plugin.test.mockcollector.entity.RegistryItem;
 import org.apache.skywalking.plugin.test.mockcollector.entity.ValidateData;
 
+@Slf4j
 public class MockRegisterService extends RegisterGrpc.RegisterImplBase {
-
-    private Logger logger = LogManager.getLogger(MockTraceSegmentService.class);
 
     @Override
     public void doEndpointRegister(Endpoints request, StreamObserver<EndpointMapping> responseObserver) {
@@ -86,9 +84,9 @@ public class MockRegisterService extends RegisterGrpc.RegisterImplBase {
 
     @Override
     public void doServiceRegister(Services request, StreamObserver<ServiceRegisterMapping> responseObserver) {
-        logger.debug("receive service register.");
+        log.debug("receive service register.");
         if (request.getServicesCount() <= 0) {
-            logger.warn("The service count is empty. return the default service register mapping");
+            log.warn("The service count is empty. return the default service register mapping");
             responseObserver.onNext(ServiceRegisterMapping.getDefaultInstance());
             responseObserver.onCompleted();
             return;

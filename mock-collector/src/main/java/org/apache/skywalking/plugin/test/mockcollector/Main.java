@@ -26,6 +26,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.skywalking.plugin.test.mockcollector.entity.ValidateData;
+import org.apache.skywalking.plugin.test.mockcollector.rest.service.MockInstanceRegisterServletHandler;
+import org.apache.skywalking.plugin.test.mockcollector.rest.service.MockServiceInstancePingServletHandler;
+import org.apache.skywalking.plugin.test.mockcollector.rest.service.MockServiceRegisterServletHandler;
+import org.apache.skywalking.plugin.test.mockcollector.rest.service.MockTraceSegmentCollectServletHandler;
 import org.apache.skywalking.plugin.test.mockcollector.service.ClearReceiveDataService;
 import org.apache.skywalking.plugin.test.mockcollector.service.GrpcAddressHttpService;
 import org.apache.skywalking.plugin.test.mockcollector.service.MockInstancePingService;
@@ -70,6 +74,16 @@ public class Main {
         servletContextHandler.addServlet(GrpcAddressHttpService.class, GrpcAddressHttpService.SERVLET_PATH);
         servletContextHandler.addServlet(ReceiveDataService.class, ReceiveDataService.SERVLET_PATH);
         servletContextHandler.addServlet(ClearReceiveDataService.class, ClearReceiveDataService.SERVLET_PATH);
+
+        servletContextHandler.addServlet(
+            MockInstanceRegisterServletHandler.class, MockInstanceRegisterServletHandler.SERVLET_PATH);
+        servletContextHandler.addServlet(
+            MockServiceInstancePingServletHandler.class, MockServiceInstancePingServletHandler.SERVLET_PATH);
+        servletContextHandler.addServlet(
+            MockServiceRegisterServletHandler.class, MockServiceRegisterServletHandler.SERVLET_PATH);
+        servletContextHandler.addServlet(
+            MockTraceSegmentCollectServletHandler.class, MockTraceSegmentCollectServletHandler.SERVLET_PATH);
+
         jettyServer.setHandler(servletContextHandler);
         jettyServer.start();
     }

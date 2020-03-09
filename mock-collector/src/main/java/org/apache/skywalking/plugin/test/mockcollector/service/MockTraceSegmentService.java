@@ -19,8 +19,7 @@ package org.apache.skywalking.plugin.test.mockcollector.service;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import io.grpc.stub.StreamObserver;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.skywalking.apm.network.common.Commands;
 import org.apache.skywalking.apm.network.common.KeyStringValuePair;
 import org.apache.skywalking.apm.network.language.agent.UpstreamSegment;
@@ -33,9 +32,8 @@ import org.apache.skywalking.plugin.test.mockcollector.entity.Segment;
 import org.apache.skywalking.plugin.test.mockcollector.entity.Span;
 import org.apache.skywalking.plugin.test.mockcollector.entity.ValidateData;
 
+@Slf4j
 public class MockTraceSegmentService extends TraceSegmentReportServiceGrpc.TraceSegmentReportServiceImplBase {
-
-    private Logger logger = LogManager.getLogger(MockTraceSegmentService.class);
 
     @Override
     public StreamObserver<UpstreamSegment> collect(StreamObserver<Commands> responseObserver) {
@@ -46,7 +44,7 @@ public class MockTraceSegmentService extends TraceSegmentReportServiceGrpc.Trace
                     SegmentObject traceSegmentObject = SegmentObject.parseFrom(value.getSegment());
                     Segment.SegmentBuilder segmentBuilder = Segment.builder()
                                                                    .segmentId(traceSegmentObject.getTraceSegmentId());
-                    logger.debug(
+                    log.debug(
                         "Receive segment: ServiceID[{}], TraceSegmentId[{}]", traceSegmentObject.getServiceId(),
                         traceSegmentObject
                             .getTraceSegmentId()
