@@ -18,8 +18,7 @@
 package org.apache.skywalking.plugin.test.agent.tool.validator.assertor;
 
 import java.util.List;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exception.ActualSegmentItemEmptyException;
 import org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exception.SegmentItemNotFoundException;
 import org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exception.SegmentSizeNotEqualsException;
@@ -29,12 +28,12 @@ import org.apache.skywalking.plugin.test.agent.tool.validator.entity.SegmentItem
 import org.apache.skywalking.plugin.test.agent.tool.validator.entity.SegmentRef;
 import org.apache.skywalking.plugin.test.agent.tool.validator.entity.Span;
 
+@Slf4j
 public class SegmentItemsAssert {
-    private static Logger logger = LogManager.getLogger(SegmentItemsAssert.class);
 
     public static void assertEquals(List<SegmentItem> expected, List<SegmentItem> actual) {
         if (expected == null) {
-            logger.info("ignore segment items. because expected segment item is null.");
+            log.info("ignore segment items. because expected segment item is null.");
             return;
         }
 
