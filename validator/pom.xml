@@ -33,7 +33,7 @@
     <url>http://maven.apache.org</url>
 
     <build>
-        <finalName>validator</finalName>
+        <finalName>skywalking-validator</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

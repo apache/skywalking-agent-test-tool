@@ -45,6 +45,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.apache.skywalking.plugin</groupId>
+            <artifactId>validator</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java-util</artifactId>
             <version>${protobuf-java-util.version}</version>

@@ -16,7 +16,7 @@
  *
  */
 
-package org.apache.skywalking.plugin.test.mockcollector.rest.service;
+package org.apache.skywalking.plugin.test.mockcollector.mock.rest;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -28,7 +28,7 @@ import org.apache.skywalking.apm.network.register.v2.Service;
 import org.apache.skywalking.apm.network.register.v2.Services;
 import org.apache.skywalking.plugin.test.mockcollector.entity.RegistryItem;
 import org.apache.skywalking.plugin.test.mockcollector.entity.ValidateData;
-import org.apache.skywalking.plugin.test.mockcollector.service.Sequences;
+import org.apache.skywalking.plugin.test.mockcollector.mock.Sequences;
 import org.apache.skywalking.plugin.test.mockcollector.util.ProtoBufJsonUtils;
 
 public class MockServiceRegisterServletHandler extends JettyJsonHandler {

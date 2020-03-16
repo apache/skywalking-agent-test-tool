@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.skywalking.plugin.test.mockcollector.service;
+package org.apache.skywalking.plugin.test.mockcollector.mock;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;

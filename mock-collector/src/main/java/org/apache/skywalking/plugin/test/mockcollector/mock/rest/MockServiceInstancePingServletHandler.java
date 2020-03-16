@@ -16,7 +16,7 @@
  *
  */
 
-package org.apache.skywalking.plugin.test.mockcollector.rest.service;
+package org.apache.skywalking.plugin.test.mockcollector.mock.rest;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
