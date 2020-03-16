@@ -18,7 +18,6 @@
 
 package org.apache.skywalking.plugin.test.mockcollector.service;
 
-import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.ByteArrayInputStream;
@@ -30,7 +29,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.skywalking.plugin.test.agent.tool.validator.assertor.DataAssert;
 import org.apache.skywalking.plugin.test.agent.tool.validator.entity.Data;
-import org.apache.skywalking.plugin.test.agent.tool.validator.exception.AssertFailedException;
 import org.apache.skywalking.plugin.test.mockcollector.entity.ValidateData;
 import org.apache.skywalking.plugin.test.mockcollector.entity.ValidateDataSerializer;
 import org.yaml.snakeyaml.Yaml;
@@ -51,18 +49,12 @@ public class DataValidateService extends HttpServlet {
         ByteArrayInputStream actualData = new ByteArrayInputStream(dump.getBytes());
 
         PrintWriter writer = resp.getWriter();
-        try {
-            DataAssert.assertEquals(
-                Data.Loader.loadData(req.getInputStream()),
-                Data.Loader.loadData(actualData));
-            writer.write("success");
-            resp.setStatus(200);
-        } catch (AssertFailedException exception) {
-            writer.write(Strings.nullToEmpty(exception.getMessage()));
-            writer.write("\n");
-            writer.write(dump);
-            resp.setStatus(500);
-        }
+        DataAssert.assertEquals(
+            Data.Loader.loadData(req.getInputStream()),
+            Data.Loader.loadData(actualData)
+        );
+        writer.write("success");
+        resp.setStatus(200);
         writer.flush();
     }
 }
