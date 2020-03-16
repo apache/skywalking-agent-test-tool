@@ -28,6 +28,7 @@ import org.apache.skywalking.apm.network.language.agent.v2.Log;
 import org.apache.skywalking.apm.network.language.agent.v2.SegmentObject;
 import org.apache.skywalking.apm.network.language.agent.v2.SegmentReference;
 import org.apache.skywalking.apm.network.language.agent.v2.SpanObjectV2;
+import org.apache.skywalking.plugin.test.mockcollector.entity.RegistryItem;
 import org.apache.skywalking.plugin.test.mockcollector.entity.Segment;
 import org.apache.skywalking.plugin.test.mockcollector.entity.Span;
 import org.apache.skywalking.plugin.test.mockcollector.entity.ValidateData;
@@ -82,6 +83,12 @@ public class MockTraceSegmentCollectServletHandler extends JettyJsonHandler {
             for (SegmentReference ref : spanObject.getRefsList()) {
                 spanBuilder.ref(new Span.SegmentRef(ref));
             }
+
+            // Endpoint register
+            ValidateData.INSTANCE.getRegistryItem()
+                                 .registryOperationName(
+                                     new RegistryItem.OperationName(traceSegmentObject.getServiceId(),
+                                                                    spanObject.getOperationName()));
 
             segmentBuilder.addSpan(spanBuilder);
         }

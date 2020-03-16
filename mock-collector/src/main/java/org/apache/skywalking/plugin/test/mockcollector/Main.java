@@ -25,8 +25,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.skywalking.plugin.test.mockcollector.entity.ValidateData;
+import org.apache.skywalking.plugin.test.mockcollector.mock.MockInstancePingService;
+import org.apache.skywalking.plugin.test.mockcollector.mock.MockJVMMetricReportService;
+import org.apache.skywalking.plugin.test.mockcollector.mock.MockRegisterService;
+import org.apache.skywalking.plugin.test.mockcollector.mock.MockTraceSegmentService;
+import org.apache.skywalking.plugin.test.mockcollector.mock.rest.MockEndpointRegisterServletHandler;
 import org.apache.skywalking.plugin.test.mockcollector.mock.rest.MockInstanceRegisterServletHandler;
 import org.apache.skywalking.plugin.test.mockcollector.mock.rest.MockServiceInstancePingServletHandler;
 import org.apache.skywalking.plugin.test.mockcollector.mock.rest.MockServiceRegisterServletHandler;
@@ -34,10 +38,6 @@ import org.apache.skywalking.plugin.test.mockcollector.mock.rest.MockTraceSegmen
 import org.apache.skywalking.plugin.test.mockcollector.service.ClearReceiveDataService;
 import org.apache.skywalking.plugin.test.mockcollector.service.DataValidateService;
 import org.apache.skywalking.plugin.test.mockcollector.service.GrpcAddressHttpService;
-import org.apache.skywalking.plugin.test.mockcollector.mock.MockInstancePingService;
-import org.apache.skywalking.plugin.test.mockcollector.mock.MockJVMMetricReportService;
-import org.apache.skywalking.plugin.test.mockcollector.mock.MockRegisterService;
-import org.apache.skywalking.plugin.test.mockcollector.mock.MockTraceSegmentService;
 import org.apache.skywalking.plugin.test.mockcollector.service.ReceiveDataService;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -95,6 +95,10 @@ public class Main {
             MockServiceRegisterServletHandler.class, MockServiceRegisterServletHandler.SERVLET_PATH);
         servletContextHandler.addServlet(
             MockTraceSegmentCollectServletHandler.class, MockTraceSegmentCollectServletHandler.SERVLET_PATH);
+        servletContextHandler.addServlet(
+            MockEndpointRegisterServletHandler.class,
+            MockEndpointRegisterServletHandler.SERVLET_PATH
+        );
 
         jettyServer.setHandler(servletContextHandler);
         jettyServer.start();
