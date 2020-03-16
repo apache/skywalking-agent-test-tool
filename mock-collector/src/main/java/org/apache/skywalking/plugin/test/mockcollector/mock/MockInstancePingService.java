@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.skywalking.plugin.test.mockcollector.service;
+package org.apache.skywalking.plugin.test.mockcollector.mock;
 
 import io.grpc.stub.StreamObserver;
 import org.apache.skywalking.apm.network.common.Commands;

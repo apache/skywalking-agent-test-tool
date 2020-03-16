@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.skywalking.plugin.test.mockcollector.service;
+package org.apache.skywalking.plugin.test.mockcollector.mock;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import io.grpc.stub.StreamObserver;

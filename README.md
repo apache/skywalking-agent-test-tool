@@ -17,12 +17,12 @@ Eventually, validate the file downloaded from `mock collector` by using `SkyWalk
 
 ## Apache SkyWalking Mock Collector
 
-- requirement:
+### Requirement
 1. JDK 1.8+
 2. Maven 
 
 
-- How to install
+### How to install
 
 The `mock collector` is written by pure-`Java`. It compiles and packages through `Maven`.
 
@@ -34,13 +34,13 @@ cd ./mock-collector
 bash ./bin/collector-startup.sh
 ```
 
-after above steps, we can check whether the `mock collector` is available through HTTP API. To visit `http://localhost:12800/status` and get the response with `success` in the body of content.
+after above steps, we can check whether the `mock collector` is available through HTTP API. To visit `http://localhost:12800/healthCheck` and get the response with `success` in the body of content.
 
 Finally, To visit follow URL to download the data as `yaml` file, which can be used by `SkyWalking Validator Tool`.
 
 http://localhost:12800/receiveData
 
-- How to config on agent
+### How to config on agent
 
 We can modify the configurations of agent in `./config/agent.conf`, as follows
 
@@ -55,6 +55,10 @@ or specify the jvm arguments like:
 # Backend service addresses.
 -DSW_AGENT_COLLECTOR_BACKEND_SERVICES=127.0.0.1:19876
 ```
+
+### Data validation in Mock Collector
+
+Currently, we integration SkyWalking Validator Tool in Mock Collector. We can post the `expectedData.yaml` to `/dataValidate` after agent reported.
 
 ## Apache SkyWalking Validator Tool
 

@@ -25,17 +25,19 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.skywalking.plugin.test.mockcollector.entity.ValidateData;
-import org.apache.skywalking.plugin.test.mockcollector.rest.service.MockInstanceRegisterServletHandler;
-import org.apache.skywalking.plugin.test.mockcollector.rest.service.MockServiceInstancePingServletHandler;
-import org.apache.skywalking.plugin.test.mockcollector.rest.service.MockServiceRegisterServletHandler;
-import org.apache.skywalking.plugin.test.mockcollector.rest.service.MockTraceSegmentCollectServletHandler;
+import org.apache.skywalking.plugin.test.mockcollector.mock.rest.MockInstanceRegisterServletHandler;
+import org.apache.skywalking.plugin.test.mockcollector.mock.rest.MockServiceInstancePingServletHandler;
+import org.apache.skywalking.plugin.test.mockcollector.mock.rest.MockServiceRegisterServletHandler;
+import org.apache.skywalking.plugin.test.mockcollector.mock.rest.MockTraceSegmentCollectServletHandler;
 import org.apache.skywalking.plugin.test.mockcollector.service.ClearReceiveDataService;
+import org.apache.skywalking.plugin.test.mockcollector.service.DataValidateService;
 import org.apache.skywalking.plugin.test.mockcollector.service.GrpcAddressHttpService;
-import org.apache.skywalking.plugin.test.mockcollector.service.MockInstancePingService;
-import org.apache.skywalking.plugin.test.mockcollector.service.MockJVMMetricReportService;
-import org.apache.skywalking.plugin.test.mockcollector.service.MockRegisterService;
-import org.apache.skywalking.plugin.test.mockcollector.service.MockTraceSegmentService;
+import org.apache.skywalking.plugin.test.mockcollector.mock.MockInstancePingService;
+import org.apache.skywalking.plugin.test.mockcollector.mock.MockJVMMetricReportService;
+import org.apache.skywalking.plugin.test.mockcollector.mock.MockRegisterService;
+import org.apache.skywalking.plugin.test.mockcollector.mock.MockTraceSegmentService;
 import org.apache.skywalking.plugin.test.mockcollector.service.ReceiveDataService;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -62,6 +64,15 @@ public class Main {
             @Override
             protected void doGet(HttpServletRequest req,
                                  HttpServletResponse resp) throws ServletException, IOException {
+                resp.setStatus(200);
+                resp.getWriter().write("Success");
+                resp.getWriter().flush();
+            }
+        }), "/healthCheck");
+        servletContextHandler.addServlet(new ServletHolder(new HttpServlet() {
+            @Override
+            protected void doGet(HttpServletRequest req,
+                                 HttpServletResponse resp) throws ServletException, IOException {
                 if (ValidateData.INSTANCE.getRegistryItem().getServices().isEmpty()) {
                     resp.setStatus(500);
                     return;
@@ -72,6 +83,7 @@ public class Main {
             }
         }), "/status");
         servletContextHandler.addServlet(GrpcAddressHttpService.class, GrpcAddressHttpService.SERVLET_PATH);
+        servletContextHandler.addServlet(DataValidateService.class, DataValidateService.SERVLET_PATH);
         servletContextHandler.addServlet(ReceiveDataService.class, ReceiveDataService.SERVLET_PATH);
         servletContextHandler.addServlet(ClearReceiveDataService.class, ClearReceiveDataService.SERVLET_PATH);
 

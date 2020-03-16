@@ -31,8 +31,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>mock-collector</module>
         <module>validator</module>
+        <module>mock-collector</module>
     </modules>
 
     <properties>
