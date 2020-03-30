@@ -84,12 +84,6 @@ public class MockTraceSegmentCollectServletHandler extends JettyJsonHandler {
                 spanBuilder.ref(new Span.SegmentRef(ref));
             }
 
-            // Endpoint register
-            ValidateData.INSTANCE.getRegistryItem()
-                                 .registryOperationName(
-                                     new RegistryItem.OperationName(traceSegmentObject.getServiceId(),
-                                                                    spanObject.getOperationName()));
-
             segmentBuilder.addSpan(spanBuilder);
         }
 
