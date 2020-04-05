@@ -50,6 +50,8 @@ public interface Span {
 
     String peerId();
 
+    boolean skipAnalysis();
+
     List<SegmentRef> refs();
 
     void setActualRefs(List<SegmentRef> refs);

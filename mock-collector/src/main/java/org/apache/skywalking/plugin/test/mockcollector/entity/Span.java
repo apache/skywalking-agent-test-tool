@@ -40,9 +40,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
-import org.apache.skywalking.apm.network.common.KeyStringValuePair;
-import org.apache.skywalking.apm.network.language.agent.UniqueId;
-import org.apache.skywalking.apm.network.language.agent.v2.SegmentReference;
+import org.apache.skywalking.apm.network.common.v3.KeyStringValuePair;
+import org.apache.skywalking.apm.network.language.agent.v3.SegmentReference;
 
 @Builder
 @ToString
@@ -61,6 +60,7 @@ public class Span {
     private String spanType;
     private String peer;
     private int peerId;
+    private boolean skipAnalysis;
     private List<KeyValuePair> tags = new ArrayList<>();
     private List<LogEvent> logs = new ArrayList<>();
     private List<SegmentRef> refs = new ArrayList<>();
@@ -107,60 +107,36 @@ public class Span {
 
     }
 
+    @Getter
+    @AllArgsConstructor
     public static class KeyValuePair {
-        @Getter
         private String key;
-        @Getter
         private String value;
-
-        public KeyValuePair(String key, String value) {
-            this.key = key;
-            this.value = value;
-        }
     }
 
     @ToString
+    @Getter
     public static class SegmentRef {
-        @Getter
-        private int parentEndpointId;
-        @Getter
         private String parentEndpoint;
-        @Getter
-        private int networkAddressId;
-        @Getter
-        private int entryEndpointId;
-        @Getter
-        private String refType;
-        @Getter
-        private int parentSpanId;
-        @Getter
-        private String parentTraceSegmentId;
-        @Getter
-        private int parentServiceInstanceId;
-        @Getter
         private String networkAddress;
-        @Getter
-        private String entryEndpoint;
-        @Getter
-        private int entryServiceInstanceId;
+        private String refType;
+        private int parentSpanId;
+        private String parentTraceSegmentId;
+        private String parentServiceInstance;
+        private String parentService;
+        private String traceId;
 
         public SegmentRef(SegmentReference ref) {
-            UniqueId segmentUniqueId = ref.getParentTraceSegmentId();
-            this.parentTraceSegmentId = String.join(
-                ".", Long.toString(segmentUniqueId.getIdParts(0)), Long.toString(segmentUniqueId
-                                                                                     .getIdParts(1)),
-                Long.toString(segmentUniqueId.getIdParts(2))
-            );
+            this.parentTraceSegmentId = ref.getParentTraceSegmentId();
             this.refType = ref.getRefType().toString();
             this.parentSpanId = ref.getParentSpanId();
-            this.entryEndpointId = ref.getEntryEndpointId();
-            this.networkAddressId = ref.getNetworkAddressId();
-            this.parentServiceInstanceId = ref.getParentServiceInstanceId();
-            this.parentEndpointId = ref.getParentEndpointId();
             this.parentEndpoint = ref.getParentEndpoint();
-            this.networkAddress = ref.getNetworkAddress();
-            this.entryEndpoint = ref.getEntryEndpoint();
-            this.entryServiceInstanceId = ref.getEntryServiceInstanceId();
+            this.parentService = ref.getParentService();
+            this.parentServiceInstance = ref.getParentServiceInstance();
+            this.parentTraceSegmentId = ref.getParentTraceSegmentId();
+            this.networkAddress = ref.getNetworkAddressUsedAtPeer();
+            this.parentSpanId = ref.getParentSpanId();
+            this.traceId = ref.getTraceId();
         }
 
     }

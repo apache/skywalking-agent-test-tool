@@ -28,12 +28,10 @@ import java.lang.reflect.Type;
 public class ValidateDataSerializer implements JsonSerializer<ValidateData> {
     @Override
     public JsonElement serialize(ValidateData src, Type typeOfSrc, JsonSerializationContext context) {
-        Gson gson = new GsonBuilder().registerTypeAdapter(RegistryItem.class, new RegistryItemSerializer())
-                                     .registerTypeAdapter(SegmentItems.class, new SegmentItemsSerializer())
+        Gson gson = new GsonBuilder().registerTypeAdapter(SegmentItems.class, new SegmentItemsSerializer())
                                      .create();
 
         JsonObject jsonObject = new JsonObject();
-        jsonObject.add("registryItems", gson.toJsonTree(src.getRegistryItem()));
         jsonObject.add("segmentItems", gson.toJsonTree(src.getSegmentItem()));
         return jsonObject;
     }

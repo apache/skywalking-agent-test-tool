@@ -28,8 +28,6 @@ import org.yaml.snakeyaml.constructor.Constructor;
 import org.yaml.snakeyaml.representer.Representer;
 
 public interface Data {
-    RegistryItems registryItems();
-
     List<SegmentItem> segmentItems();
 
     class Loader {

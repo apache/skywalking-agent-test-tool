@@ -19,40 +19,33 @@ package org.apache.skywalking.plugin.test.mockcollector;
 
 import io.grpc.netty.NettyServerBuilder;
 import io.netty.channel.local.LocalAddress;
-import java.io.IOException;
 import java.net.InetSocketAddress;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.apache.skywalking.plugin.test.mockcollector.entity.ValidateData;
-import org.apache.skywalking.plugin.test.mockcollector.mock.MockInstancePingService;
+import org.apache.skywalking.plugin.test.mockcollector.mock.MockCLRMetricReportService;
 import org.apache.skywalking.plugin.test.mockcollector.mock.MockJVMMetricReportService;
-import org.apache.skywalking.plugin.test.mockcollector.mock.MockRegisterService;
+import org.apache.skywalking.plugin.test.mockcollector.mock.MockManagementService;
 import org.apache.skywalking.plugin.test.mockcollector.mock.MockTraceSegmentService;
-import org.apache.skywalking.plugin.test.mockcollector.mock.rest.MockEndpointRegisterServletHandler;
-import org.apache.skywalking.plugin.test.mockcollector.mock.rest.MockInstanceRegisterServletHandler;
-import org.apache.skywalking.plugin.test.mockcollector.mock.rest.MockServiceInstancePingServletHandler;
-import org.apache.skywalking.plugin.test.mockcollector.mock.rest.MockServiceRegisterServletHandler;
+import org.apache.skywalking.plugin.test.mockcollector.mock.rest.MockManagementServiceKeepAliveHandler;
+import org.apache.skywalking.plugin.test.mockcollector.mock.rest.MockManagementServiceReportPropertiesHandler;
 import org.apache.skywalking.plugin.test.mockcollector.mock.rest.MockTraceSegmentCollectServletHandler;
 import org.apache.skywalking.plugin.test.mockcollector.service.ClearReceiveDataService;
 import org.apache.skywalking.plugin.test.mockcollector.service.DataValidateService;
 import org.apache.skywalking.plugin.test.mockcollector.service.GrpcAddressHttpService;
+import org.apache.skywalking.plugin.test.mockcollector.service.HealthCheckService;
 import org.apache.skywalking.plugin.test.mockcollector.service.ReceiveDataService;
+import org.apache.skywalking.plugin.test.mockcollector.service.StatusService;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHolder;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+        // Mock GRPC Collector
         NettyServerBuilder.forAddress(LocalAddress.ANY)
                           .forPort(19876)
                           .maxConcurrentCallsPerConnection(12)
-                          .maxMessageSize(16777216)
-                          .addService(new MockRegisterService())
-                          .addService(new MockInstancePingService())
-                          .addService(new MockTraceSegmentService())
+                          .addService(new MockCLRMetricReportService())
                           .addService(new MockJVMMetricReportService())
+                          .addService(new MockManagementService())
+                          .addService(new MockTraceSegmentService())
                           .build()
                           .start();
 
@@ -60,44 +53,27 @@ public class Main {
         String contextPath = "/";
         ServletContextHandler servletContextHandler = new ServletContextHandler(ServletContextHandler.NO_SESSIONS);
         servletContextHandler.setContextPath(contextPath);
-        servletContextHandler.addServlet(new ServletHolder(new HttpServlet() {
-            @Override
-            protected void doGet(HttpServletRequest req,
-                                 HttpServletResponse resp) throws ServletException, IOException {
-                resp.setStatus(200);
-                resp.getWriter().write("Success");
-                resp.getWriter().flush();
-            }
-        }), "/healthCheck");
-        servletContextHandler.addServlet(new ServletHolder(new HttpServlet() {
-            @Override
-            protected void doGet(HttpServletRequest req,
-                                 HttpServletResponse resp) throws ServletException, IOException {
-                if (ValidateData.INSTANCE.getRegistryItem().getServices().isEmpty()) {
-                    resp.setStatus(500);
-                    return;
-                }
-                resp.setStatus(200);
-                resp.getWriter().write("Success");
-                resp.getWriter().flush();
-            }
-        }), "/status");
+
+        // Collector service
+        servletContextHandler.addServlet(HealthCheckService.class, HealthCheckService.SERVLET_PATH);
+        servletContextHandler.addServlet(StatusService.class, StatusService.SERVLET_PATH);
         servletContextHandler.addServlet(GrpcAddressHttpService.class, GrpcAddressHttpService.SERVLET_PATH);
         servletContextHandler.addServlet(DataValidateService.class, DataValidateService.SERVLET_PATH);
         servletContextHandler.addServlet(ReceiveDataService.class, ReceiveDataService.SERVLET_PATH);
         servletContextHandler.addServlet(ClearReceiveDataService.class, ClearReceiveDataService.SERVLET_PATH);
 
+        // Mock Rest API collector
         servletContextHandler.addServlet(
-            MockInstanceRegisterServletHandler.class, MockInstanceRegisterServletHandler.SERVLET_PATH);
+            MockManagementServiceKeepAliveHandler.class,
+            MockManagementServiceKeepAliveHandler.SERVLET_PATH
+        );
         servletContextHandler.addServlet(
-            MockServiceInstancePingServletHandler.class, MockServiceInstancePingServletHandler.SERVLET_PATH);
+            MockManagementServiceReportPropertiesHandler.class,
+            MockManagementServiceReportPropertiesHandler.SERVLET_PATH
+        );
         servletContextHandler.addServlet(
-            MockServiceRegisterServletHandler.class, MockServiceRegisterServletHandler.SERVLET_PATH);
-        servletContextHandler.addServlet(
-            MockTraceSegmentCollectServletHandler.class, MockTraceSegmentCollectServletHandler.SERVLET_PATH);
-        servletContextHandler.addServlet(
-            MockEndpointRegisterServletHandler.class,
-            MockEndpointRegisterServletHandler.SERVLET_PATH
+            MockTraceSegmentCollectServletHandler.class,
+            MockTraceSegmentCollectServletHandler.SERVLET_PATH
         );
 
         jettyServer.setHandler(servletContextHandler);

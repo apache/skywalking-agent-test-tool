@@ -12,281 +12,89 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-{
-  "registryItems": {
-    "services": [
-    {
-      "vertx-core-3.x-scenario": 2
-    }
-    ],
-    "instances": [
-    {
-      "vertx-core-3.x-scenario": 1
-    }
-    ],
-    "operationNames": [
-    {
-      "vertx-core-3.x-scenario": [
-        "/vertx-core-3-scenario/vertx-core/executeTest",
-        "/vertx-core-3-scenario/vertx-core/core-case",
-        "cluster-message-receiver"
-      ]
-    }
-    ]
-  },
-  "segmentItems": [
-  {
-    "serviceName": "vertx-core-3.x-scenario",
-    "segmentSize": "8",
-    "segments": [
-    {
-      "segmentId": "nq 0",
-      "spans": [
-      {
-        "operationName": "#local-message-receiver",
-        "operationId": "0",
-        "parentSpanId": "-1",
-        "spanId": "0",
-        "spanLayer": "RPCFramework",
-        "refs": [
-        {
-          "parentEndpointId": 0,
-          "parentEndpoint": "local-message-receiver",
-          "networkAddressId": 0,
-          "entryEndpointId": 0,
-          "refType": "CrossThread",
-          "parentSpanId": 0,
-          "parentTraceSegmentId": "not null",
-          "parentServiceInstanceId": 1,
-          "networkAddress": "",
-          "entryEndpoint": "local-message-receiver",
-          "entryServiceInstanceId": 1
-        }
-        ],
-        "startTime": "nq 0",
-        "endTime": "nq 0",
-        "componentId": "59",
-        "componentName": "",
-        "isError": false,
-        "spanType": "Local",
-        "peer": "",
-        "peerId": "0"
-      }
-      ]
-    },
-    {
-      "segmentId": "nq 0",
-      "spans": [
-      {
-        "operationName": "local-message-receiver",
-        "operationId": "0",
-        "parentSpanId": "-1",
-        "spanId": "0",
-        "spanLayer": "RPCFramework",
-        "startTime": "nq 0",
-        "endTime": "nq 0",
-        "componentId": "59",
-        "componentName": "",
-        "isError": false,
-        "spanType": "Local",
-        "peer": "",
-        "peerId": "0"
-      }
-      ]
-    },
-    {
-      "segmentId": "nq 0",
-      "spans": [
-      {
-        "operationName": "/vertx-core-3-scenario/vertx-core/executeTest",
-        "operationId": "0",
-        "parentSpanId": "-1",
-        "spanId": "0",
-        "spanLayer": "Http",
-        "tags": [
-        {
-          "key": "http.method",
-          "value": "GET"
-        },
-        {
-          "key": "url",
-          "value": "http://localhost:8080/vertx-core-3-scenario/vertx-core/executeTest"
-        }
-        ],
-        "startTime": "nq 0",
-        "endTime": "nq 0",
-        "componentId": "59",
-        "componentName": "",
-        "isError": false,
-        "spanType": "Exit",
-        "peer": "/vertx-core-3-scenario/vertx-core/executeTest",
-        "peerId": "0"
-      }
-      ]
-    },
-    {
-      "segmentId": "nq 0",
-      "spans": [
-      {
-        "operationName": "/vertx-core-3-scenario/vertx-core/core-case",
-        "operationId": "0",
-        "parentSpanId": "-1",
-        "spanId": "0",
-        "spanLayer": "Http",
-        "tags": [
-        {
-          "key": "http.method",
-          "value": "GET"
-        },
-        {
-          "key": "url",
-          "value": "http://localhost:18080/vertx-core-3-scenario/vertx-core/core-case"
-        }
-        ],
-        "startTime": "nq 0",
-        "endTime": "nq 0",
-        "componentId": "59",
-        "componentName": "",
-        "isError": false,
-        "spanType": "Entry",
-        "peerId": "0"
-      }
-      ]
-    },
-    {
-      "segmentId": "nq 0",
-      "spans": [
-      {
-        "operationName": "cluster-message-receiver",
-        "operationId": "0",
-        "parentSpanId": "-1",
-        "spanId": "0",
-        "spanLayer": "RPCFramework",
-        "refs": [
-        {
-          "parentEndpointId": 0,
-          "parentEndpoint": "cluster-message-receiver",
-          "networkAddressId": 0,
-          "entryEndpointId": 0,
-          "refType": "CrossProcess",
-          "parentSpanId": 0,
-          "parentTraceSegmentId": "not null",
-          "parentServiceInstanceId": 1,
-          "networkAddress": "not null",
-          "entryEndpoint": "cluster-message-receiver",
-          "entryServiceInstanceId": 1
-        }
-        ],
-        "startTime": "nq 0",
-        "endTime": "nq 0",
-        "componentId": "59",
-        "componentName": "",
-        "isError": false,
-        "spanType": "Entry",
-        "peer": "",
-        "peerId": "0"
-      }
-      ]
-    },
-    {
-      "segmentId": "nq 0",
-      "spans": [
-      {
-        "operationName": "#/vertx-core-3-scenario/vertx-core/executeTest",
-        "operationId": "0",
-        "parentSpanId": "-1",
-        "spanId": "0",
-        "spanLayer": "Http",
-        "refs": [
-        {
-          "parentEndpointId": 0,
-          "parentEndpoint": "/vertx-core-3-scenario/vertx-core/executeTest",
-          "networkAddressId": 0,
-          "entryEndpointId": 0,
-          "refType": "CrossThread",
-          "parentSpanId": 0,
-          "parentTraceSegmentId": "not null",
-          "parentServiceInstanceId": 1,
-          "networkAddress": "",
-          "entryEndpoint": "/vertx-core-3-scenario/vertx-core/executeTest",
-          "entryServiceInstanceId": 1
-        }
-        ],
-        "startTime": "nq 0",
-        "endTime": "nq 0",
-        "componentId": "59",
-        "componentName": "",
-        "isError": false,
-        "spanType": "Local",
-        "peer": "",
-        "peerId": "0"
-      }
-      ]
-    },
-    {
-      "segmentId": "nq 0",
-      "spans": [
-      {
-        "operationName": "cluster-message-receiver",
-        "operationId": "0",
-        "parentSpanId": "-1",
-        "spanId": "0",
-        "spanLayer": "RPCFramework",
-        "startTime": "nq 0",
-        "endTime": "nq 0",
-        "componentId": "59",
-        "componentName": "",
-        "isError": false,
-        "spanType": "Exit",
-        "peerId": "0"
-      }
-      ]
-    },
-    {
-      "segmentId": "nq 0",
-      "spans": [
-      {
-        "operationName": "/vertx-core-3-scenario/vertx-core/executeTest",
-        "operationId": "0",
-        "parentSpanId": "-1",
-        "spanId": "0",
-        "spanLayer": "Http",
-        "tags": [
-        {
-          "key": "http.method",
-          "value": "GET"
-        },
-        {
-          "key": "url",
-          "value": "http://localhost:8080/vertx-core-3-scenario/vertx-core/executeTest"
-        }
-        ],
-        "refs": [
-        {
-          "parentEndpointId": 0,
-          "parentEndpoint": "/vertx-core-3-scenario/vertx-core/executeTest",
-          "networkAddressId": 0,
-          "entryEndpointId": 0,
-          "refType": "CrossProcess",
-          "parentSpanId": 0,
-          "parentTraceSegmentId": "not null",
-          "parentServiceInstanceId": 1,
-          "networkAddress": "/vertx-core-3-scenario/vertx-core/executeTest",
-          "entryEndpoint": "/vertx-core-3-scenario/vertx-core/executeTest",
-          "entryServiceInstanceId": 1
-        }
-        ],
-        "startTime": "nq 0",
-        "endTime": "nq 0",
-        "componentId": "59",
-        "componentName": "",
-        "isError": false,
-        "spanType": "Entry",
-        "peerId": "0"
-      }
-      ]
-    }
-    ]
-  }
-  ]
-}
+segmentItems:
+  - serviceName: jettyserver-scenario
+    segmentSize: 1
+    segments:
+      - segmentId: not null
+        spans:
+          - operationName: /jettyserver-case/case/receiveContext-0
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: Http
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 19
+            componentName: ''
+            isError: false
+            spanType: Entry
+            peer: ''
+            peerId: 0
+            skipAnalysis: false
+            tags:
+              - {key: url, value: 'http://localhost:18080/jettyserver-case/case/receiveContext-0'}
+              - {key: http.method, value: GET}
+            refs:
+              - {parentEndpoint: /jettyclient-case/case/jettyclient-case, networkAddress: 'localhost:18080',
+                 refType: CrossProcess, parentSpanId: 1, parentTraceSegmentId: not null,
+                 parentServiceInstance: not null, parentService: jettyclient-scenario,
+                 traceId: not null}
+  - serviceName: jettyclient-scenario
+    segmentSize: 2
+    segments:
+      - segmentId: not null
+        spans:
+          - operationName: /jettyclient-case/case/healthCheck
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: Http
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 1
+            componentName: ''
+            isError: false
+            spanType: Entry
+            peer: ''
+            peerId: 0
+            skipAnalysis: false
+            tags:
+              - {key: url, value: 'http://localhost:8080/jettyclient-case/case/healthCheck'}
+              - {key: http.method, value: HEAD}
+      - segmentId: not null
+        spans:
+          - operationName: /jettyserver-case/case/receiveContext-0
+            operationId: 0
+            parentSpanId: 0
+            spanId: 1
+            spanLayer: Http
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 18
+            componentName: ''
+            isError: false
+            spanType: Exit
+            peer: localhost:18080
+            peerId: 0
+            skipAnalysis: false
+            tags:
+              - {key: http.method, value: GET}
+              - {key: url, value: 'http://localhost:18080/jettyserver-case/case/receiveContext-0'}
+          - operationName: /jettyclient-case/case/jettyclient-case
+            operationId: 0
+            parentSpanId: -1
+            spanId: 0
+            spanLayer: Http
+            startTime: gt 0
+            endTime: gt 0
+            componentId: 1
+            componentName: ''
+            isError: false
+            spanType: Entry
+            peer: ''
+            peerId: 0
+            skipAnalysis: false
+            tags:
+              - {key: url, value: 'http://localhost:8080/jettyclient-case/case/jettyclient-case'}
+              - {key: http.method, value: GET}

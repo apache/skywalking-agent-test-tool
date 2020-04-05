@@ -211,10 +211,12 @@ public class SegmentAssert {
 
     private static boolean simpleSegmentRefEquals(SegmentRef expected, SegmentRef actual) {
         try {
-            ExpressParser.parse(expected.entryEndpointName())
-                         .assertValue("entry service name", actual.entryEndpointName());
-            ExpressParser.parse(expected.parentEndpointName())
-                         .assertValue("parent service name", actual.parentEndpointName());
+            ExpressParser.parse(expected.parentEndpoint())
+                         .assertValue("parent endpoint name", actual.parentEndpoint());
+            ExpressParser.parse(expected.parenService())
+                         .assertValue("parent service name", actual.parenService());
+            ExpressParser.parse(expected.networkAddress())
+                         .assertValue("network address", actual.networkAddress());
             ExpressParser.parse(expected.refType()).assertValue("ref type", actual.refType());
             return true;
         } catch (ValueAssertFailedException e) {

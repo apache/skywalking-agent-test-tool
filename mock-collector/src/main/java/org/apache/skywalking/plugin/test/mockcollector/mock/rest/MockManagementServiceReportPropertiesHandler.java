@@ -18,18 +18,16 @@
 
 package org.apache.skywalking.plugin.test.mockcollector.mock.rest;
 
-import com.google.gson.JsonArray;
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
-import org.apache.skywalking.apm.network.register.v2.Endpoint;
-import org.apache.skywalking.apm.network.register.v2.Endpoints;
-import org.apache.skywalking.plugin.test.mockcollector.entity.RegistryItem;
-import org.apache.skywalking.plugin.test.mockcollector.entity.ValidateData;
+import org.apache.skywalking.apm.network.common.v3.Commands;
 import org.apache.skywalking.plugin.test.mockcollector.util.ProtoBufJsonUtils;
 
-public class MockEndpointRegisterServletHandler extends JettyJsonHandler {
-    public static final String SERVLET_PATH = "/v2/endpoint/register";
+public class MockManagementServiceReportPropertiesHandler extends JettyJsonHandler {
+    public static final String SERVLET_PATH = "/v3/management/reportProperties";
+    private final Gson gson = new Gson();
 
     @Override
     protected JsonElement doGet(final HttpServletRequest req) {
@@ -38,15 +36,6 @@ public class MockEndpointRegisterServletHandler extends JettyJsonHandler {
 
     @Override
     protected JsonElement doPost(final HttpServletRequest req) throws IOException {
-        Endpoints.Builder builder = Endpoints.newBuilder();
-        ProtoBufJsonUtils.fromJSON(getJsonBody(req), builder);
-
-        for (Endpoint endpoint : builder.build().getEndpointsList()) {
-            ValidateData.INSTANCE.getRegistryItem()
-                                 .registryOperationName(new RegistryItem.OperationName(endpoint.getServiceId(), endpoint
-                                     .getEndpointName()));
-        }
-
-        return new JsonArray();
+        return gson.fromJson(ProtoBufJsonUtils.toJSON(Commands.newBuilder().build()), JsonElement.class);
     }
 }
