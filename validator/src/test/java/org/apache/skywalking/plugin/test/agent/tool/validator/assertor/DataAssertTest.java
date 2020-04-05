@@ -35,8 +35,7 @@ public class DataAssertTest {
                 Data.Loader.loadData("actualData.yaml", actualData)
             );
         } catch (AssertFailedException e) {
-            System.out.println(String.format("\nassert failed.\n%s\n", e.getCauseMessage()));
-
+            throw new RuntimeException(String.format("\nassert failed.\n%s\n", e.getCauseMessage()), e);
         }
     }
 

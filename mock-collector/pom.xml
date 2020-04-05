@@ -34,7 +34,7 @@
     <url>http://maven.apache.org</url>
 
     <properties>
-        <protocol.version>b512211334db26a9c1031ce7bacfa2bef99b1d89</protocol.version>
+        <protocol.version>16fafd53d427b42e80a6fa8fc6dee28569053ebe</protocol.version>
         <protocol.workingDirectory>${project.basedir}/target/protocol</protocol.workingDirectory>
         <protocol.repos>https://github.com/apache/skywalking-data-collect-protocol.git</protocol.repos>
         <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
@@ -50,29 +50,30 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.google.protobuf</groupId>
-            <artifactId>protobuf-java-util</artifactId>
-            <version>${protobuf-java-util.version}</version>
-        </dependency>
-        <dependency>
             <groupId>io.grpc</groupId>
-            <artifactId>grpc-netty</artifactId>
+            <artifactId>grpc-core</artifactId>
             <version>${grpc.version}</version>
             <exclusions>
                 <exclusion>
-                    <groupId>io.netty</groupId>
-                    <artifactId>netty-codec-http2</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>io.netty</groupId>
-                    <artifactId>netty-handler-proxy</artifactId>
+                    <groupId>com.google.android</groupId>
+                    <artifactId>annotations</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
         <dependency>
             <groupId>io.grpc</groupId>
+            <artifactId>grpc-netty</artifactId>
+            <version>${grpc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
             <artifactId>grpc-protobuf</artifactId>
             <version>${grpc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java-util</artifactId>
+            <version>${protobuf-java-util.version}</version>
         </dependency>
         <dependency>
             <groupId>io.grpc</groupId>
@@ -81,8 +82,8 @@
         </dependency>
         <dependency>
             <groupId>io.netty</groupId>
-            <artifactId>netty-codec-http2</artifactId>
-            <version>${netty.version}</version>
+            <artifactId>netty-tcnative-boringssl-static</artifactId>
+            <version>${netty-tcnative-boringssl-static.version}</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>

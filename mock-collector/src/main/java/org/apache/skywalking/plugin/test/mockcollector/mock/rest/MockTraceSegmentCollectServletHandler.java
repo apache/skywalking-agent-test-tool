@@ -22,20 +22,12 @@ import com.google.common.io.CharStreams;
 import com.google.gson.JsonElement;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
-import org.apache.skywalking.apm.network.common.KeyStringValuePair;
-import org.apache.skywalking.apm.network.language.agent.UpstreamSegment;
-import org.apache.skywalking.apm.network.language.agent.v2.Log;
-import org.apache.skywalking.apm.network.language.agent.v2.SegmentObject;
-import org.apache.skywalking.apm.network.language.agent.v2.SegmentReference;
-import org.apache.skywalking.apm.network.language.agent.v2.SpanObjectV2;
-import org.apache.skywalking.plugin.test.mockcollector.entity.RegistryItem;
-import org.apache.skywalking.plugin.test.mockcollector.entity.Segment;
-import org.apache.skywalking.plugin.test.mockcollector.entity.Span;
-import org.apache.skywalking.plugin.test.mockcollector.entity.ValidateData;
+import org.apache.skywalking.apm.network.language.agent.v3.SegmentObject;
 import org.apache.skywalking.plugin.test.mockcollector.util.ProtoBufJsonUtils;
+import org.apache.skywalking.plugin.test.mockcollector.util.TraceSegmentHandler;
 
 public class MockTraceSegmentCollectServletHandler extends JettyJsonHandler {
-    public static final String SERVLET_PATH = "/v2/segments";
+    public static final String SERVLET_PATH = "/v3/segments";
 
     @Override
     protected JsonElement doGet(final HttpServletRequest req) {
@@ -46,49 +38,10 @@ public class MockTraceSegmentCollectServletHandler extends JettyJsonHandler {
     protected JsonElement doPost(final HttpServletRequest req) throws IOException {
         String json = CharStreams.toString(req.getReader());
 
-        SegmentObject.Builder _builder = SegmentObject.newBuilder();
-        ProtoBufJsonUtils.fromJSON(json, _builder);
+        SegmentObject.Builder upstreamSegmentBuilder = SegmentObject.newBuilder();
+        ProtoBufJsonUtils.fromJSON(json, upstreamSegmentBuilder);
 
-        UpstreamSegment.Builder upstreamSegmentBuilder = UpstreamSegment.newBuilder();
-        UpstreamSegment value = upstreamSegmentBuilder.setSegment(_builder.build().toByteString()).build();
-
-        SegmentObject traceSegmentObject = SegmentObject.parseFrom(value.getSegment());
-        Segment.SegmentBuilder segmentBuilder = Segment.builder()
-                                                       .segmentId(traceSegmentObject.getTraceSegmentId());
-
-        for (SpanObjectV2 spanObject : traceSegmentObject.getSpansList()) {
-            Span.SpanBuilder spanBuilder = Span.builder()
-                                               .operationName(spanObject.getOperationName())
-                                               .parentSpanId(spanObject.getParentSpanId())
-                                               .spanId(spanObject.getSpanId())
-                                               .componentId(spanObject.getComponentId())
-                                               .componentName(spanObject.getComponent())
-                                               .spanLayer(spanObject.getSpanLayer().toString())
-                                               .endTime(spanObject.getEndTime())
-                                               .isError(spanObject.getIsError())
-                                               .startTime(spanObject.getStartTime())
-                                               .spanType(spanObject.getSpanType().toString())
-                                               .peer(spanObject.getPeer())
-                                               .peerId(spanObject.getPeerId())
-                                               .operationId(spanObject.getOperationNameId());
-
-            for (Log logMessage : spanObject.getLogsList()) {
-                spanBuilder.logEvent(logMessage.getDataList());
-            }
-
-            for (KeyStringValuePair tags : spanObject.getTagsList()) {
-                spanBuilder.tags(tags.getKey(), tags.getValue());
-            }
-
-            for (SegmentReference ref : spanObject.getRefsList()) {
-                spanBuilder.ref(new Span.SegmentRef(ref));
-            }
-
-            segmentBuilder.addSpan(spanBuilder);
-        }
-
-        ValidateData.INSTANCE.getSegmentItem()
-                             .addSegmentItem(traceSegmentObject.getServiceId(), segmentBuilder.build());
+        TraceSegmentHandler.parseSegment(upstreamSegmentBuilder.build());
         return null;
     }
 }

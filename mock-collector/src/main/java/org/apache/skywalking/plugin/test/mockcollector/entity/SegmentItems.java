@@ -27,8 +27,7 @@ public class SegmentItems {
         this.segmentItems = new HashMap<>();
     }
 
-    public SegmentItems addSegmentItem(int serviceId, Segment segment) {
-        String serviceName = ValidateData.INSTANCE.getRegistryItem().findServiceName(serviceId);
+    public SegmentItems addSegmentItem(String serviceName, Segment segment) {
         SegmentItem segmentItem = segmentItems.get(serviceName);
         if (segmentItem == null) {
             segmentItem = new SegmentItem(serviceName);

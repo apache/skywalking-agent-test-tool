@@ -19,25 +19,24 @@ package org.apache.skywalking.plugin.test.mockcollector.entity;
 
 public class ValidateData {
     public static ValidateData INSTANCE = new ValidateData();
-    private RegistryItem registryItem;
     private SegmentItems segmentItem;
 
-    public ValidateData() {
-        registryItem = new RegistryItem();
-        segmentItem = new SegmentItems();
-    }
+    private boolean registered = false;
 
-    public RegistryItem getRegistryItem() {
-        return registryItem;
+    private  ValidateData() {
+        segmentItem = new SegmentItems();
     }
 
     public SegmentItems getSegmentItem() {
         return segmentItem;
     }
 
+    public boolean isRegistered() {
+        return registered;
+    }
+
     public static void clearData() {
-        System.out.println("Clear Data");
+        INSTANCE.registered = false;
         INSTANCE.segmentItem = new SegmentItems();
-        INSTANCE.registryItem.getOperationNames().clear();
     }
 }

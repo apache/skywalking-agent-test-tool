@@ -17,80 +17,32 @@
 
 package org.apache.skywalking.plugin.test.mockcollector.mock;
 
-import com.google.protobuf.InvalidProtocolBufferException;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.skywalking.apm.network.common.Commands;
-import org.apache.skywalking.apm.network.common.KeyStringValuePair;
-import org.apache.skywalking.apm.network.language.agent.UpstreamSegment;
-import org.apache.skywalking.apm.network.language.agent.v2.Log;
-import org.apache.skywalking.apm.network.language.agent.v2.SegmentObject;
-import org.apache.skywalking.apm.network.language.agent.v2.SegmentReference;
-import org.apache.skywalking.apm.network.language.agent.v2.SpanObjectV2;
-import org.apache.skywalking.apm.network.language.agent.v2.TraceSegmentReportServiceGrpc;
-import org.apache.skywalking.plugin.test.mockcollector.entity.Segment;
-import org.apache.skywalking.plugin.test.mockcollector.entity.Span;
-import org.apache.skywalking.plugin.test.mockcollector.entity.ValidateData;
+import org.apache.skywalking.apm.network.common.v3.Commands;
+import org.apache.skywalking.apm.network.language.agent.v3.SegmentObject;
+import org.apache.skywalking.apm.network.language.agent.v3.TraceSegmentReportServiceGrpc;
+import org.apache.skywalking.plugin.test.mockcollector.util.TraceSegmentHandler;
 
 @Slf4j
 public class MockTraceSegmentService extends TraceSegmentReportServiceGrpc.TraceSegmentReportServiceImplBase {
 
     @Override
-    public StreamObserver<UpstreamSegment> collect(StreamObserver<Commands> responseObserver) {
-        return new StreamObserver<UpstreamSegment>() {
+    public StreamObserver<SegmentObject> collect(StreamObserver<Commands> responseObserver) {
+        return new StreamObserver<SegmentObject>() {
             @Override
-            public void onNext(UpstreamSegment value) {
-                try {
-                    SegmentObject traceSegmentObject = SegmentObject.parseFrom(value.getSegment());
-                    Segment.SegmentBuilder segmentBuilder = Segment.builder()
-                                                                   .segmentId(traceSegmentObject.getTraceSegmentId());
-                    log.debug(
-                        "Receive segment: ServiceID[{}], TraceSegmentId[{}]", traceSegmentObject.getServiceId(),
-                        traceSegmentObject
-                            .getTraceSegmentId()
-                    );
-
-                    for (SpanObjectV2 spanObject : traceSegmentObject.getSpansList()) {
-                        Span.SpanBuilder spanBuilder = Span.builder()
-                                                           .operationName(spanObject.getOperationName())
-                                                           .parentSpanId(spanObject.getParentSpanId())
-                                                           .spanId(spanObject.getSpanId())
-                                                           .componentId(spanObject.getComponentId())
-                                                           .componentName(spanObject.getComponent())
-                                                           .spanLayer(spanObject.getSpanLayer().toString())
-                                                           .endTime(spanObject.getEndTime())
-                                                           .isError(spanObject.getIsError())
-                                                           .startTime(spanObject.getStartTime())
-                                                           .spanType(spanObject.getSpanType().toString())
-                                                           .peer(spanObject.getPeer())
-                                                           .peerId(spanObject.getPeerId())
-                                                           .operationId(spanObject.getOperationNameId());
-
-                        for (Log logMessage : spanObject.getLogsList()) {
-                            spanBuilder.logEvent(logMessage.getDataList());
-                        }
-
-                        for (KeyStringValuePair tags : spanObject.getTagsList()) {
-                            spanBuilder.tags(tags.getKey(), tags.getValue());
-                        }
-
-                        for (SegmentReference ref : spanObject.getRefsList()) {
-                            spanBuilder.ref(new Span.SegmentRef(ref));
-                        }
-
-                        segmentBuilder.addSpan(spanBuilder);
-                    }
-
-                    ValidateData.INSTANCE.getSegmentItem()
-                                         .addSegmentItem(traceSegmentObject.getServiceId(), segmentBuilder.build());
-                } catch (InvalidProtocolBufferException e) {
-                    e.printStackTrace();
+            public void onNext(SegmentObject segmentObject) {
+                if (segmentObject.getSpansList().size() == 0) {
+                    return;
                 }
+
+                TraceSegmentHandler.parseSegment(segmentObject);
             }
 
             @Override
-            public void onError(Throwable t) {
-
+            public void onError(Throwable throwable) {
+                log.error(throwable.getMessage(), throwable);
+                responseObserver.onCompleted();
             }
 
             @Override
@@ -100,4 +52,5 @@ public class MockTraceSegmentService extends TraceSegmentReportServiceGrpc.Trace
             }
         };
     }
+
 }

@@ -27,7 +27,6 @@ public class DataAssert {
     public static void assertEquals(Data excepted, Data actual) {
         log.info("excepted data:\n{}", new GsonBuilder().setPrettyPrinting().create().toJson(excepted));
         log.info("actual data:\n{}", new GsonBuilder().setPrettyPrinting().create().toJson(actual));
-        RegistryItemsAssert.assertEquals(excepted.registryItems(), actual.registryItems());
         SegmentItemsAssert.assertEquals(excepted.segmentItems(), actual.segmentItems());
         log.info("{} assert successful.", "segment items");
     }

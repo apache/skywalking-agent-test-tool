@@ -18,17 +18,16 @@
 
 package org.apache.skywalking.plugin.test.mockcollector.mock.rest;
 
-import com.google.gson.JsonArray;
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
-import org.apache.skywalking.apm.network.register.v2.ServiceInstancePingPkg;
-import org.apache.skywalking.plugin.test.mockcollector.entity.RegistryItem;
-import org.apache.skywalking.plugin.test.mockcollector.entity.ValidateData;
+import org.apache.skywalking.apm.network.common.v3.Commands;
 import org.apache.skywalking.plugin.test.mockcollector.util.ProtoBufJsonUtils;
 
-public class MockServiceInstancePingServletHandler extends JettyJsonHandler {
-    public static final String SERVLET_PATH = "/v2/instance/heartbeat";
+public class MockManagementServiceKeepAliveHandler extends JettyJsonHandler {
+    public static final String SERVLET_PATH = "/v3/management/keepAlive";
+    private final Gson gson = new Gson();
 
     @Override
     protected JsonElement doGet(final HttpServletRequest req) {
@@ -37,13 +36,6 @@ public class MockServiceInstancePingServletHandler extends JettyJsonHandler {
 
     @Override
     protected JsonElement doPost(final HttpServletRequest req) throws IOException {
-
-        ServiceInstancePingPkg.Builder builder = ServiceInstancePingPkg.newBuilder();
-        ProtoBufJsonUtils.fromJSON(getJsonBody(req), builder);
-        ServiceInstancePingPkg instancePingPkg = builder.build();
-
-        ValidateData.INSTANCE.getRegistryItem()
-                             .registryHeartBeat(new RegistryItem.HeartBeat(instancePingPkg.getServiceInstanceId()));
-        return new JsonArray();
+        return gson.fromJson(ProtoBufJsonUtils.toJSON(Commands.newBuilder().build()), JsonElement.class);
     }
 }
