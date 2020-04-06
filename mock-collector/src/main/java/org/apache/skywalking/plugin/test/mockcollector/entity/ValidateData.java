@@ -31,6 +31,10 @@ public class ValidateData {
         return segmentItem;
     }
 
+    public void register() {
+        registered = true;
+    }
+
     public boolean isRegistered() {
         return registered;
     }

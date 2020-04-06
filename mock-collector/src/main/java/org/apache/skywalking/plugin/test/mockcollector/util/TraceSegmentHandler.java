@@ -44,7 +44,6 @@ public class TraceSegmentHandler {
                        .startTime(spanObject.getStartTime())
                        .endTime(spanObject.getEndTime())
                        .componentId(spanObject.getComponentId())
-                       .componentName(spanObject.getComponent())
                        .isError(spanObject.getIsError())
                        .spanType(spanObject.getSpanType().name())
                        .peer(spanObject.getPeer());

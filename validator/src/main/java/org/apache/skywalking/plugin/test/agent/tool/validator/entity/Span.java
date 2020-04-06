@@ -40,8 +40,6 @@ public interface Span {
 
     String componentId();
 
-    String componentName();
-
     String error();
 
     String spanType();

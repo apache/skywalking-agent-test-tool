@@ -97,7 +97,6 @@ public class SegmentAssert {
     private static void spanEquals(Span excepted, Span actualSpan) {
         ExpressParser.parse(excepted.operationName()).assertValue("operation name", actualSpan.operationName());
         ExpressParser.parse(excepted.componentId()).assertValue("component id", actualSpan.componentId());
-        ExpressParser.parse(excepted.componentName()).assertValue("component name", actualSpan.componentName());
         ExpressParser.parse(excepted.startTime()).assertValue("start time", actualSpan.startTime());
         ExpressParser.parse(excepted.endTime()).assertValue("end time", actualSpan.endTime());
         ExpressParser.parse(excepted.parentSpanId()).assertValue("parent span id", actualSpan.parentSpanId());

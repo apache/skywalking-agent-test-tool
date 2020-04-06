@@ -26,7 +26,6 @@ segmentItems:
             startTime: 1586097228454
             endTime: 1586097230551
             componentId: 19
-            componentName: ''
             isError: false
             spanType: Entry
             peer: ''
@@ -53,7 +52,6 @@ segmentItems:
             startTime: 1586097226069
             endTime: 1586097226561
             componentId: 1
-            componentName: ''
             isError: false
             spanType: Entry
             peer: ''
@@ -72,7 +70,6 @@ segmentItems:
             startTime: 1586097226783
             endTime: 1586097230546
             componentId: 18
-            componentName: ''
             isError: false
             spanType: Exit
             peer: localhost:18080
@@ -89,7 +86,6 @@ segmentItems:
             startTime: 1586097226661
             endTime: 1586097230548
             componentId: 1
-            componentName: ''
             isError: false
             spanType: Entry
             peer: ''

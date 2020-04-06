@@ -55,7 +55,6 @@ public class Span {
     private long startTime;
     private long endTime;
     private int componentId;
-    private String componentName;
     private boolean isError;
     private String spanType;
     private String peer;

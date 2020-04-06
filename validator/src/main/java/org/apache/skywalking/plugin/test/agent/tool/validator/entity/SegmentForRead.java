@@ -272,11 +272,6 @@ public class SegmentForRead implements Segment {
         }
 
         @Override
-        public String componentName() {
-            return componentName;
-        }
-
-        @Override
         public String error() {
             return isError;
         }

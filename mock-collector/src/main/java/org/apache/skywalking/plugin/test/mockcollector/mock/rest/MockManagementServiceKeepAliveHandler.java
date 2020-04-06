@@ -23,6 +23,7 @@ import com.google.gson.JsonElement;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.skywalking.apm.network.common.v3.Commands;
+import org.apache.skywalking.apm.network.management.v3.InstanceProperties;
 import org.apache.skywalking.plugin.test.mockcollector.util.ProtoBufJsonUtils;
 
 public class MockManagementServiceKeepAliveHandler extends JettyJsonHandler {
@@ -36,6 +37,9 @@ public class MockManagementServiceKeepAliveHandler extends JettyJsonHandler {
 
     @Override
     protected JsonElement doPost(final HttpServletRequest req) throws IOException {
+        final InstanceProperties.Builder request = InstanceProperties.newBuilder();
+        ProtoBufJsonUtils.fromJSON(getJsonBody(req), request);
+        request.build();
         return gson.fromJson(ProtoBufJsonUtils.toJSON(Commands.newBuilder().build()), JsonElement.class);
     }
 }
