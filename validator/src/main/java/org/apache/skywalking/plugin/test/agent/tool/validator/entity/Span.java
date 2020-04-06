@@ -46,9 +46,7 @@ public interface Span {
 
     String peer();
 
-    String peerId();
-
-    boolean skipAnalysis();
+    String skipAnalysis();
 
     List<SegmentRef> refs();
 
