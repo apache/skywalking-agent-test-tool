@@ -24,7 +24,6 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.skywalking.apm.network.common.v3.Commands;
 import org.apache.skywalking.apm.network.management.v3.InstanceProperties;
-import org.apache.skywalking.plugin.test.mockcollector.entity.ValidateData;
 import org.apache.skywalking.plugin.test.mockcollector.util.ProtoBufJsonUtils;
 
 public class MockManagementServiceReportPropertiesHandler extends JettyJsonHandler {
@@ -41,7 +40,6 @@ public class MockManagementServiceReportPropertiesHandler extends JettyJsonHandl
         final InstanceProperties.Builder request = InstanceProperties.newBuilder();
         ProtoBufJsonUtils.fromJSON(getJsonBody(req), request);
         request.build();
-        ValidateData.INSTANCE.register();
         return gson.fromJson(ProtoBufJsonUtils.toJSON(Commands.newBuilder().build()), JsonElement.class);
     }
 }

@@ -32,7 +32,6 @@ import org.apache.skywalking.plugin.test.mockcollector.service.DataValidateServi
 import org.apache.skywalking.plugin.test.mockcollector.service.GrpcAddressHttpService;
 import org.apache.skywalking.plugin.test.mockcollector.service.HealthCheckService;
 import org.apache.skywalking.plugin.test.mockcollector.service.ReceiveDataService;
-import org.apache.skywalking.plugin.test.mockcollector.service.StatusService;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 
@@ -56,7 +55,6 @@ public class Main {
 
         // Collector service
         servletContextHandler.addServlet(HealthCheckService.class, HealthCheckService.SERVLET_PATH);
-        servletContextHandler.addServlet(StatusService.class, StatusService.SERVLET_PATH);
         servletContextHandler.addServlet(GrpcAddressHttpService.class, GrpcAddressHttpService.SERVLET_PATH);
         servletContextHandler.addServlet(DataValidateService.class, DataValidateService.SERVLET_PATH);
         servletContextHandler.addServlet(ReceiveDataService.class, ReceiveDataService.SERVLET_PATH);
