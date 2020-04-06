@@ -130,8 +130,7 @@ public class SegmentForRead implements Segment {
         private String isError;
         private String spanType;
         private String peer;
-        private String peerId;
-        private boolean skipAnalysis;
+        private String skipAnalysis;
 
         public void setOperationName(String operationName) {
             this.operationName = operationName;
@@ -189,15 +188,11 @@ public class SegmentForRead implements Segment {
             this.peer = peer;
         }
 
-        public void setPeerId(String peerId) {
-            this.peerId = peerId;
-        }
-
         public void setRefs(List<Map<String, Object>> refs) {
             this.refs = refs;
         }
 
-        public void setSkipAnalysis(boolean skipAnalysis) {
+        public void setSkipAnalysis(String skipAnalysis) {
             this.skipAnalysis = skipAnalysis;
         }
 
@@ -272,11 +267,6 @@ public class SegmentForRead implements Segment {
         }
 
         @Override
-        public String componentName() {
-            return componentName;
-        }
-
-        @Override
         public String error() {
             return isError;
         }
@@ -292,12 +282,7 @@ public class SegmentForRead implements Segment {
         }
 
         @Override
-        public String peerId() {
-            return peerId;
-        }
-
-        @Override
-        public boolean skipAnalysis() {
+        public String skipAnalysis() {
             return skipAnalysis;
         }
 

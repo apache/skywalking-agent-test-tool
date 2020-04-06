@@ -40,17 +40,13 @@ public interface Span {
 
     String componentId();
 
-    String componentName();
-
     String error();
 
     String spanType();
 
     String peer();
 
-    String peerId();
-
-    boolean skipAnalysis();
+    String skipAnalysis();
 
     List<SegmentRef> refs();
 

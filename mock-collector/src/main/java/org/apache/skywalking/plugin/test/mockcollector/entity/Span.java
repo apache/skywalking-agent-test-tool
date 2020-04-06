@@ -55,11 +55,9 @@ public class Span {
     private long startTime;
     private long endTime;
     private int componentId;
-    private String componentName;
     private boolean isError;
     private String spanType;
     private String peer;
-    private int peerId;
     private boolean skipAnalysis;
     private List<KeyValuePair> tags = new ArrayList<>();
     private List<LogEvent> logs = new ArrayList<>();

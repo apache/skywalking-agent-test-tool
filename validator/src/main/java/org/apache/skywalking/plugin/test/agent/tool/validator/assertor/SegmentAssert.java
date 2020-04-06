@@ -97,7 +97,6 @@ public class SegmentAssert {
     private static void spanEquals(Span excepted, Span actualSpan) {
         ExpressParser.parse(excepted.operationName()).assertValue("operation name", actualSpan.operationName());
         ExpressParser.parse(excepted.componentId()).assertValue("component id", actualSpan.componentId());
-        ExpressParser.parse(excepted.componentName()).assertValue("component name", actualSpan.componentName());
         ExpressParser.parse(excepted.startTime()).assertValue("start time", actualSpan.startTime());
         ExpressParser.parse(excepted.endTime()).assertValue("end time", actualSpan.endTime());
         ExpressParser.parse(excepted.parentSpanId()).assertValue("parent span id", actualSpan.parentSpanId());
@@ -105,9 +104,9 @@ public class SegmentAssert {
         ExpressParser.parse(excepted.operationId()).assertValue("operation id", actualSpan.operationId());
         ExpressParser.parse(excepted.peer()).assertValue("peer", actualSpan.peer());
         ExpressParser.parse(excepted.spanLayer()).assertValue("span layer", actualSpan.spanLayer());
-        ExpressParser.parse(excepted.peerId()).assertValue("peer id", actualSpan.peerId());
         ExpressParser.parse(excepted.error()).assertValue("is error", actualSpan.error());
         ExpressParser.parse(excepted.spanType()).assertValue("span type", actualSpan.spanType());
+        ExpressParser.parse(excepted.skipAnalysis()).assertValue("skip analysis", actualSpan.skipAnalysis());
         tagsEquals(excepted.tags(), actualSpan.tags());
         logsEquals(excepted.logs(), actualSpan.logs());
         refEquals(excepted.refs(), actualSpan.refs());

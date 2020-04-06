@@ -26,11 +26,9 @@ segmentItems:
             startTime: gt 0
             endTime: gt 0
             componentId: 19
-            componentName: ''
             isError: false
             spanType: Entry
             peer: ''
-            peerId: 0
             skipAnalysis: false
             tags:
               - {key: url, value: 'http://localhost:18080/jettyserver-case/case/receiveContext-0'}
@@ -53,11 +51,9 @@ segmentItems:
             startTime: gt 0
             endTime: gt 0
             componentId: 1
-            componentName: ''
             isError: false
             spanType: Entry
             peer: ''
-            peerId: 0
             skipAnalysis: false
             tags:
               - {key: url, value: 'http://localhost:8080/jettyclient-case/case/healthCheck'}
@@ -72,11 +68,9 @@ segmentItems:
             startTime: gt 0
             endTime: gt 0
             componentId: 18
-            componentName: ''
             isError: false
             spanType: Exit
             peer: localhost:18080
-            peerId: 0
             skipAnalysis: false
             tags:
               - {key: http.method, value: GET}
@@ -89,11 +83,9 @@ segmentItems:
             startTime: gt 0
             endTime: gt 0
             componentId: 1
-            componentName: ''
             isError: false
             spanType: Entry
             peer: ''
-            peerId: 0
             skipAnalysis: false
             tags:
               - {key: url, value: 'http://localhost:8080/jettyclient-case/case/jettyclient-case'}
