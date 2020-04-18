@@ -46,7 +46,8 @@ public class TraceSegmentHandler {
                        .componentId(spanObject.getComponentId())
                        .isError(spanObject.getIsError())
                        .spanType(spanObject.getSpanType().name())
-                       .peer(spanObject.getPeer());
+                       .peer(spanObject.getPeer())
+                       .skipAnalysis(spanObject.getSkipAnalysis());
 
             for (Log log : spanObject.getLogsList()) {
                 spanBuilder.logEvent(log.getDataList());
