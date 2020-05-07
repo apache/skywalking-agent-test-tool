@@ -26,7 +26,8 @@ import org.apache.skywalking.plugin.test.mockcollector.mock.MockManagementServic
 import org.apache.skywalking.plugin.test.mockcollector.mock.MockTraceSegmentService;
 import org.apache.skywalking.plugin.test.mockcollector.mock.rest.MockManagementServiceKeepAliveHandler;
 import org.apache.skywalking.plugin.test.mockcollector.mock.rest.MockManagementServiceReportPropertiesHandler;
-import org.apache.skywalking.plugin.test.mockcollector.mock.rest.MockTraceSegmentCollectServletHandler;
+import org.apache.skywalking.plugin.test.mockcollector.mock.rest.MockTraceSegmentListCollectServletHandler;
+import org.apache.skywalking.plugin.test.mockcollector.mock.rest.MockTraceSegmentSingleCollectServletHandler;
 import org.apache.skywalking.plugin.test.mockcollector.service.ClearReceiveDataService;
 import org.apache.skywalking.plugin.test.mockcollector.service.DataValidateService;
 import org.apache.skywalking.plugin.test.mockcollector.service.GrpcAddressHttpService;
@@ -70,8 +71,12 @@ public class Main {
             MockManagementServiceReportPropertiesHandler.SERVLET_PATH
         );
         servletContextHandler.addServlet(
-            MockTraceSegmentCollectServletHandler.class,
-            MockTraceSegmentCollectServletHandler.SERVLET_PATH
+            MockTraceSegmentListCollectServletHandler.class,
+            MockTraceSegmentListCollectServletHandler.SERVLET_PATH
+        );
+        servletContextHandler.addServlet(
+            MockTraceSegmentSingleCollectServletHandler.class,
+            MockTraceSegmentSingleCollectServletHandler.SERVLET_PATH
         );
 
         jettyServer.setHandler(servletContextHandler);
