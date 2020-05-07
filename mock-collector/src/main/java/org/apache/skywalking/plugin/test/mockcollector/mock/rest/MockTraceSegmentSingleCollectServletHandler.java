@@ -20,14 +20,15 @@ package org.apache.skywalking.plugin.test.mockcollector.mock.rest;
 
 import com.google.common.io.CharStreams;
 import com.google.gson.JsonElement;
-import java.io.IOException;
-import javax.servlet.http.HttpServletRequest;
 import org.apache.skywalking.apm.network.language.agent.v3.SegmentObject;
 import org.apache.skywalking.plugin.test.mockcollector.util.ProtoBufJsonUtils;
 import org.apache.skywalking.plugin.test.mockcollector.util.TraceSegmentHandler;
 
-public class MockTraceSegmentCollectServletHandler extends JettyJsonHandler {
-    public static final String SERVLET_PATH = "/v3/segments";
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+
+public class MockTraceSegmentSingleCollectServletHandler extends JettyJsonHandler {
+    public static final String SERVLET_PATH = "/v3/segment";
 
     @Override
     protected JsonElement doGet(final HttpServletRequest req) {
@@ -38,10 +39,10 @@ public class MockTraceSegmentCollectServletHandler extends JettyJsonHandler {
     protected JsonElement doPost(final HttpServletRequest req) throws IOException {
         String json = CharStreams.toString(req.getReader());
 
-        SegmentObject.Builder upstreamSegmentBuilder = SegmentObject.newBuilder();
-        ProtoBufJsonUtils.fromJSON(json, upstreamSegmentBuilder);
+        SegmentObject.Builder segmentBuilder = SegmentObject.newBuilder();
+        ProtoBufJsonUtils.fromJSON(json, segmentBuilder);
 
-        TraceSegmentHandler.parseSegment(upstreamSegmentBuilder.build());
+        TraceSegmentHandler.parseSegment(segmentBuilder.build());
         return null;
     }
 }
