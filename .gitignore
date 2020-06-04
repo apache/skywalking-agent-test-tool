@@ -11,7 +11,8 @@ target/
 packages/
 **/dependency-reduced-pom.xml
 /dist/
-.factorypath  
-.vscode 
+.factorypath
+.vscode
 .checkstyle
 .externalToolBuilders
+.mvn/wrapper/maven-wrapper.jar
