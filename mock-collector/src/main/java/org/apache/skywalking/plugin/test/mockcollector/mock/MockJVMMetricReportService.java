@@ -22,9 +22,6 @@ import org.apache.skywalking.apm.network.common.v3.Commands;
 import org.apache.skywalking.apm.network.language.agent.v3.JVMMetricCollection;
 import org.apache.skywalking.apm.network.language.agent.v3.JVMMetricReportServiceGrpc;
 
-/**
- * Author Daming Email zteny@foxmail.com
- **/
 public class MockJVMMetricReportService extends JVMMetricReportServiceGrpc.JVMMetricReportServiceImplBase {
 
     @Override

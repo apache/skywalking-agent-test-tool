@@ -22,9 +22,6 @@ import org.apache.skywalking.apm.network.common.v3.Commands;
 import org.apache.skywalking.apm.network.language.agent.v3.CLRMetricCollection;
 import org.apache.skywalking.apm.network.language.agent.v3.CLRMetricReportServiceGrpc;
 
-/**
- * Author Daming Email zteny@foxmail.com
- **/
 public class MockCLRMetricReportService extends CLRMetricReportServiceGrpc.CLRMetricReportServiceImplBase {
 
     @Override
