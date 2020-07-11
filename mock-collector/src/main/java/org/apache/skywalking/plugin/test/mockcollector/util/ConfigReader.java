@@ -41,4 +41,8 @@ public class ConfigReader {
     public static int getGrpcBindPort() {
         return Integer.parseInt(config.getProperty("grpc_bind_port", "19876"));
     }
+
+    public static int getServerPort() {
+        return Integer.parseInt(config.getProperty("server_port", "12800"));
+    }
 }

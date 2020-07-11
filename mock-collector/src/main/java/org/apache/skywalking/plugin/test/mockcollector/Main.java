@@ -33,6 +33,7 @@ import org.apache.skywalking.plugin.test.mockcollector.service.DataValidateServi
 import org.apache.skywalking.plugin.test.mockcollector.service.GrpcAddressHttpService;
 import org.apache.skywalking.plugin.test.mockcollector.service.HealthCheckService;
 import org.apache.skywalking.plugin.test.mockcollector.service.ReceiveDataService;
+import org.apache.skywalking.plugin.test.mockcollector.util.ConfigReader;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 
@@ -40,7 +41,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         // Mock GRPC Collector
         NettyServerBuilder.forAddress(LocalAddress.ANY)
-                          .forPort(19876)
+                          .forPort(ConfigReader.getGrpcBindPort())
                           .maxConcurrentCallsPerConnection(12)
                           .addService(new MockCLRMetricReportService())
                           .addService(new MockJVMMetricReportService())
@@ -49,7 +50,7 @@ public class Main {
                           .build()
                           .start();
 
-        Server jettyServer = new Server(new InetSocketAddress("0.0.0.0", Integer.valueOf(12800)));
+        Server jettyServer = new Server(new InetSocketAddress("0.0.0.0", ConfigReader.getServerPort()));
         String contextPath = "/";
         ServletContextHandler servletContextHandler = new ServletContextHandler(ServletContextHandler.NO_SESSIONS);
         servletContextHandler.setContextPath(contextPath);
