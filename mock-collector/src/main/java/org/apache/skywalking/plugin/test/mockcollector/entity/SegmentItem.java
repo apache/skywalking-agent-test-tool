@@ -17,8 +17,8 @@
 
 package org.apache.skywalking.plugin.test.mockcollector.entity;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class SegmentItem {
     private String serviceName;
@@ -26,7 +26,7 @@ public class SegmentItem {
 
     public SegmentItem(String serviceName) {
         this.serviceName = serviceName;
-        segments = new ArrayList<>();
+        segments = new CopyOnWriteArrayList<>();
     }
 
     public void addSegments(Segment item) {

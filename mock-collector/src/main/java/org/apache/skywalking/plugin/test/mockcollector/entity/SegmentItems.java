@@ -17,14 +17,14 @@
 
 package org.apache.skywalking.plugin.test.mockcollector.entity;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SegmentItems {
     private Map<String, SegmentItem> segmentItems;
 
     public SegmentItems() {
-        this.segmentItems = new HashMap<>();
+        this.segmentItems = new ConcurrentHashMap<>();
     }
 
     public SegmentItems addSegmentItem(String serviceName, Segment segment) {
