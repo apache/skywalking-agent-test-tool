@@ -25,11 +25,11 @@ public class ValidateData {
         segmentItem = new SegmentItems();
     }
 
-    public SegmentItems getSegmentItem() {
+    public synchronized SegmentItems getSegmentItem() {
         return segmentItem;
     }
 
-    public static void clearData() {
+    public synchronized void clearData() {
         INSTANCE.segmentItem = new SegmentItems();
     }
 }

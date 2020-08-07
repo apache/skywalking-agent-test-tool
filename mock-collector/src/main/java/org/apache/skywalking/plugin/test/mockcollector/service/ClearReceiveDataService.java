@@ -34,7 +34,7 @@ public class ClearReceiveDataService extends HttpServlet {
         resp.setContentType("text/json");
         resp.setCharacterEncoding("utf-8");
         resp.setStatus(200);
-        ValidateData.clearData();
+        ValidateData.INSTANCE.clearData();
         Writer out = resp.getWriter();
         out.flush();
         out.close();
