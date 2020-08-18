@@ -49,7 +49,7 @@ public class SegmentForRead implements Segment {
         private String parentSpanId;
         private String parentTraceSegmentId;
         private String parentServiceInstance;
-        private String parenService;
+        private String parentService;
         private String traceId;
 
         public SegmentRefForRead() {
@@ -62,7 +62,7 @@ public class SegmentForRead implements Segment {
             this.parentSpanId = ref.get("parentSpanId") == null ? null : ref.get("parentSpanId").toString();
             this.parentTraceSegmentId = ref.get("parentTraceSegmentId").toString();
             this.parentServiceInstance = ref.get("parentServiceInstance").toString();
-            this.parenService = ref.get("parentService").toString();
+            this.parentService = ref.get("parentService").toString();
             this.traceId = ref.get("traceId").toString();
         }
 
@@ -102,8 +102,8 @@ public class SegmentForRead implements Segment {
         }
 
         @Override
-        public String parenService() {
-            return parenService;
+        public String parentService() {
+            return parentService;
         }
 
         @Override
