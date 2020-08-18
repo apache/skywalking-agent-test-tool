@@ -32,7 +32,7 @@ public interface SegmentRef {
 
     String parentServiceInstance();
 
-    String parenService();
+    String parentService();
 
     String traceId();
 }

@@ -212,8 +212,8 @@ public class SegmentAssert {
         try {
             ExpressParser.parse(expected.parentEndpoint())
                          .assertValue("parent endpoint name", actual.parentEndpoint());
-            ExpressParser.parse(expected.parenService())
-                         .assertValue("parent service name", actual.parenService());
+            ExpressParser.parse(expected.parentService())
+                         .assertValue("parent service name", actual.parentService());
             ExpressParser.parse(expected.networkAddress())
                          .assertValue("network address", actual.networkAddress());
             ExpressParser.parse(expected.refType()).assertValue("ref type", actual.refType());

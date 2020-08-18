@@ -69,8 +69,8 @@ public class SegmentRefAssert {
                          .assertValue("parent segment id", actual.parentTraceSegmentId());
             ExpressParser.parse(expected.parentServiceInstance())
                          .assertValue("parent service instance", actual.parentServiceInstance());
-            ExpressParser.parse(expected.parenService())
-                         .assertValue("parent service name", actual.parenService());
+            ExpressParser.parse(expected.parentService())
+                         .assertValue("parent service name", actual.parentService());
             ExpressParser.parse(expected.traceId())
                          .assertValue("trace id", actual.traceId());
             return true;
