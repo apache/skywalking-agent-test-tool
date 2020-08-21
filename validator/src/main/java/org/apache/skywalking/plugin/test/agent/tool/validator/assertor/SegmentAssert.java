@@ -51,14 +51,13 @@ public class SegmentAssert {
             return;
         }
         Set<Segment> exist = new HashSet<>();
-
         for (Segment segment : expected.segments()) {
-            Segment actualSegment = findSegment(actual, segment,exist);
+            Segment actualSegment = findSegment(actual, segment, exist);
             segment.setSegmentId(actualSegment.segmentId());
         }
     }
 
-    private static Segment findSegment(SegmentItem actual, Segment expectedSegment,Set<Segment> exist ) {
+    private static Segment findSegment(SegmentItem actual, Segment expectedSegment, Set<Segment> exist) {
         List<SegmentPredictionFailedCause> exceptions = new ArrayList<>();
         for (Segment actualSegment : actual.segments()) {
             try {
