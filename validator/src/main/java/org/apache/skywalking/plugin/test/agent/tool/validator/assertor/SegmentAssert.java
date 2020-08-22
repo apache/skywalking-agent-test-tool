@@ -18,7 +18,9 @@
 package org.apache.skywalking.plugin.test.agent.tool.validator.assertor;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exception.ActualSegmentRefIsEmptyException;
 import org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exception.KeyValueNotEqualsException;
 import org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exception.LogEventKeyNotEqualsException;
@@ -48,18 +50,19 @@ public class SegmentAssert {
         if (expected.segments() == null) {
             return;
         }
-
+        Set<Segment> exist = new HashSet<>();
         for (Segment segment : expected.segments()) {
-            Segment actualSegment = findSegment(actual, segment);
+            Segment actualSegment = findSegment(actual, segment, exist);
             segment.setSegmentId(actualSegment.segmentId());
         }
     }
 
-    private static Segment findSegment(SegmentItem actual, Segment expectedSegment) {
+    private static Segment findSegment(SegmentItem actual, Segment expectedSegment, Set<Segment> exist) {
         List<SegmentPredictionFailedCause> exceptions = new ArrayList<>();
         for (Segment actualSegment : actual.segments()) {
             try {
-                if (spansEquals(expectedSegment.spans(), actualSegment.spans())) {
+                if (spansEquals(expectedSegment.spans(), actualSegment.spans()) && !exist.contains(actualSegment)) {
+                    exist.add(actualSegment);
                     return actualSegment;
                 }
             } catch (SpanSizeNotEqualsException e) {
