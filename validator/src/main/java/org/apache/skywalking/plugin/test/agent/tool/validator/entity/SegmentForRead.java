@@ -176,8 +176,8 @@ public class SegmentForRead implements Segment {
             this.componentName = componentName;
         }
 
-        public void setError(String error) {
-            isError = error;
+        public void setIsError(String isError) {
+            this.isError = isError;
         }
 
         public void setSpanType(String spanType) {
