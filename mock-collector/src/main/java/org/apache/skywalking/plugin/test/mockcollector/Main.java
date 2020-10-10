@@ -19,10 +19,10 @@ package org.apache.skywalking.plugin.test.mockcollector;
 
 import io.grpc.netty.NettyServerBuilder;
 import io.netty.channel.local.LocalAddress;
-import java.net.InetSocketAddress;
 import org.apache.skywalking.plugin.test.mockcollector.mock.MockCLRMetricReportService;
 import org.apache.skywalking.plugin.test.mockcollector.mock.MockJVMMetricReportService;
 import org.apache.skywalking.plugin.test.mockcollector.mock.MockManagementService;
+import org.apache.skywalking.plugin.test.mockcollector.mock.MockMeterReportService;
 import org.apache.skywalking.plugin.test.mockcollector.mock.MockTraceSegmentService;
 import org.apache.skywalking.plugin.test.mockcollector.mock.rest.MockManagementServiceKeepAliveHandler;
 import org.apache.skywalking.plugin.test.mockcollector.mock.rest.MockManagementServiceReportPropertiesHandler;
@@ -36,6 +36,8 @@ import org.apache.skywalking.plugin.test.mockcollector.service.ReceiveDataServic
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 
+import java.net.InetSocketAddress;
+
 public class Main {
     public static void main(String[] args) throws Exception {
         // Mock GRPC Collector
@@ -46,6 +48,7 @@ public class Main {
                           .addService(new MockJVMMetricReportService())
                           .addService(new MockManagementService())
                           .addService(new MockTraceSegmentService())
+                          .addService(new MockMeterReportService())
                           .build()
                           .start();
 

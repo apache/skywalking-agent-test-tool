@@ -17,18 +17,20 @@
 
 package org.apache.skywalking.plugin.test.agent.tool.validator.entity;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.util.List;
 import org.apache.skywalking.plugin.test.agent.tool.validator.exception.IllegalDataFileException;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 import org.yaml.snakeyaml.representer.Representer;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.List;
+
 public interface Data {
     List<SegmentItem> segmentItems();
+    List<MeterItem> meterItems();
 
     class Loader {
         public static Data loadData(String fileName, File file) {

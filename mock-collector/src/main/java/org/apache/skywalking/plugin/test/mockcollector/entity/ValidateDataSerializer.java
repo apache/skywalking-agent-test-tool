@@ -29,10 +29,12 @@ public class ValidateDataSerializer implements JsonSerializer<ValidateData> {
     @Override
     public JsonElement serialize(ValidateData src, Type typeOfSrc, JsonSerializationContext context) {
         Gson gson = new GsonBuilder().registerTypeAdapter(SegmentItems.class, new SegmentItemsSerializer())
+                                     .registerTypeAdapter(MeterItems.class, new MeterItemsSerializer())
                                      .create();
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.add("segmentItems", gson.toJsonTree(src.getSegmentItem()));
+        jsonObject.add("meterItems", gson.toJsonTree(src.getMeterItems()));
         return jsonObject;
     }
 }

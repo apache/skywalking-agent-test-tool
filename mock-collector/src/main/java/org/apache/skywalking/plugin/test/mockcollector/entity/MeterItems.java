@@ -6,38 +6,34 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *    http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 
 package org.apache.skywalking.plugin.test.mockcollector.entity;
 
-public class ValidateData {
-    public static ValidateData INSTANCE = new ValidateData();
-    private SegmentItems segmentItem;
-    private MeterItems meterItems;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-    private  ValidateData() {
-        segmentItem = new SegmentItems();
-        meterItems = new MeterItems();
+public class MeterItems {
+    private Map<String, MeterItem> meterItems;
+
+    public MeterItems() {
+        this.meterItems = new ConcurrentHashMap<>();
     }
 
-    public synchronized SegmentItems getSegmentItem() {
-        return segmentItem;
+    public MeterItems addMeter(String serviceName, Meter meter) {
+        final MeterItem item = meterItems.computeIfAbsent(serviceName, (name) -> new MeterItem(name));
+        item.addMeter(meter);
+        return this;
     }
 
-    public synchronized void clearData() {
-        INSTANCE.segmentItem = new SegmentItems();
-        INSTANCE.meterItems = new MeterItems();
-    }
-
-    public synchronized MeterItems getMeterItems() {
+    public Map<String, MeterItem> getMeterItems() {
         return meterItems;
     }
-
 }

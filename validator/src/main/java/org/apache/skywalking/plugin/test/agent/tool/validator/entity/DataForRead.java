@@ -22,6 +22,7 @@ import java.util.List;
 
 public class DataForRead implements Data {
     private List<SegmentItemForRead> segmentItems;
+    private List<MeterItem> meterItems;
 
     public List<SegmentItemForRead> getSegmentItems() {
         return segmentItems;
@@ -31,6 +32,14 @@ public class DataForRead implements Data {
         this.segmentItems = segmentItems;
     }
 
+    public List<MeterItem> getMeterItems() {
+        return meterItems;
+    }
+
+    public void setMeterItems(List<MeterItem> meterItems) {
+        this.meterItems = meterItems;
+    }
+
     @Override
     public List<SegmentItem> segmentItems() {
         if (this.segmentItems == null) {
@@ -38,6 +47,15 @@ public class DataForRead implements Data {
         }
 
         return new ArrayList<>(this.segmentItems);
+    }
+
+    @Override
+    public List<MeterItem> meterItems() {
+        if (this.meterItems == null) {
+            return null;
+        }
+
+        return new ArrayList<>(this.meterItems);
     }
 
 }
