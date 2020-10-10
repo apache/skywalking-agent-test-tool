@@ -29,15 +29,21 @@ import java.util.List;
 public class MeterItemsAssert {
 
     public static void assertEquals(List<MeterItem> excepted, List<MeterItem> actual) {
+        if (excepted == null) {
+            return;
+        }
         for (MeterItem item : excepted) {
+            // find same service meter items
             MeterItem actualMeterItem = findMeterItem(actual, item);
             try {
+                // check meter size
                 assertMeterSize(item.getMeterSize(), actualMeterItem.getMeterSize());
             } catch (ValueAssertFailedException e) {
                 throw new MeterSizeNotEqualsException(
                     item.getServiceName(), item.getMeterSize(), actualMeterItem.getMeterSize());
             }
 
+            // check items
             MeterAssert.assertEquals(item, actualMeterItem);
         }
     }

@@ -30,13 +30,18 @@ import java.util.Objects;
 public class MeterAssert {
 
     public static void assertEquals(MeterItem expected, MeterItem actual) {
+        if (expected.getMeters() == null) {
+            return;
+        }
         for (Meter meter : expected.getMeters()) {
+            // find same meter id
             Meter actualMeter = findMeter(actual, meter);
             if (actualMeter == null) {
                 throw new MeterNotFoundException(meter);
             }
 
             try {
+                // check data
                 meterDataEquals(meter, actualMeter);
             } catch (AssertFailedException e) {
                 throw new MeterAssertFailedException(e, meter.getMeterId());
@@ -49,13 +54,17 @@ public class MeterAssert {
     }
 
     private static void meterDataEquals(Meter excepted, Meter actual) {
+        // check single value
         if (excepted.getSingleValue() != null) {
             ExpressParser.parse(excepted.getSingleValue()).assertValue("single value", actual.getSingleValue());
         } else {
+            // histogram
+            // check size
             if (excepted.getHistogram().size() != actual.getHistogram().size()) {
                 throw new HistogramSizeNotEqualsException(excepted, actual.getHistogram().size());
             }
 
+            // check buckets
             for (int bucketIndex = 0; bucketIndex < excepted.getHistogram().size(); bucketIndex++) {
                 final BucketAndValue exceptedBucket = excepted.getHistogram().get(bucketIndex);
                 final BucketAndValue actualBucket = actual.getHistogram().get(bucketIndex);
