@@ -28,6 +28,7 @@ public class DataAssert {
         log.info("excepted data:\n{}", new GsonBuilder().setPrettyPrinting().create().toJson(excepted));
         log.info("actual data:\n{}", new GsonBuilder().setPrettyPrinting().create().toJson(actual));
         SegmentItemsAssert.assertEquals(excepted.segmentItems(), actual.segmentItems());
+        MeterItemsAssert.assertEquals(excepted.meterItems(), actual.meterItems());
         log.info("{} assert successful.", "segment items");
     }
 }

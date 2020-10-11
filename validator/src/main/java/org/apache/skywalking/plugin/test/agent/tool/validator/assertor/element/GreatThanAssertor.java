@@ -27,7 +27,7 @@ public class GreatThanAssertor extends ElementAssertor {
 
     @Override
     public void assertValue(String desc, String actualValue) {
-        if (Long.parseLong(actualValue) <= Long.parseLong(exceptedValue)) {
+        if (Double.parseDouble(actualValue) <= Double.parseDouble(exceptedValue)) {
             throw new ValueAssertFailedException(desc, " gt " + exceptedValue, actualValue);
         }
     }
