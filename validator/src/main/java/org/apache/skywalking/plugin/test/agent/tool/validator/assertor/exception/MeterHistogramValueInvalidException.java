@@ -31,6 +31,6 @@ public class MeterHistogramValueInvalidException extends AssertFailedException {
     public String getCauseMessage() {
         return String.format("MeterHistogramValueInvalidException:\nmeter id:%s\nreason:%s\n",
             meterId,
-            "histogram bucket value has not valid");
+            "One of the histogram bucket value must bigger than 0");
     }
 }
