@@ -22,7 +22,8 @@ import java.util.List;
 public class Meter {
     private MeterId meterId;
     private String singleValue;
-    private List<BucketAndValue> histogram;
+    private List<String> histogramBuckets;
+    private List<String> histogramValues;
 
     public MeterId getMeterId() {
         return meterId;
@@ -40,11 +41,19 @@ public class Meter {
         this.singleValue = singleValue;
     }
 
-    public List<BucketAndValue> getHistogram() {
-        return histogram;
+    public List<String> getHistogramBuckets() {
+        return histogramBuckets;
     }
 
-    public void setHistogram(List<BucketAndValue> histogram) {
-        this.histogram = histogram;
+    public void setHistogramBuckets(List<String> histogramBuckets) {
+        this.histogramBuckets = histogramBuckets;
+    }
+
+    public List<String> getHistogramValues() {
+        return histogramValues;
+    }
+
+    public void setHistogramValues(List<String> histogramValues) {
+        this.histogramValues = histogramValues;
     }
 }

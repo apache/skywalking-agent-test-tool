@@ -18,6 +18,7 @@
 package org.apache.skywalking.plugin.test.mockcollector.util;
 
 import org.apache.skywalking.apm.network.language.agent.v3.Label;
+import org.apache.skywalking.apm.network.language.agent.v3.MeterBucketValue;
 import org.apache.skywalking.apm.network.language.agent.v3.MeterData;
 import org.apache.skywalking.apm.network.language.agent.v3.MeterHistogram;
 import org.apache.skywalking.apm.network.language.agent.v3.MeterSingleValue;
@@ -55,8 +56,10 @@ public class MeterHandler {
                         .name(histogram.getName())
                         .tags(parseTags(histogram.getLabelsList()))
                         .build());
-                    builder.histogram(histogram.getValuesList().stream()
-                        .map(b -> new Meter.BucketAndValue(b.getBucket(), b.getCount())).collect(Collectors.toList()));
+                    builder.histogramBuckets(histogram.getValuesList().stream()
+                        .map(MeterBucketValue::getBucket).collect(Collectors.toList()));
+                    builder.histogramValues(histogram.getValuesList().stream()
+                        .map(MeterBucketValue::getCount).collect(Collectors.toList()));
                     break;
                 case METRIC_NOT_SET:
                     return;

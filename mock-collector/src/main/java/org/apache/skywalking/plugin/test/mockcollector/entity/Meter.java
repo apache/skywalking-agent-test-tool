@@ -31,25 +31,8 @@ import java.util.List;
 public class Meter {
     private MeterId meterId;
     private Double singleValue;
-    private List<BucketAndValue> histogram;
-
-    public static class BucketAndValue {
-        private double bucket;
-        private long count;
-
-        public BucketAndValue(double bucket, long count) {
-            this.bucket = bucket;
-            this.count = count;
-        }
-
-        public double getBucket() {
-            return bucket;
-        }
-
-        public long getCount() {
-            return count;
-        }
-    }
+    private List<Double> histogramBuckets;
+    private List<Long> histogramValues;
 
     public MeterId getMeterId() {
         return meterId;
@@ -59,7 +42,11 @@ public class Meter {
         return singleValue;
     }
 
-    public List<BucketAndValue> getHistogram() {
-        return histogram;
+    public List<Double> getHistogramBuckets() {
+        return histogramBuckets;
+    }
+
+    public List<Long> getHistogramValues() {
+        return histogramValues;
     }
 }
