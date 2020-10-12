@@ -19,8 +19,9 @@ package org.apache.skywalking.plugin.test.agent.tool.validator.assertor;
 
 import org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exception.HistogramSizeNotEqualsException;
 import org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exception.MeterAssertFailedException;
+import org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exception.MeterHistogramValueInvalidException;
 import org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exception.MeterNotFoundException;
-import org.apache.skywalking.plugin.test.agent.tool.validator.entity.BucketAndValue;
+import org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exception.ValueAssertFailedException;
 import org.apache.skywalking.plugin.test.agent.tool.validator.entity.Meter;
 import org.apache.skywalking.plugin.test.agent.tool.validator.entity.MeterItem;
 import org.apache.skywalking.plugin.test.agent.tool.validator.exception.AssertFailedException;
@@ -60,17 +61,30 @@ public class MeterAssert {
         } else {
             // histogram
             // check size
-            if (excepted.getHistogram().size() != actual.getHistogram().size()) {
-                throw new HistogramSizeNotEqualsException(excepted, actual.getHistogram().size());
+            if (excepted.getHistogramBuckets().size() != actual.getHistogramBuckets().size()) {
+                throw new HistogramSizeNotEqualsException(excepted, actual.getHistogramBuckets().size());
             }
 
             // check buckets
-            for (int bucketIndex = 0; bucketIndex < excepted.getHistogram().size(); bucketIndex++) {
-                final BucketAndValue exceptedBucket = excepted.getHistogram().get(bucketIndex);
-                final BucketAndValue actualBucket = actual.getHistogram().get(bucketIndex);
+            for (int bucketIndex = 0; bucketIndex < excepted.getHistogramBuckets().size(); bucketIndex++) {
+                final String exceptedBucket = excepted.getHistogramBuckets().get(bucketIndex);
+                final String actualBucket = actual.getHistogramBuckets().get(bucketIndex);
 
-                ExpressParser.parse(exceptedBucket.getBucket()).assertValue("histogram bucket", actualBucket.getBucket());
-                ExpressParser.parse(exceptedBucket.getCount()).assertValue("histogram count[" + actualBucket.getBucket() + "]", actualBucket.getCount());
+                if (!Objects.equals(exceptedBucket, actualBucket)) {
+                    throw new ValueAssertFailedException("histogram bucket", exceptedBucket, actualBucket);
+                }
+            }
+
+            // check values
+            boolean valueContainValid = false;
+            for (String histogramValue : actual.getHistogramValues()) {
+                if (Long.parseLong(histogramValue) > 0) {
+                    valueContainValid = true;
+                    break;
+                }
+            }
+            if (!valueContainValid) {
+                throw new MeterHistogramValueInvalidException(actual.getMeterId());
             }
         }
     }

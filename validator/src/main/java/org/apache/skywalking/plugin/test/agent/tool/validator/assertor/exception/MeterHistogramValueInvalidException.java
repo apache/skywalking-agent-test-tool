@@ -17,23 +17,20 @@
 
 package org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exception;
 
-import org.apache.skywalking.plugin.test.agent.tool.validator.entity.Meter;
+import org.apache.skywalking.plugin.test.agent.tool.validator.entity.MeterId;
 import org.apache.skywalking.plugin.test.agent.tool.validator.exception.AssertFailedException;
 
-public class HistogramSizeNotEqualsException extends AssertFailedException {
-    private final Meter exceptedMeter;
-    private final int actualSize;
+public class MeterHistogramValueInvalidException extends AssertFailedException {
+    private final MeterId meterId;
 
-    public HistogramSizeNotEqualsException(Meter exceptedMeter, int actualSize) {
-        this.exceptedMeter = exceptedMeter;
-        this.actualSize = actualSize;
+    public MeterHistogramValueInvalidException(MeterId meterId) {
+        this.meterId = meterId;
     }
 
     @Override
     public String getCauseMessage() {
-        return String.format("HistogramSizeNotEqualsException:\nmeter id:%s\nexpected:%s\nactual:%s\n",
-            exceptedMeter.getMeterId(),
-            exceptedMeter.getHistogramBuckets().size(),
-            actualSize);
+        return String.format("MeterHistogramValueInvalidException:\nmeter id:%s\nreason:%s\n",
+            meterId,
+            "One of the histogram bucket value must bigger than 0");
     }
 }
