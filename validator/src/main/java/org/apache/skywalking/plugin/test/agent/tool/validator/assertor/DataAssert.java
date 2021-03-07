@@ -25,7 +25,7 @@ import org.apache.skywalking.plugin.test.agent.tool.validator.entity.Data;
 public class DataAssert {
 
     public static void assertEquals(Data excepted, Data actual) {
-        log.info("excepted data:\n{}", new GsonBuilder().setPrettyPrinting().create().toJson(excepted));
+        log.info("expected data:\n{}", new GsonBuilder().setPrettyPrinting().create().toJson(excepted));
         log.info("actual data:\n{}", new GsonBuilder().setPrettyPrinting().create().toJson(actual));
         SegmentItemsAssert.assertEquals(excepted.segmentItems(), actual.segmentItems());
         MeterItemsAssert.assertEquals(excepted.meterItems(), actual.meterItems());
