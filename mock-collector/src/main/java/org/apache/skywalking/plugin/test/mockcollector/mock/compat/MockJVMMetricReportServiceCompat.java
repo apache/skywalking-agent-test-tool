@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-package org.apache.skywalking.plugin.test.mockcollector.mock.compatgrpc;
+package org.apache.skywalking.plugin.test.mockcollector.mock.compat;
 
 import io.grpc.stub.StreamObserver;
 import org.apache.skywalking.apm.network.common.v3.Commands;
-import org.apache.skywalking.apm.network.language.agent.v3.CLRMetricCollection;
-import org.apache.skywalking.apm.network.language.agent.v3.compat.CLRMetricReportServiceGrpc;
+import org.apache.skywalking.apm.network.language.agent.v3.JVMMetricCollection;
+import org.apache.skywalking.apm.network.language.agent.v3.compat.JVMMetricReportServiceGrpc;
 
-public class MockCLRMetricReportServiceCompat extends CLRMetricReportServiceGrpc.CLRMetricReportServiceImplBase {
+public class MockJVMMetricReportServiceCompat extends JVMMetricReportServiceGrpc.JVMMetricReportServiceImplBase {
 
     @Override
-    public void collect(CLRMetricCollection request, StreamObserver<Commands> responseObserver) {
+    public void collect(JVMMetricCollection request, StreamObserver<Commands> responseObserver) {
         responseObserver.onNext(Commands.newBuilder().build());
         responseObserver.onCompleted();
     }

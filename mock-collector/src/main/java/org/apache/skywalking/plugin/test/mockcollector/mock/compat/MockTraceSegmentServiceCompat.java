@@ -6,34 +6,37 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *    http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
-package org.apache.skywalking.plugin.test.mockcollector.mock.compatgrpc;
+package org.apache.skywalking.plugin.test.mockcollector.mock.compat;
 
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.skywalking.apm.network.common.v3.Commands;
-import org.apache.skywalking.apm.network.language.agent.v3.MeterData;
-import org.apache.skywalking.apm.network.language.agent.v3.compat.MeterReportServiceGrpc;
-import org.apache.skywalking.plugin.test.mockcollector.util.MeterHandler;
+import org.apache.skywalking.apm.network.language.agent.v3.SegmentObject;
+import org.apache.skywalking.apm.network.language.agent.v3.compat.TraceSegmentReportServiceGrpc;
+import org.apache.skywalking.plugin.test.mockcollector.util.TraceSegmentHandler;
 
 @Slf4j
-public class MockMeterReportServiceCompat extends MeterReportServiceGrpc.MeterReportServiceImplBase {
+public class MockTraceSegmentServiceCompat extends TraceSegmentReportServiceGrpc.TraceSegmentReportServiceImplBase {
 
     @Override
-    public StreamObserver<MeterData> collect(StreamObserver<Commands> responseObserver) {
-        final MeterHandler.Parser parser = MeterHandler.createParser();
-        return new StreamObserver<MeterData>() {
+    public StreamObserver<SegmentObject> collect(StreamObserver<Commands> responseObserver) {
+        return new StreamObserver<SegmentObject>() {
             @Override
-            public void onNext(MeterData meterData) {
-                parser.parse(meterData);
+            public void onNext(SegmentObject segmentObject) {
+                if (segmentObject.getSpansList().size() == 0) {
+                    return;
+                }
+
+                TraceSegmentHandler.parseSegment(segmentObject);
             }
 
             @Override
@@ -49,4 +52,5 @@ public class MockMeterReportServiceCompat extends MeterReportServiceGrpc.MeterRe
             }
         };
     }
+
 }

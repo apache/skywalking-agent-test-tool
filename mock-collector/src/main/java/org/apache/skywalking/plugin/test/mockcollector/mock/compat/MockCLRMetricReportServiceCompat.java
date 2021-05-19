@@ -6,36 +6,27 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *    http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
 
-package org.apache.skywalking.plugin.test.mockcollector.mock.compatgrpc;
+package org.apache.skywalking.plugin.test.mockcollector.mock.compat;
 
 import io.grpc.stub.StreamObserver;
 import org.apache.skywalking.apm.network.common.v3.Commands;
-import org.apache.skywalking.apm.network.management.v3.InstancePingPkg;
-import org.apache.skywalking.apm.network.management.v3.InstanceProperties;
-import org.apache.skywalking.apm.network.management.v3.compat.ManagementServiceGrpc;
+import org.apache.skywalking.apm.network.language.agent.v3.CLRMetricCollection;
+import org.apache.skywalking.apm.network.language.agent.v3.compat.CLRMetricReportServiceGrpc;
 
-public class MockManagementServiceCompat extends ManagementServiceGrpc.ManagementServiceImplBase {
+public class MockCLRMetricReportServiceCompat extends CLRMetricReportServiceGrpc.CLRMetricReportServiceImplBase {
 
     @Override
-    public void reportInstanceProperties(InstanceProperties request, StreamObserver<Commands> responseObserver) {
+    public void collect(CLRMetricCollection request, StreamObserver<Commands> responseObserver) {
         responseObserver.onNext(Commands.newBuilder().build());
         responseObserver.onCompleted();
     }
-
-    @Override
-    public void keepAlive(InstancePingPkg request, StreamObserver<Commands> responseObserver) {
-        responseObserver.onNext(Commands.newBuilder().build());
-        responseObserver.onCompleted();
-    }
-
 }
