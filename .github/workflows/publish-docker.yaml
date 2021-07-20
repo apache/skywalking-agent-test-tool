@@ -20,7 +20,6 @@ on:
   push:
     branches:
       - master
-  pull_request:
 
 env:
   SKIP_TEST: true
