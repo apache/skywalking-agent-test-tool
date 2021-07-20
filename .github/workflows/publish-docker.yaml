@@ -23,7 +23,7 @@ on:
 
 env:
   SKIP_TEST: true
-  HUB: ghcr.io/apache/skywalking
+  HUB: ghcr.io/apache/skywalking-agent-test-tool
 
 jobs:
   build:
