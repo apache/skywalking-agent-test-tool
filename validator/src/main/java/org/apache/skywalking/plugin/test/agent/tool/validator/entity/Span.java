@@ -22,8 +22,6 @@ import java.util.List;
 public interface Span {
     String operationName();
 
-    String operationId();
-
     String parentSpanId();
 
     String spanId();
