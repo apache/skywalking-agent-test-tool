@@ -104,7 +104,6 @@ public class SegmentAssert {
         ExpressParser.parse(excepted.endTime()).assertValue("end time", actualSpan.endTime());
         ExpressParser.parse(excepted.parentSpanId()).assertValue("parent span id", actualSpan.parentSpanId());
         ExpressParser.parse(excepted.spanId()).assertValue("span id", actualSpan.spanId());
-        ExpressParser.parse(excepted.operationId()).assertValue("operation id", actualSpan.operationId());
         ExpressParser.parse(excepted.peer()).assertValue("peer", actualSpan.peer());
         ExpressParser.parse(excepted.spanLayer()).assertValue("span layer", actualSpan.spanLayer());
         ExpressParser.parse(excepted.error()).assertValue("is error", actualSpan.error());
