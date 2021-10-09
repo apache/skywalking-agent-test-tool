@@ -114,7 +114,6 @@ public class SegmentForRead implements Segment {
 
     public static class SpanForRead implements Span {
         private String operationName;
-        private String operationId;
         private String parentSpanId;
         private String spanId;
         private String spanLayer;
@@ -134,10 +133,6 @@ public class SegmentForRead implements Segment {
 
         public void setOperationName(String operationName) {
             this.operationName = operationName;
-        }
-
-        public void setOperationId(String operationId) {
-            this.operationId = operationId;
         }
 
         public void setParentSpanId(String parentSpanId) {
@@ -199,11 +194,6 @@ public class SegmentForRead implements Segment {
         @Override
         public String operationName() {
             return operationName;
-        }
-
-        @Override
-        public String operationId() {
-            return operationId;
         }
 
         @Override
