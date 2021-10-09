@@ -48,7 +48,6 @@ import org.apache.skywalking.apm.network.language.agent.v3.SegmentReference;
 @AllArgsConstructor
 public class Span {
     private String operationName;
-    private int operationId;
     private int parentSpanId;
     private int spanId;
     private String spanLayer;
