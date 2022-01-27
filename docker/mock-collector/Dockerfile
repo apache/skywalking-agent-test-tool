@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-FROM openjdk:8
+FROM eclipse-temurin:8u312-b07-jre-focal
 
 WORKDIR /skywalking-mock-collector
 

@@ -16,51 +16,55 @@
 
 SHELL := /bin/bash -o pipefail
 
-export TOOLS_ROOT := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+TOOL_ROOT := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+CONTEXT ?= ${TOOL_ROOT}/dist
+SKIP_TEST ?= false
+DIST ?= skywalking-mock-collector.tar.gz
 
-export TOOLS_OUT:=${TOOLS_ROOT}/dist
+.PHONY: build.mock-collector
+build.mock-collector:
+	cd $(TOOL_ROOT) && ./mvnw -B -Dmaven.test.skip=$(SKIP_TEST) clean package
 
-SKIP_TEST?=false
+DOCKER_BUILD_TOP:=${CONTEXT}/docker_build
 
-HUB?=skywalking
+HUB ?= skywalking
+MOCK_COLLECTOR_NAME ?= mock-collector
+TAG ?= latest
 
-TAG?=latest
+.PHONY: docker build.mock-collector
 
-DOCKER_BUILD_TOP:=${TOOLS_OUT}/docker_build
+docker: build.mock-collector docker.all
 
 DOCKER_TARGETS:=docker.mock-collector
 
-.PHONY: build docker docker.mock docker.push
+%.mock-collector: NAME = $(MOCK_COLLECTOR_NAME)
 
-build:
-	cd $(TOOLS_ROOT) && ./mvnw -B -Dmaven.test.skip=$(SKIP_TEST) clean package
+docker.%: PLATFORMS =
+docker.%: LOAD_OR_PUSH = --load
+push.%: PLATFORMS = --platform linux/amd64,linux/arm64,linux/arm/v7
+push.%: LOAD_OR_PUSH = --push
 
-docker: build docker.mock-collector
+docker.% push.docker.%: $(CONTEXT)/$(DIST) $(TOOL_ROOT)/docker/%/*
+	$(DOCKER_RULE)
 
-docker.mock-collector: $(TOOLS_OUT)/skywalking-mock-collector.tar.gz
-docker.mock-collector: $(TOOLS_ROOT)/docker/Dockerfile.mock-collector
-		$(DOCKER_RULE)
+docker.all: $(DOCKER_TARGETS)
+docker.push: $(DOCKER_TARGETS:%=push.%)
 
-# $@ is the name of the target
 # $^ the name of the dependencies for the target
 # Rule Steps #
 ##############
-# 1. Make a directory $(DOCKER_BUILD_TOP)/%@
-# 2. This rule uses cp to copy all dependency filenames into into $(DOCKER_BUILD_TOP/$@
-# 3. This rule then changes directories to $(DOCKER_BUID_TOP)/$@
-# 4. This rule runs $(BUILD_PRE) prior to any docker build and only if specified as a dependency variable
+# 1. Make a directory $(DOCKER_BUILD_TOP)/$(NAME)
+# 2. This rule uses cp to copy all dependency filenames into into $(DOCKER_BUILD_TOP/$(NAME)
+# 3. This rule finally runs docker build passing $(BUILD_ARGS) to docker if they are specified as a dependency variable
 
-DOCKER_RULE=time (mkdir -p $(DOCKER_BUILD_TOP)/$@ && cp -r $^ $(DOCKER_BUILD_TOP)/$@ && cd $(DOCKER_BUILD_TOP)/$@ && $(BUILD_PRE) docker build --no-cache -t $(HUB)/$(subst docker.,,$@):$(TAG) -f Dockerfile$(suffix $@) .)
-
-# for each docker.XXX target create a push.docker.XXX target that pushes
-# the local docker image to another hub
-# a possible optimization is to use tag.$(TGT) as a dependency to do the tag for us
-$(foreach TGT,$(DOCKER_TARGETS),$(eval push.$(TGT): | $(TGT) ; \
-	time (docker push $(HUB)/$(subst docker.,,$(TGT)):$(TAG))))
-
-# create a DOCKER_PUSH_TARGETS that's each of DOCKER_TARGETS with a push. prefix
-DOCKER_PUSH_TARGETS:=
-$(foreach TGT,$(DOCKER_TARGETS),$(eval DOCKER_PUSH_TARGETS+=push.$(TGT)))
-
-# Will build and push docker images.
-docker.push: $(DOCKER_PUSH_TARGETS)
+define DOCKER_RULE
+	mkdir -p $(DOCKER_BUILD_TOP)/$(NAME)
+	cp -r $^ $(DOCKER_BUILD_TOP)/$(NAME)
+	docker buildx create --use --driver docker-container --name skywalking_main > /dev/null 2>&1 || true
+	docker buildx build $(PLATFORMS) $(LOAD_OR_PUSH) \
+		--no-cache $(BUILD_ARGS) \
+		-t $(HUB)/$(NAME):$(TAG) \
+		-t $(HUB)/$(NAME):latest \
+		$(DOCKER_BUILD_TOP)/$(NAME)
+	docker buildx rm skywalking_main || true
+endef
