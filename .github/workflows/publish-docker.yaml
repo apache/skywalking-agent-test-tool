@@ -20,7 +20,6 @@ on:
   push:
     branches:
       - master
-      - push.branches
 
 env:
   SKIP_TEST: true
