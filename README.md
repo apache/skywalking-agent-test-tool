@@ -75,7 +75,7 @@ java -jar \
 NOTICE: the `expected data` have to call `expectedData.yaml`, and the `actual data` must name as `actualData.yaml`. These files save all the segment and meter data, and in the same directory, `/path/to/download-folder`.
 JVM argument `caseName` just for show in the log.
 
-The format and documentation of `expectedData.yaml` could be found in [SkyWalking plugin test doc](https://github.com/apache/skywalking/blob/master/docs/en/guides/Plugin-test.md#expecteddatayaml)
+The format and documentation of `expectedData.yaml` could be found in [SkyWalking plugin test doc](https://skywalking.apache.org/docs/skywalking-java/latest/en/setup/service-agent/java-agent/java-plugin-development-guide/#plugin-test-tool)
 
 # Contact Us
 * Mail list: **dev@skywalking.apache.org**. Mail to `dev-subscribe@skywalking.apache.org`, follow the reply to subscribe the mail list.
