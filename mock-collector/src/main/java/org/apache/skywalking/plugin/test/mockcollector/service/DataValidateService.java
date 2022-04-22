@@ -23,14 +23,15 @@ import com.google.gson.GsonBuilder;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.skywalking.plugin.test.agent.tool.validator.assertor.DataAssert;
 import org.apache.skywalking.plugin.test.agent.tool.validator.entity.Data;
+import org.apache.skywalking.plugin.test.agent.tool.validator.exception.AssertFailedException;
 import org.apache.skywalking.plugin.test.mockcollector.entity.ValidateData;
 import org.apache.skywalking.plugin.test.mockcollector.entity.ValidateDataSerializer;
+import org.eclipse.jetty.http.MimeTypes.Type;
 import org.yaml.snakeyaml.Yaml;
 
 public class DataValidateService extends HttpServlet {
@@ -41,20 +42,32 @@ public class DataValidateService extends HttpServlet {
     public static final String SERVLET_PATH = "/dataValidate";
 
     @Override
-    protected void doPost(final HttpServletRequest req,
-                          final HttpServletResponse resp) throws ServletException, IOException {
-
+    protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws IOException {
         final Yaml yaml = new Yaml();
         final String dump = yaml.dump(yaml.load(gson.toJson(ValidateData.INSTANCE)));
         ByteArrayInputStream actualData = new ByteArrayInputStream(dump.getBytes());
 
         PrintWriter writer = resp.getWriter();
-        DataAssert.assertEquals(
-            Data.Loader.loadData(req.getInputStream()),
-            Data.Loader.loadData(actualData)
-        );
-        writer.write("success");
-        resp.setStatus(200);
+
+        resp.setContentType(Type.APPLICATION_JSON.asString());
+        try {
+            DataAssert.assertEquals(
+                Data.Loader.loadData(req.getInputStream()),
+                Data.Loader.loadData(actualData)
+            );
+
+            writer.write("success");
+            resp.setStatus(HttpServletResponse.SC_OK);
+        } catch (AssertFailedException e) {
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+
+            writer.write("actual data:\n");
+            writer.write(dump);
+            writer.write("\ncause by:\n");
+            writer.write(e.getCauseMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         writer.flush();
     }
 }

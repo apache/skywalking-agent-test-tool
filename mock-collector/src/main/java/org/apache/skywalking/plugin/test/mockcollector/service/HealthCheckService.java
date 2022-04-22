@@ -19,7 +19,6 @@
 package org.apache.skywalking.plugin.test.mockcollector.service;
 
 import java.io.IOException;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,8 +27,8 @@ public class HealthCheckService extends HttpServlet {
     public static final String SERVLET_PATH = "/healthCheck";
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setStatus(200);
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.setStatus(HttpServletResponse.SC_OK);
         resp.getWriter().write("Success");
         resp.getWriter().flush();
     }

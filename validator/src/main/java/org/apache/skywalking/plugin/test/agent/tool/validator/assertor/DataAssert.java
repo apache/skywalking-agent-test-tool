@@ -17,18 +17,12 @@
 
 package org.apache.skywalking.plugin.test.agent.tool.validator.assertor;
 
-import com.google.gson.GsonBuilder;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.skywalking.plugin.test.agent.tool.validator.entity.Data;
 
-@Slf4j
 public class DataAssert {
 
-    public static void assertEquals(Data excepted, Data actual) {
-        log.info("expected data:\n{}", new GsonBuilder().setPrettyPrinting().create().toJson(excepted));
-        log.info("actual data:\n{}", new GsonBuilder().setPrettyPrinting().create().toJson(actual));
+    public static void assertEquals(final Data excepted, final Data actual) {
         SegmentItemsAssert.assertEquals(excepted.segmentItems(), actual.segmentItems());
         MeterItemsAssert.assertEquals(excepted.meterItems(), actual.meterItems());
-        log.info("{} assert successful.", "segment items");
     }
 }

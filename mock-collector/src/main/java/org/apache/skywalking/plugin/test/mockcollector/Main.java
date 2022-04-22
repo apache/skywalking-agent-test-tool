@@ -18,7 +18,7 @@
 package org.apache.skywalking.plugin.test.mockcollector;
 
 import io.grpc.netty.NettyServerBuilder;
-import io.netty.channel.local.LocalAddress;
+import java.net.InetSocketAddress;
 import org.apache.skywalking.plugin.test.mockcollector.mock.MockCLRMetricReportService;
 import org.apache.skywalking.plugin.test.mockcollector.mock.MockEventService;
 import org.apache.skywalking.plugin.test.mockcollector.mock.MockJVMMetricReportService;
@@ -34,7 +34,6 @@ import org.apache.skywalking.plugin.test.mockcollector.mock.rest.MockManagementS
 import org.apache.skywalking.plugin.test.mockcollector.mock.rest.MockManagementServiceReportPropertiesHandler;
 import org.apache.skywalking.plugin.test.mockcollector.mock.rest.MockTraceSegmentListCollectServletHandler;
 import org.apache.skywalking.plugin.test.mockcollector.mock.rest.MockTraceSegmentSingleCollectServletHandler;
-import org.apache.skywalking.plugin.test.mockcollector.service.ClearReceiveDataService;
 import org.apache.skywalking.plugin.test.mockcollector.service.DataValidateService;
 import org.apache.skywalking.plugin.test.mockcollector.service.GrpcAddressHttpService;
 import org.apache.skywalking.plugin.test.mockcollector.service.HealthCheckService;
@@ -42,13 +41,10 @@ import org.apache.skywalking.plugin.test.mockcollector.service.ReceiveDataServic
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 
-import java.net.InetSocketAddress;
-
 public class Main {
     public static void main(String[] args) throws Exception {
         // Mock GRPC Collector
-        NettyServerBuilder.forAddress(LocalAddress.ANY)
-                          .forPort(19876)
+        NettyServerBuilder.forPort(19876)
                           .maxConcurrentCallsPerConnection(12)
                           .addService(new MockCLRMetricReportService())
                           .addService(new MockJVMMetricReportService())
@@ -61,11 +57,10 @@ public class Main {
                           .addService(new MockManagementServiceCompat())
                           .addService(new MockTraceSegmentServiceCompat())
                           .addService(new MockMeterReportServiceCompat())
-                          
                           .build()
                           .start();
 
-        Server jettyServer = new Server(new InetSocketAddress("0.0.0.0", Integer.valueOf(12800)));
+        Server jettyServer = new Server(new InetSocketAddress("0.0.0.0", 12800));
         String contextPath = "/";
         ServletContextHandler servletContextHandler = new ServletContextHandler(ServletContextHandler.NO_SESSIONS);
         servletContextHandler.setContextPath(contextPath);
@@ -75,7 +70,6 @@ public class Main {
         servletContextHandler.addServlet(GrpcAddressHttpService.class, GrpcAddressHttpService.SERVLET_PATH);
         servletContextHandler.addServlet(DataValidateService.class, DataValidateService.SERVLET_PATH);
         servletContextHandler.addServlet(ReceiveDataService.class, ReceiveDataService.SERVLET_PATH);
-        servletContextHandler.addServlet(ClearReceiveDataService.class, ClearReceiveDataService.SERVLET_PATH);
 
         // Mock Rest API collector
         servletContextHandler.addServlet(

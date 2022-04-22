@@ -31,11 +31,11 @@ public class DataAssertTest {
             File expectedData = new File(DataAssertTest.class.getResource("/expectedData.yaml").getFile());
 
             DataAssert.assertEquals(
-                Data.Loader.loadData("expectedData.yaml", expectedData),
-                Data.Loader.loadData("actualData.yaml", actualData)
+                Data.Loader.loadData(expectedData),
+                Data.Loader.loadData(actualData)
             );
         } catch (AssertFailedException e) {
-            throw new RuntimeException(String.format("\nassert failed.\n%s\n", e.getCauseMessage()), e);
+            throw new RuntimeException(String.format("assert failed.\n%s", e.getCauseMessage()), e);
         }
     }
 
