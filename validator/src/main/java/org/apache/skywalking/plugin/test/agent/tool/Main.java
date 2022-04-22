@@ -17,6 +17,7 @@
 
 package org.apache.skywalking.plugin.test.agent.tool;
 
+import com.google.gson.GsonBuilder;
 import java.io.File;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.skywalking.plugin.test.agent.tool.validator.assertor.DataAssert;
@@ -39,25 +40,26 @@ public class Main {
             }
 
             log.info("start to assert data of test case[{}]", ConfigHelper.caseName());
-            File actualData = new File(casePath, "actualData.yaml");
-            File expectedData = new File(casePath, "expectedData.yaml");
+            File actualDataFile = new File(casePath, "actualData.yaml");
+            File expectedDataFile = new File(casePath, "expectedData.yaml");
 
-            if (actualData.exists() && expectedData.exists()) {
+            if (actualDataFile.exists() && expectedDataFile.exists()) {
+                Data expectedData = Data.Loader.loadData(expectedDataFile);
+                Data actualData = Data.Loader.loadData(actualDataFile);
+
                 try {
-                    DataAssert.assertEquals(
-                        Data.Loader.loadData("expectedData.yaml", expectedData),
-                        Data.Loader.loadData("actualData.yaml", actualData)
-                    );
-                    return true;
+                    DataAssert.assertEquals(expectedData, actualData);
+                    log.info("{} assert successful.", "segment items");
                 } catch (AssertFailedException e) {
-                    log.error("\nassert failed.\n{}\n", e.getCauseMessage());
+                    log.error(
+                        "assert failed:\nexpected data: {}\nactual data: {}\ncause by: {}",
+                        new GsonBuilder().setPrettyPrinting().create().toJson(expectedData),
+                        new GsonBuilder().setPrettyPrinting().create().toJson(actualData),
+                        e.getCauseMessage()
+                    );
                 }
             } else {
-                log.error(
-                    "assert failed. because actual data {} and expected data {}",
-                    actualData.exists() ? "founded" : "not founded", expectedData
-                        .exists() ? "founded" : "not founded"
-                );
+                log.error("assert failed. because actual data or and expected data not found.");
             }
         } catch (Exception e) {
             log.error("assert test case {} failed.", ConfigHelper.caseName(), e);

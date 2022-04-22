@@ -17,6 +17,7 @@
 
 package org.apache.skywalking.plugin.test.agent.tool.validator.entity;
 
+import java.io.FileNotFoundException;
 import org.apache.skywalking.plugin.test.agent.tool.validator.exception.IllegalDataFileException;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
@@ -33,11 +34,11 @@ public interface Data {
     List<MeterItem> meterItems();
 
     class Loader {
-        public static Data loadData(String fileName, File file) {
+        public static Data loadData(File file) {
             try {
                 return loadData(new FileInputStream(file));
-            } catch (Exception e) {
-                throw new IllegalDataFileException(fileName);
+            } catch (FileNotFoundException e) {
+                throw new IllegalDataFileException(file.getName());
             }
         }
 
@@ -49,12 +50,7 @@ public interface Data {
             Representer representer = new Representer();
             representer.getPropertyUtils().setSkipMissingProperties(true);
             Yaml yaml = new Yaml(constructor, representer);
-            Data result = yaml.loadAs(inputStream, DataForRead.class);
-            if (result == null) {
-                throw new RuntimeException();
-            } else {
-                return result;
-            }
+            return yaml.loadAs(inputStream, DataForRead.class);
         }
     }
 }

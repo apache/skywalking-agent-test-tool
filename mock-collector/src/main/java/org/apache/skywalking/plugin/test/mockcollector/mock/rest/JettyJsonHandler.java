@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.jetty.http.MimeTypes.Type;
 
 import static java.util.Objects.nonNull;
 
@@ -63,7 +64,7 @@ public abstract class JettyJsonHandler extends HttpServlet {
     protected abstract JsonElement doPost(HttpServletRequest req) throws IOException;
 
     private void reply(HttpServletResponse response, JsonElement resJson) throws IOException {
-        response.setContentType("application/json");
+        response.setContentType(Type.APPLICATION_JSON.asString());
         response.setCharacterEncoding("utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
 
@@ -76,7 +77,7 @@ public abstract class JettyJsonHandler extends HttpServlet {
     }
 
     private void replyError(HttpServletResponse response, String errorMessage, int status) throws IOException {
-        response.setContentType("application/json");
+        response.setContentType(Type.APPLICATION_JSON.asString());
         response.setCharacterEncoding("utf-8");
         response.setStatus(status);
         response.setHeader("error-message", errorMessage);
