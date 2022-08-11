@@ -32,6 +32,7 @@ import java.util.List;
 public interface Data {
     List<SegmentItem> segmentItems();
     List<MeterItem> meterItems();
+    List<LogItem> logItems();
 
     class Loader {
         public static Data loadData(File file) {

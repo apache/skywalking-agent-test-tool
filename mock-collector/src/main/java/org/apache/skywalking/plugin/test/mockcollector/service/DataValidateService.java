@@ -66,6 +66,8 @@ public class DataValidateService extends HttpServlet {
             writer.write("\ncause by:\n");
             writer.write(e.getCauseMessage());
         } catch (Exception e) {
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+
             e.printStackTrace();
         }
         writer.flush();

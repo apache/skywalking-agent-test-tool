@@ -17,34 +17,27 @@
 
 package org.apache.skywalking.plugin.test.mockcollector.entity;
 
-public class ValidateData {
-    public static ValidateData INSTANCE = new ValidateData();
-    private SegmentItems segmentItem;
-    private MeterItems meterItems;
-    private LogItems logItems;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-    private  ValidateData() {
-        segmentItem = new SegmentItems();
-        meterItems = new MeterItems();
-        logItems = new LogItems();
+public class LogItem {
+    private String serviceName;
+    private List<Log> logs;
+
+    public LogItem(String serviceName) {
+        this.serviceName = serviceName;
+        logs = new CopyOnWriteArrayList<>();
     }
 
-    public synchronized SegmentItems getSegmentItem() {
-        return segmentItem;
+    public void addLogs(Log item) {
+        logs.add(item);
     }
 
-    public synchronized void clearData() {
-        INSTANCE.segmentItem = new SegmentItems();
-        INSTANCE.meterItems = new MeterItems();
-        INSTANCE.logItems = new LogItems();
+    public String getServiceName() {
+        return serviceName;
     }
 
-    public synchronized MeterItems getMeterItems() {
-        return meterItems;
+    public List<Log> getLogs() {
+        return logs;
     }
-
-    public synchronized LogItems getLogItems() {
-        return logItems;
-    }
-
 }

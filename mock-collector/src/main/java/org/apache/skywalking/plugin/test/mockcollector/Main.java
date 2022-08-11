@@ -19,12 +19,8 @@ package org.apache.skywalking.plugin.test.mockcollector;
 
 import io.grpc.netty.NettyServerBuilder;
 import java.net.InetSocketAddress;
-import org.apache.skywalking.plugin.test.mockcollector.mock.MockCLRMetricReportService;
-import org.apache.skywalking.plugin.test.mockcollector.mock.MockEventService;
-import org.apache.skywalking.plugin.test.mockcollector.mock.MockJVMMetricReportService;
-import org.apache.skywalking.plugin.test.mockcollector.mock.MockManagementService;
-import org.apache.skywalking.plugin.test.mockcollector.mock.MockMeterReportService;
-import org.apache.skywalking.plugin.test.mockcollector.mock.MockTraceSegmentService;
+
+import org.apache.skywalking.plugin.test.mockcollector.mock.*;
 import org.apache.skywalking.plugin.test.mockcollector.mock.compat.MockCLRMetricReportServiceCompat;
 import org.apache.skywalking.plugin.test.mockcollector.mock.compat.MockJVMMetricReportServiceCompat;
 import org.apache.skywalking.plugin.test.mockcollector.mock.compat.MockManagementServiceCompat;
@@ -51,6 +47,7 @@ public class Main {
                           .addService(new MockManagementService())
                           .addService(new MockTraceSegmentService())
                           .addService(new MockMeterReportService())
+                          .addService(new MockLogReportService())
                           .addService(new MockEventService())
                           .addService(new MockCLRMetricReportServiceCompat())
                           .addService(new MockJVMMetricReportServiceCompat())
