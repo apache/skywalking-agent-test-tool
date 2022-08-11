@@ -15,15 +15,19 @@
  * limitations under the License.
  */
 
-package org.apache.skywalking.plugin.test.agent.tool.validator.assertor;
+package org.apache.skywalking.plugin.test.agent.tool.validator.entity;
 
-import org.apache.skywalking.plugin.test.agent.tool.validator.entity.Data;
+import lombok.Data;
 
-public class DataAssert {
+import java.util.List;
 
-    public static void assertEquals(final Data excepted, final Data actual) {
-        SegmentItemsAssert.assertEquals(excepted.segmentItems(), actual.segmentItems());
-        MeterItemsAssert.assertEquals(excepted.meterItems(), actual.meterItems());
-        LogItemsAssert.assertEquals(excepted.logItems(), actual.logItems());
+@Data
+public class LogTags {
+    private List<KeyValuePair> data;
+
+    @Data
+    public static class KeyValuePair {
+        private String key;
+        private String value;
     }
 }

@@ -17,6 +17,8 @@
 
 package org.apache.skywalking.plugin.test.agent.tool.validator.entity;
 
+import lombok.Data;
+
 public interface KeyValuePair {
     String key();
 

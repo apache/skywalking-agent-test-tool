@@ -18,54 +18,59 @@
 
 package org.apache.skywalking.plugin.test.mockcollector.util;
 
-import com.google.common.collect.Lists;
 import org.apache.skywalking.apm.network.common.v3.KeyStringValuePair;
-import org.apache.skywalking.apm.network.language.agent.v3.Log;
-import org.apache.skywalking.apm.network.language.agent.v3.SegmentObject;
-import org.apache.skywalking.apm.network.language.agent.v3.SegmentReference;
-import org.apache.skywalking.apm.network.language.agent.v3.SpanObject;
 import org.apache.skywalking.apm.network.logging.v3.LogData;
-import org.apache.skywalking.plugin.test.mockcollector.entity.Segment;
-import org.apache.skywalking.plugin.test.mockcollector.entity.Span;
+import org.apache.skywalking.apm.network.logging.v3.LogDataBody;
+import org.apache.skywalking.apm.network.logging.v3.TraceContext;
+import org.apache.skywalking.plugin.test.mockcollector.entity.Log;
 import org.apache.skywalking.plugin.test.mockcollector.entity.ValidateData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LogDataHandler {
 
     public static void parseLogData(LogData logData) {
-//        Segment.SegmentBuilder builder = Segment.builder();
-//
-//        List<Span> spans = Lists.newArrayList();
-//        for (SpanObject spanObject : segmentObject.getSpansList()) {
-//            Span.SpanBuilder spanBuilder = Span.builder();
-//            spanBuilder.operationName(spanObject.getOperationName())
-//                       .parentSpanId(spanObject.getParentSpanId())
-//                       .spanId(spanObject.getSpanId())
-//                       .spanLayer(spanObject.getSpanLayer().name())
-//                       .startTime(spanObject.getStartTime())
-//                       .endTime(spanObject.getEndTime())
-//                       .componentId(spanObject.getComponentId())
-//                       .isError(spanObject.getIsError())
-//                       .spanType(spanObject.getSpanType().name())
-//                       .peer(spanObject.getPeer())
-//                       .skipAnalysis(spanObject.getSkipAnalysis());
-//
-//            for (Log log : spanObject.getLogsList()) {
-//                spanBuilder.logEvent(log.getDataList());
-//            }
-//            for (KeyStringValuePair tags : spanObject.getTagsList()) {
-//                spanBuilder.tags(tags.getKey(), tags.getValue());
-//            }
-//            for (SegmentReference ref : spanObject.getRefsList()) {
-//                spanBuilder.ref(new Span.SegmentRef(ref));
-//            }
-//            spans.add(spanBuilder.build());
-//        }
-//        builder.segmentId(segmentObject.getTraceSegmentId()).spans(spans);
-//
-//        ValidateData.INSTANCE.getSegmentItem()
-//                             .addSegmentItem(segmentObject.getService(), builder.build());
+        Log.LogBuilder builder = Log.builder();
+
+        builder.timestamp(logData.getTimestamp());
+
+        builder.endpoint(logData.getEndpoint());
+
+        LogDataBody body = logData.getBody();
+        Log.LogDataBody.LogDataBodyBuilder logDataBodyBuilder = Log.LogDataBody.builder();
+        logDataBodyBuilder.type(body.getType());
+        switch (body.getContentCase()) {
+            case TEXT:
+                logDataBodyBuilder.content(new Log.TextLog(body.getText().getText()));
+                break;
+            case JSON:
+                logDataBodyBuilder.content(new Log.JsonLog(body.getJson().getJson()));
+                break;
+            case YAML:
+                logDataBodyBuilder.content(new Log.YamlLog(body.getYaml().getYaml()));
+                break;
+        }
+        builder.body(logDataBodyBuilder.build());
+
+        TraceContext traceContext = logData.getTraceContext();
+        builder.traceContext(Log.TraceContext.builder()
+                .traceId(traceContext.getTraceId())
+                .traceSegmentId(traceContext.getTraceSegmentId())
+                .spanId(traceContext.getSpanId())
+                .build());
+
+        Log.LogTags.LogTagsBuilder logTagsBuilder = Log.LogTags.builder();
+        List<Log.KeyValuePair> kvs = new ArrayList<>();
+        for (KeyStringValuePair keyStringValuePair : logData.getTags().getDataList()) {
+            kvs.add(new Log.KeyValuePair(keyStringValuePair.getKey(), keyStringValuePair.getValue()));
+        }
+        builder.tags(logTagsBuilder.data(kvs).build());
+
+        builder.layer(logData.getLayer());
+
+        ValidateData.INSTANCE.getLogItems()
+                .addLogItem(logData.getService(), builder.build());
     }
 
 }

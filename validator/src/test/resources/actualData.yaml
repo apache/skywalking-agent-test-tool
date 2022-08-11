@@ -90,3 +90,49 @@ segmentItems:
             tags:
               - {key: url, value: 'http://localhost:8080/jettyclient-case/case/jettyclient-case'}
               - {key: http.method, value: GET}
+
+logItems:
+  - serviceName: foo
+    logSize: 2
+    logs:
+      - timestamp: 12345667890
+        endpoint: "/foo1"
+        body:
+          type: ''
+          content:
+            text: "something text to log"
+        traceContext:
+          traceId: ''
+          traceSegmentId: ''
+          spanId: 0
+        tags:
+          data:
+            - key: foo
+              value: bar
+        layer: ''
+
+      - timestamp: 22345667890
+        endpoint: "/foo2"
+        body:
+          type: ''
+          content:
+            json: "something json to log"
+        traceContext:
+          traceId: 9999999999
+          traceSegmentId: 8888888888
+          spanId: 1
+        tags: {}
+        layer: ''
+
+  - serviceName: bar
+    logSize: 1
+    logs:
+      - timestamp: 32345667890
+        endpoint: "/bar1"
+        body:
+          type: ''
+          content:
+            yaml: "something yaml to log"
+        traceContext: {}
+        tags: {}
+        layer: ''

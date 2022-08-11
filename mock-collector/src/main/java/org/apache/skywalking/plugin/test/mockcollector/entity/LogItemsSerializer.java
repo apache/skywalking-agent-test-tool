@@ -21,18 +21,23 @@ import com.google.gson.*;
 
 import java.lang.reflect.Type;
 
-public class ValidateDataSerializer implements JsonSerializer<ValidateData> {
-    @Override
-    public JsonElement serialize(ValidateData src, Type typeOfSrc, JsonSerializationContext context) {
-        Gson gson = new GsonBuilder().registerTypeAdapter(SegmentItems.class, new SegmentItemsSerializer())
-                                     .registerTypeAdapter(MeterItems.class, new MeterItemsSerializer())
-                                     .registerTypeAdapter(LogItems.class, new LogItemsSerializer())
-                                     .create();
+public class LogItemsSerializer implements JsonSerializer<LogItems> {
 
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.add("segmentItems", gson.toJsonTree(src.getSegmentItem()));
-        jsonObject.add("meterItems", gson.toJsonTree(src.getMeterItems()));
-        jsonObject.add("logItems", gson.toJsonTree(src.getLogItems()));
-        return jsonObject;
+    @Override
+    public JsonElement serialize(LogItems src, Type typeOfSrc, JsonSerializationContext context) {
+        JsonArray serviceLogItems = new JsonArray();
+        src.getLogItems().forEach((serviceName, logItem) -> {
+            JsonObject logJson = new JsonObject();
+            logJson.addProperty("serviceName", serviceName);
+            logJson.addProperty("logSize", logItem.getLogs().size());
+            JsonArray logs = new JsonArray();
+            logItem.getLogs().forEach(log -> {
+                logs.add(new Gson().toJsonTree(log));
+            });
+            logJson.add("logs", logs);
+            serviceLogItems.add(logJson);
+        });
+
+        return serviceLogItems;
     }
 }

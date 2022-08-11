@@ -44,6 +44,7 @@ public class Log {
     }
 
     @Getter
+    @Builder
     public static class LogDataBody {
         private String type;
         private Object content;
@@ -68,6 +69,7 @@ public class Log {
     }
 
     @Getter
+    @Builder
     public static class TraceContext {
         private String traceId;
         private String traceSegmentId;
@@ -75,6 +77,7 @@ public class Log {
     }
 
     @Getter
+    @Builder
     public static class LogTags {
         private List<KeyValuePair> data;
     }

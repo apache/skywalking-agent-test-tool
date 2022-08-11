@@ -21,10 +21,12 @@ public class ValidateData {
     public static ValidateData INSTANCE = new ValidateData();
     private SegmentItems segmentItem;
     private MeterItems meterItems;
+    private LogItems logItems;
 
     private  ValidateData() {
         segmentItem = new SegmentItems();
         meterItems = new MeterItems();
+        logItems = new LogItems();
     }
 
     public synchronized SegmentItems getSegmentItem() {
@@ -34,10 +36,15 @@ public class ValidateData {
     public synchronized void clearData() {
         INSTANCE.segmentItem = new SegmentItems();
         INSTANCE.meterItems = new MeterItems();
+        INSTANCE.logItems = new LogItems();
     }
 
     public synchronized MeterItems getMeterItems() {
         return meterItems;
+    }
+
+    public synchronized LogItems getLogItems() {
+        return logItems;
     }
 
 }

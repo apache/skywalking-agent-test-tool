@@ -46,33 +46,7 @@ public class MockLogReportService extends LogReportServiceGrpc.LogReportServiceI
                 responseObserver.onNext(Commands.newBuilder().build());
                 responseObserver.onCompleted();
             }
-        }
+        };
     }
-
-    //    @Override
-//    public StreamObserver<SegmentObject> collect(StreamObserver<Commands> responseObserver) {
-//        return new StreamObserver<SegmentObject>() {
-//            @Override
-//            public void onNext(SegmentObject segmentObject) {
-//                if (segmentObject.getSpansList().size() == 0) {
-//                    return;
-//                }
-//
-//                TraceSegmentHandler.parseSegment(segmentObject);
-//            }
-//
-//            @Override
-//            public void onError(Throwable throwable) {
-//                log.error(throwable.getMessage(), throwable);
-//                responseObserver.onCompleted();
-//            }
-//
-//            @Override
-//            public void onCompleted() {
-//                responseObserver.onNext(Commands.newBuilder().build());
-//                responseObserver.onCompleted();
-//            }
-//        };
-//    }
 
 }
