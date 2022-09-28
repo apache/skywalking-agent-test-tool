@@ -50,6 +50,7 @@ public class Main {
                 try {
                     DataAssert.assertEquals(expectedData, actualData);
                     log.info("{} assert successful.", "segment items");
+                    return true;
                 } catch (AssertFailedException e) {
                     log.error(
                         "assert failed:\nexpected data: {}\nactual data: {}\ncause by: {}",
