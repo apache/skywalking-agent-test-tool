@@ -74,7 +74,7 @@ segmentItems:
             skipAnalysis: false
             tags:
               - {key: http.method, value: GET}
-              - {key: url, value: 'http://localhost:18080/jettyserver-case/case/receiveContext-0'}
+              - {key: url, value: not blank}
           - operationName: /jettyclient-case/case/jettyclient-case
             operationId: 0
             parentSpanId: -1
@@ -112,7 +112,7 @@ logItems:
         body:
           type: ''
           content:
-            json: "something json to log"
+            json: not blank
         traceContext:
           traceId: not null
           traceSegmentId: not null
