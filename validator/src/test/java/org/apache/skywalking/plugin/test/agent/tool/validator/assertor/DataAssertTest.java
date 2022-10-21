@@ -20,6 +20,7 @@ package org.apache.skywalking.plugin.test.agent.tool.validator.assertor;
 import java.io.File;
 import org.apache.skywalking.plugin.test.agent.tool.validator.entity.Data;
 import org.apache.skywalking.plugin.test.agent.tool.validator.exception.AssertFailedException;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class DataAssertTest {
@@ -36,6 +37,23 @@ public class DataAssertTest {
             );
         } catch (AssertFailedException e) {
             throw new RuntimeException(String.format("assert failed.\n%s", e.getCauseMessage()), e);
+        }
+    }
+
+    @Test(expected = AssertFailedException.class)
+    public void testNotBlankAssertFunction() {
+        try {
+            File actualData = new File(DataAssertTest.class.getResource("/blank-validator/actualData.yaml").getFile());
+            File expectedData = new File(
+                DataAssertTest.class.getResource("/blank-validator/expectedData.yaml").getFile());
+            DataAssert.assertEquals(
+                Data.Loader.loadData(expectedData),
+                Data.Loader.loadData(actualData)
+            );
+        } catch (AssertFailedException e) {
+            System.out.println(e.getCauseMessage());
+            Assert.assertTrue(e.getCauseMessage().contains("{not blank}"));
+            throw e;
         }
     }
 
