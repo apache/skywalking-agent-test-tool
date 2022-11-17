@@ -100,7 +100,7 @@ logItems:
         body:
           type: ''
           content:
-            text: "something text to log"
+            text: "start with something text"
         tags:
           data:
             - key: foo
@@ -128,7 +128,7 @@ logItems:
         body:
           type: ''
           content:
-            yaml: "something yaml to log"
+            yaml: "end with to log"
         traceContext: {}
         tags: {}
         layer: ''
