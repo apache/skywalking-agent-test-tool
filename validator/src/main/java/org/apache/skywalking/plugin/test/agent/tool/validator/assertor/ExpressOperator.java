@@ -27,12 +27,12 @@ public enum ExpressOperator {
     NULL("null", false),
     NOT_NULL("not null", false),
     NOT_BLANK("not blank", false),
-    NOT_EQUALS("nq",true),
-    EQUALS("eq",true),
-    GREAT_THAN("gt",true),
-    GREAT_EQUAL("ge",true),
-    START_WITH("start with",true),
-    END_WITH("end with",true),
+    NOT_EQUALS("nq ",true),
+    EQUALS("eq ",true),
+    GREAT_THAN("gt ",true),
+    GREAT_EQUAL("ge ",true),
+    START_WITH("start with ",true),
+    END_WITH("end with ",true),
     ;
     private final String prefix;
     private final boolean hasValue;
