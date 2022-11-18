@@ -20,15 +20,15 @@ package org.apache.skywalking.plugin.test.agent.tool.validator.assertor.element;
 
 import org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exception.ValueAssertFailedException;
 
-public class EndWithAssertor extends ElementAssertor {
-    public EndWithAssertor(String exceptedValue) {
+public class GreetEqualAssertor extends ElementAssertor {
+    public GreetEqualAssertor(String exceptedValue) {
         super(exceptedValue);
     }
 
     @Override
     public void assertValue(String desc, String actualValue) {
-        if (actualValue == null || !actualValue.endsWith(exceptedValue)) {
-            throw new ValueAssertFailedException(desc, " end with " + exceptedValue, actualValue);
+        if (Double.parseDouble(actualValue) < Double.parseDouble(exceptedValue)) {
+            throw new ValueAssertFailedException(desc, " ge " + exceptedValue, actualValue);
         }
     }
 }
