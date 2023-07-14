@@ -20,6 +20,7 @@ package org.apache.skywalking.plugin.test.agent.tool.validator.assertor;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exception.ActualSegmentRefIsEmptyException;
 import org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exception.KeyValueNotEqualsException;
@@ -90,7 +91,28 @@ public class SegmentAssert {
             try {
                 spanEquals(exceptedSpan, actualSpan);
             } catch (AssertFailedException e) {
-                throw new SpanAssertFailedException(e, exceptedSpan, actualSpan);
+                if (Objects.equals(exceptedSpan.spanId(), actualSpan.spanId())) {
+                    throw new SpanAssertFailedException(e, exceptedSpan, actualSpan);
+                }
+                // if the span id is not equals, trying to find the span by span id
+                Span tmpSpan = null;
+                for (Span s : actual) {
+                    if (Objects.equals(exceptedSpan.spanId(), s.spanId())) {
+                        tmpSpan = s;
+                        break;
+                    }
+                }
+                if (tmpSpan == null) {
+                    // keep the original exception if the span not found
+                    throw new SpanAssertFailedException(e, exceptedSpan, actualSpan);
+                }
+                actualSpan = tmpSpan;
+                // if the span still not equals, throw the exception
+                try {
+                    spanEquals(exceptedSpan, actualSpan);
+                } catch (AssertFailedException e1) {
+                    throw new SpanAssertFailedException(e1, exceptedSpan, actualSpan);
+                }
             }
         }
 
