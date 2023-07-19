@@ -24,7 +24,7 @@ on:
       - 'v*'
 
 jobs:
-  CI:
+  CI-on-Ubuntu:
     runs-on: ubuntu-18.04
     timeout-minutes: 180
     strategy:
