@@ -27,6 +27,7 @@ github:
       - lua
       - dapper
       - test
+    dependabot_updates: false
     enabled_merge_buttons:
       squash:  true
       merge:   false
