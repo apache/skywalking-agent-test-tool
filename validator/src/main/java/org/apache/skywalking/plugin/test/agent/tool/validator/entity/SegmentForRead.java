@@ -237,9 +237,8 @@ public class SegmentForRead implements Segment {
                 }
                 result.add(logEvent);
             }
-            // 按照 endpoint、type 和 message 排序
+            // ordered by endpoint、type、message
             result.sort((log1, log2) -> {
-                // 假设 LogEvent 有获取 endpoint、type 和 message 的方法，这里需要根据实际情况调整
                 String endpoint1 = log1.getEndpoint() != null ? log1.getEndpoint() : "";
                 String endpoint2 = log2.getEndpoint() != null ? log2.getEndpoint() : "";
                 int endpointCompare = endpoint1.compareTo(endpoint2);

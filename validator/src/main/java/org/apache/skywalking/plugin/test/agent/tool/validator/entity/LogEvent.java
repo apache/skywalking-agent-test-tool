@@ -44,11 +44,12 @@ public interface LogEvent {
 
         @Override
         public String getMessage() {
-            StringBuilder message = new StringBuilder();
             for (KeyValuePair pair : keyValuePairs) {
-                message.append(pair.value()).append(" ");
+                if ("message".equals(pair.key())) {
+                    return pair.value();
+                }
             }
-            return message.toString().trim();
+            return "";
         }
 
         @Override
