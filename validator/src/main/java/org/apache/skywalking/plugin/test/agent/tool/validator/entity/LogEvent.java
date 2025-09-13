@@ -22,6 +22,9 @@ import java.util.List;
 
 public interface LogEvent {
     List<KeyValuePair> events();
+    String getMessage();
+    String getEndpoint();
+    String getType();
 
     class Impl implements LogEvent {
         private List<KeyValuePair> keyValuePairs;
@@ -37,6 +40,35 @@ public interface LogEvent {
         @Override
         public List<KeyValuePair> events() {
             return keyValuePairs;
+        }
+
+        @Override
+        public String getMessage() {
+            StringBuilder message = new StringBuilder();
+            for (KeyValuePair pair : keyValuePairs) {
+                message.append(pair.value()).append(" ");
+            }
+            return message.toString().trim();
+        }
+
+        @Override
+        public String getEndpoint() {
+            for (KeyValuePair pair : keyValuePairs) {
+                if ("endpoint".equals(pair.key())) {
+                    return pair.value();
+                }
+            }
+            return "";
+        }
+
+        @Override
+        public String getType() {
+            for (KeyValuePair pair : keyValuePairs) {
+                if ("type".equals(pair.key())) {
+                    return pair.value();
+                }
+            }
+            return "";
         }
     }
 }
