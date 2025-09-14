@@ -237,26 +237,7 @@ public class SegmentForRead implements Segment {
                 }
                 result.add(logEvent);
             }
-            // ordered by endpoint、type、message
-            result.sort((log1, log2) -> {
-                String endpoint1 = log1.getEndpoint() != null ? log1.getEndpoint() : "";
-                String endpoint2 = log2.getEndpoint() != null ? log2.getEndpoint() : "";
-                int endpointCompare = endpoint1.compareTo(endpoint2);
-                if (endpointCompare != 0) {
-                    return endpointCompare;
-                }
-                
-                String type1 = log1.getType() != null ? log1.getType() : "";
-                String type2 = log2.getType() != null ? log2.getType() : "";
-                int typeCompare = type1.compareTo(type2);
-                if (typeCompare != 0) {
-                    return typeCompare;
-                }
-                
-                String message1 = log1.getMessage() != null ? log1.getMessage() : "";
-                String message2 = log2.getMessage() != null ? log2.getMessage() : "";
-                return message1.compareTo(message2);
-            });
+
             return result;
         }
 

@@ -174,7 +174,7 @@ meterItems:
     singleValue: 200.0
 logItems:
   - serviceName: foo
-    logSize: 2
+    logSize: 4
     logs:
       - timestamp: 12345667890
         endpoint: "/foo1"
@@ -204,6 +204,24 @@ logItems:
           spanId: 1
         tags: {}
         layer: ''
+      - timestamp: 111
+        endpoint: ''
+        body:
+          type: ''
+          content:
+            text: "empty endpoint log2"
+          traceContext: { }
+          tags: { }
+          layer: ''
+      - timestamp: 1111
+        endpoint: ''
+        body:
+          type: ''
+          content:
+            text: "empty endpoint log1"
+          traceContext: { }
+          tags: { }
+          layer: ''
 
   - serviceName: bar
     logSize: 1
