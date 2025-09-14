@@ -19,15 +19,15 @@ name: publish-docker
 on:
   push:
     branches:
-      - ci
+      - master
 
 env:
   SKIP_TEST: true
-  HUB: ghcr.io/cqhasy/skywalking-agent-test-tool
+  HUB: ghcr.io/apache/skywalking-agent-test-tool
 
 jobs:
   build:
-    if: github.repository == 'cqhasy/skywalking-agent-test-tool'
+    if: github.repository == 'apache/skywalking-agent-test-tool'
     runs-on: ubuntu-latest
     permissions:
       contents: read
