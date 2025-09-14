@@ -144,8 +144,26 @@ meterItems:
         singleValue: ge 0
 logItems:
   - serviceName: foo
-    logSize: 2
+    logSize: 4
     logs:
+      - timestamp: gt 0
+        endpoint: ''
+        body:
+          type: ''
+          content:
+            text: "empty endpoint log1"
+          traceContext: { }
+          tags: { }
+          layer: ''
+      - timestamp: gt 0
+        endpoint: ''
+        body:
+          type: ''
+          content:
+            text: "empty endpoint log2"
+          traceContext: { }
+          tags: { }
+          layer: ''
       - timestamp: gt 0
         endpoint: "/foo1"
         body:

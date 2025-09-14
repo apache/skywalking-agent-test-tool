@@ -41,7 +41,24 @@ public class LogAssert {
         if (actual == null || excepted.size() != actual.size()) {
             throw new LogSizeNotEqualsException(excepted.size(), (actual != null) ? actual.size() : 0);
         }
+        Comparator<LogData> logComparator = (log1, log2) -> {
+            String ep1 = log1.getEndpoint() != null ? log1.getEndpoint() : "";
+            String ep2 = log2.getEndpoint() != null ? log2.getEndpoint() : "";
+            int cmp = ep1.compareTo(ep2);
+            if (cmp != 0) return cmp;
 
+            String type1 = log1.getBody() != null && log1.getBody().getType() != null ? log1.getBody().getType() : "";
+            String type2 = log2.getBody() != null && log2.getBody().getType() != null ? log2.getBody().getType() : "";
+            cmp = type1.compareTo(type2);
+            if (cmp != 0) return cmp;
+
+            String content1 = getContentValue(log1);
+            String content2 = getContentValue(log2);
+            return content1.compareTo(content2);
+        };
+
+        excepted.sort(logComparator);
+        actual.sort(logComparator);
         for (int index = 0; index < excepted.size(); index++) {
             LogData exceptedLog = excepted.get(index);
             LogData actualLog = actual.get(index);
@@ -142,6 +159,15 @@ public class LogAssert {
         }
 
         ExpressParser.parse(excepted.getValue()).assertValue("", actual.getValue());
+    }
+
+    private static String getContentValue(LogData log) {
+        if (log.getBody() == null || log.getBody().getContent() == null) return "";
+        Map<String, String> content = log.getBody().getContent();
+        if (content.get("text") != null) return content.get("text");
+        if (content.get("json") != null) return content.get("json");
+        if (content.get("yaml") != null) return content.get("yaml");
+        return "";
     }
 
 }
