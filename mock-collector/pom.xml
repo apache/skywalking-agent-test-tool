@@ -169,6 +169,8 @@
                                 <descriptor>src/main/assembly/assembly.xml</descriptor>
                             </descriptors>
                             <outputDirectory>${project.basedir}/../dist</outputDirectory>
+                            <finalName>skywalking-mock-collector</finalName>
+                            <appendAssemblyId>false</appendAssemblyId>
                         </configuration>
                     </execution>
                 </executions>
