@@ -27,7 +27,7 @@ env:
 
 jobs:
   build:
-    if: github.repository == 'apache/skywalking-agent-test-tool'
+    if: github.repository == 'cqhasy/skywalking-agent-test-tool'
     runs-on: ubuntu-latest
     permissions:
       contents: read
