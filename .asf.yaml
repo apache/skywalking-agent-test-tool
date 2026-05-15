@@ -16,19 +16,32 @@
 #
 
 github:
-    description: The integration test tool for Apache SkyWalking, including Mock OAP server and trace validator.
-    homepage: https://skywalking.apache.org/
-    labels:
-      - skywalking
-      - observability
-      - apm
-      - distributed-tracing
-      - nginx
-      - lua
-      - dapper
-      - test
-    dependabot_updates: false
-    enabled_merge_buttons:
-      squash:  true
-      merge:   false
-      rebase:  false  
+  description: The integration test tool for Apache SkyWalking, including Mock OAP server and trace validator.
+  homepage: https://skywalking.apache.org/
+  labels:
+    - skywalking
+    - observability
+    - apm
+    - distributed-tracing
+    - nginx
+    - lua
+    - dapper
+    - test
+  dependabot_updates: false
+  enabled_merge_buttons:
+    squash: true
+    merge: false
+    rebase: false
+  rulesets:
+    - name: "Default Branch Protection"
+      type: branch
+      branches:
+        includes:
+          - "~DEFAULT_BRANCH"
+          - "release/*"
+          - "rel/*"
+        excludes: []
+      bypass_teams:
+        - root
+      restrict_deletion: true
+      restrict_force_push: true
