@@ -28,11 +28,7 @@ public class LogItems {
     }
 
     public LogItems addLogItem(String serviceName, Log log) {
-        LogItem logItem = logItems.get(serviceName);
-        if (logItem == null) {
-            logItem = new LogItem(serviceName);
-            logItems.put(serviceName, logItem);
-        }
+        final LogItem logItem = logItems.computeIfAbsent(serviceName, LogItem::new);
         logItem.addLogs(log);
         return this;
     }

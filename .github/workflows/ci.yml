@@ -30,9 +30,11 @@ jobs:
     strategy:
       fail-fast: true
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
+          # zulu ships a macOS aarch64 build of JDK 8, temurin does not
+          distribution: zulu
           java-version: 8
       - name: 'Install & Test'
         run: mvn clean install
@@ -43,9 +45,10 @@ jobs:
     strategy:
       fail-fast: true
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
+          distribution: zulu
           java-version: 8
       - name: 'Install & Test'
         run: ./mvnw clean install
