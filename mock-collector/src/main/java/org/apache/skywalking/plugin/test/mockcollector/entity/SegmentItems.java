@@ -28,11 +28,7 @@ public class SegmentItems {
     }
 
     public SegmentItems addSegmentItem(String serviceName, Segment segment) {
-        SegmentItem segmentItem = segmentItems.get(serviceName);
-        if (segmentItem == null) {
-            segmentItem = new SegmentItem(serviceName);
-            segmentItems.put(serviceName, segmentItem);
-        }
+        final SegmentItem segmentItem = segmentItems.computeIfAbsent(serviceName, SegmentItem::new);
         segmentItem.addSegments(segment);
         return this;
     }
