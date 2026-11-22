@@ -38,9 +38,9 @@
         <protocol.workingDirectory>${project.basedir}/target/protocol</protocol.workingDirectory>
         <protocol.repos>https://github.com/apache/skywalking-data-collect-protocol.git</protocol.repos>
         <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
-        <com.google.protobuf.protoc.version>3.17.3</com.google.protobuf.protoc.version>
-        <protoc-gen-grpc-java.plugin.version>1.42.1</protoc-gen-grpc-java.plugin.version>
-        <protobuf-java-util.version>3.11.4</protobuf-java-util.version>
+        <com.google.protobuf.protoc.version>3.25.5</com.google.protobuf.protoc.version>
+        <protoc-gen-grpc-java.plugin.version>1.74.0</protoc-gen-grpc-java.plugin.version>
+        <protobuf-java-util.version>3.25.5</protobuf-java-util.version>
     </properties>
 
     <dependencies>
